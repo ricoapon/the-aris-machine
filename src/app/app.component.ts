@@ -1,5 +1,6 @@
 import {Component, EventEmitter} from '@angular/core';
 import {PlaygroundEvent, SquareColor} from "./playground/playground.component";
+import {Parser} from "./backend/parser";
 
 @Component({
   selector: 'app-root',
@@ -16,5 +17,9 @@ export class AppComponent {
       j: 1,
       color: SquareColor.BLUE
     })
+  }
+
+  trigger() {
+    new Parser().parse();
   }
 }
