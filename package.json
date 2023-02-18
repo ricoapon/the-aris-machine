@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "@popperjs/core": "^2.11.6",
     "antlr4ts": "^0.5.0-alpha.4",
+    "assert": "^2.0.0",
     "bootstrap": "^5.2.3",
     "codemirror": "^5.65.11",
     "rxjs": "~7.5.0",
@@ -43,5 +44,10 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "typescript": "~4.8.2"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }
