@@ -28,7 +28,11 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "antlr4ts",
+              "codemirror/mode/javascript/javascript"
+            ]
           },
           "configurations": {
             "production": {
