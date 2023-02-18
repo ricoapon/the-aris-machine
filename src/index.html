@@ -7,7 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
+  <!--suppress ES6ConvertVarToLetConst -->
   <script>
+    // Angular 15 doesn't have polyfill.ts anymore and I couldn't figure out how to configure this.
+    // So I just added it here, that also works.
     var global = global || window;
     var Buffer = Buffer || [];
     var process = process || {
