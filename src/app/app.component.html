@@ -1,10 +1,17 @@
-<div>
-  <h1>Look at this awesome editor</h1>
-  <ngx-codemirror
-    [(ngModel)]="content"
-    [options]="{
-    lineNumbers: true,
-    theme: 'material'
-  }"
-  ></ngx-codemirror>
+<div class="vertical-center">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <!-- Editor -->
+        <ngx-codemirror
+          [(ngModel)]="content"
+          [options]="options"
+        ></ngx-codemirror>
+      </div>
+      <div class="col">
+        <!-- Game output -->
+        Look at this shit.
+      </div>
+    </div>
+  </div>
 </div>
