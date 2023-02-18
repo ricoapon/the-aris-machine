@@ -5,9 +5,8 @@
         <app-editor (runCode)="execute($event)"></app-editor>
       </div>
       <div class="col">
-        <app-playground [input]="playgroundEmitter"></app-playground>
+        <app-playground [playground]="playground"></app-playground>
       </div>
     </div>
   </div>
-  <button (click)="trigger()">Hey</button>
 </div>

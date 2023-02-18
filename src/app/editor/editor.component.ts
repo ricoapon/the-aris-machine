@@ -8,7 +8,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 export class EditorComponent {
   @Output() runCode = new EventEmitter<String>()
 
-  content = 'function myScript(){\n  return 100;\n}\n';
+  content = 'move up\n';
   options = {
     value: this.content,
     // Let's just use a language that looks similar. Good enough for now, should be custom later.

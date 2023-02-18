@@ -1,6 +1,6 @@
-import {Component, EventEmitter} from '@angular/core';
-import {PlaygroundEvent, SquareColor} from "./playground/playground.component";
+import {Component} from '@angular/core';
 import {Parser} from "./backend/parser";
+import {Playground} from "./backend/playground";
 
 @Component({
   selector: 'app-root',
@@ -9,17 +9,9 @@ import {Parser} from "./backend/parser";
 })
 export class AppComponent {
   title = 'humans-clone';
-  playgroundEmitter = new EventEmitter<PlaygroundEvent>();
+  playground = new Playground()
 
   execute(input: any) {
-    this.playgroundEmitter.emit({
-      i: parseInt(input),
-      j: 1,
-      color: SquareColor.BLUE
-    })
-  }
-
-  trigger() {
-    new Parser().parse();
+    new Parser(this.playground).parse(input)
   }
 }

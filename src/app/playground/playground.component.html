@@ -1,7 +1,7 @@
 <div class="container">
-  <div *ngFor="let i of [0,1,2,3]" class="row">
-    <div *ngFor="let j of [0,1,2,3]" [className]="'col ' + determineColorClass(i,j)">
-      ({{ i }}, {{ j }})
+  <div *ngFor="let i of [3,2,1,0]" class="row">
+    <div *ngFor="let j of [0,1,2,3]" class="col">
+      {{ playground.get(j, i) }}
     </div>
   </div>
 </div>
