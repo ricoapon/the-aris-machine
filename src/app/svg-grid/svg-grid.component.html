@@ -1,0 +1,37 @@
+<svg id="svgrenderer" class="boardsvg" xmlns="http://www.w3.org/2000/svg"
+     style="vector-effect: non-scaling-stroke; width: 700px; height: 700px;"
+     viewBox="0 0 2000 2000">
+
+  <g id="grid-lines">
+    <!-- Horizontal lines -->
+    <line *ngFor="let y of intervals()" x1="0" [attr.y1]="y" x2="2000" [attr.y2]="y" stroke="black"
+          stroke-width="1px"></line>
+    <!-- Vertical lines -->
+    <line *ngFor="let x of intervals()" [attr.x1]="x" y1="0" [attr.x2]="x" y2="2000" stroke="black"
+          stroke-width="1px"></line>
+  </g>
+
+  <g id="players">
+    <!-- Easiest is to stack all players as rectangles. I can make it prettier later on. -->
+    <g *ngFor="let players of players()">
+      <rect *ngFor="let playerId of players.ids; let i = index"
+            [attr.x]="players.x * 100"
+            [attr.y]="players.y * 100 + (100 / players.ids.length) * i" width="100" [attr.height]="(100 / players.ids.length)"
+            [attr.fill]="convertIdToColor(playerId)"></rect>
+    </g>
+  </g>
+
+  <g id="walls">
+    <rect *ngFor="let wall of walls()"
+          [attr.x]="wall.x * 100"
+          [attr.y]="wall.y * 100" width="100" height="100"
+          fill="brown"></rect>
+  </g>
+
+  <g id="pits">
+    <rect *ngFor="let pit of pits()"
+          [attr.x]="pit.x * 100"
+          [attr.y]="pit.y * 100" width="100" height="100"
+          fill="black"></rect>
+  </g>
+</svg>

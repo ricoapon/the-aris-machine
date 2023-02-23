@@ -7,12 +7,14 @@ import {FormsModule} from "@angular/forms";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditorComponent } from './editor/editor.component';
 import { PlaygroundComponent } from './playground/playground.component';
+import { SvgGridComponent } from './svg-grid/svg-grid.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EditorComponent,
-    PlaygroundComponent
+    PlaygroundComponent,
+    SvgGridComponent
   ],
   imports: [
     BrowserModule,
