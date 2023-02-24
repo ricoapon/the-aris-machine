@@ -1,5 +1,6 @@
 import {EventEmitter} from "@angular/core";
 import {MyMap} from "./my-map";
+import {Level} from "./levels/levels";
 
 export class Playground {
   private readonly updated = new EventEmitter<undefined>();
@@ -9,22 +10,35 @@ export class Playground {
   private readonly map: MyMap<Coordinate, Set<PlaygroundTile>>;
   private readonly playerCoordinates: MyMap<Player, Coordinate>;
 
-  constructor(width: number, height: number, playerCoordinates: MyMap<Player, Coordinate>) {
-    this.width = width;
-    this.height = height;
+  constructor(level: Level) {
+    this.width = level.width;
+    this.height = level.height;
     this.map = new MyMap<Coordinate, Set<PlaygroundTile>>()
-    for (let x = 0; x < width; x++) {
-      for (let y = 0; y < height; y++) {
+    for (let x = 0; x < level.width; x++) {
+      for (let y = 0; y < level.height; y++) {
         this.map.set({x: x, y: y}, new Set<PlaygroundTile>())
       }
     }
-    this.playerCoordinates = playerCoordinates;
-    playerCoordinates.forEach((value: Coordinate, key: Player) => {
+    this.playerCoordinates = new MyMap<Player, Coordinate>()
+    level.startingPositionPlayers.forEach((value: Coordinate, key: number) => {
+      this.playerCoordinates.set(new Player(key), value)
+    })
+    level.startingPositionBlocks.forEach((value: Coordinate, key: number) => {
+      this.map.get(value).add(new Block(key))
+    })
+    level.pits.forEach((c: Coordinate) => {
+      this.map.get(c).add(new Pit())
+    })
+    level.walls.forEach((c: Coordinate) => {
+      this.map.get(c).add(new Wall())
+    })
+
+    this.playerCoordinates.forEach((value: Coordinate, key: Player) => {
       // @ts-ignore
       this.map.get(value).add(key);
     });
 
-    this.nrOfPlayers = playerCoordinates.size();
+    this.nrOfPlayers = this.playerCoordinates.size();
   }
 
   private updatePlayerCoordinate(player: Player, calculateNewCoordinate: (c: Coordinate) => Coordinate) {
@@ -92,7 +106,11 @@ export interface PlaygroundTile {
 }
 
 class Block implements PlaygroundTile {
+  public readonly id: number;
 
+  constructor(id: number) {
+    this.id = id;
+  }
 }
 
 export class Player implements PlaygroundTile {
@@ -104,5 +122,9 @@ export class Player implements PlaygroundTile {
 }
 
 class Pit implements PlaygroundTile {
+
+}
+
+class Wall implements PlaygroundTile {
 
 }

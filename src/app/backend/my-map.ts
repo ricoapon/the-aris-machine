@@ -40,7 +40,7 @@ export class MyMap<K, V> {
     const keyAsString = JSON.stringify(key);
     const result = this.map.get(keyAsString);
     if (result == undefined) {
-      throw Error("This should not happen!")
+      throw Error("Key '" + JSON.stringify(key) + "' could not be found")
     }
     return result;
   }
