@@ -12,23 +12,21 @@
   </g>
 
   <g id="players">
-    <!-- Easiest is to stack all players as rectangles. I can make it prettier later on. -->
-    <g *ngFor="let players of players()">
-      <rect *ngFor="let playerId of players.ids; let i = index"
-            [attr.x]="players.c.x * 100"
-            [attr.y]="players.c.y * 100 + (100 / players.ids.length) * i" width="100" [attr.height]="(100 / players.ids.length)"
-            [attr.fill]="convertIdToColor(playerId)"></rect>
-    </g>
+    <rect *ngFor="let player of players()"
+          [attr.x]="player.c.x * 100"
+          [attr.y]="player.c.y * 100" width="100" height="100"
+          [attr.fill]="convertIdToColor(player.id)"></rect>
   </g>
 
   <g id="blocks">
-      <text *ngFor="let blocks of blocks()"
-            [attr.x]="blocks.c.x * 100"
-            [attr.y]="(blocks.c.y + 1) * 100"
-            font-size="75px">
-        {{ blocks.ids }}
-      </text>
-
+    <text *ngFor="let block of blocks()"
+          [attr.x]="block.c.x * 100 + 50"
+          [attr.y]="block.c.y * 100 + 60"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          font-size="75px">
+      {{ block.id }}
+    </text>
   </g>
 
   <g id="walls">

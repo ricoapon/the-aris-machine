@@ -80,41 +80,22 @@ export class Playground {
     return this._walls.toList()
   }
 
-  players(): [{ids: [number], c: Coordinate}] {
-    const reverseMap: MyMap<Coordinate, [number]> = new MyMap<Coordinate, [number]>()
-    this.playerCoordinates.forEach((value: Coordinate, key: Player) => {
-      if (!reverseMap.has(value)) {
-        reverseMap.set(value, [key.id])
-      } else {
-        reverseMap.get(value).push(key.id)
-      }
-    })
-
+  players(): [{id: number, c: Coordinate}] {
     // @ts-ignore
-    const result: [{ids: [number], c: Coordinate}] = []
-    reverseMap.forEach((value: [number], key: Coordinate) => {
-      result.push({ids: value, c: key})
+    const result: [{id: number, c: Coordinate}] = []
+    this.playerCoordinates.forEach((value: Coordinate, key: Player) => {
+      result.push({id: key.id, c: value})
     })
     return result
   }
 
-  blocks(): [{ids: [number], c: Coordinate}] {
-    const reverseMap: MyMap<Coordinate, [number]> = new MyMap<Coordinate, [number]>()
-    this.blockCoordinates.forEach((value: Coordinate, key: Player) => {
-      if (!reverseMap.has(value)) {
-        reverseMap.set(value, [key.id])
-      } else {
-        reverseMap.get(value).push(key.id)
-      }
-    })
-
+  blocks(): [{id: number, c: Coordinate}] {
     // @ts-ignore
-    const result: [{ids: [number], c: Coordinate}] = []
-    reverseMap.forEach((value: [number], key: Coordinate) => {
-      result.push({ids: value, c: key})
+    const result: [{id: number, c: Coordinate}] = []
+    this.blockCoordinates.forEach((value: Coordinate, key: Player) => {
+      result.push({id: key.id, c: value})
     })
     return result
-
   }
 
   updateEmitter(): EventEmitter<undefined> {

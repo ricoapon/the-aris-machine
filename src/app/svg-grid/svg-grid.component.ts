@@ -24,11 +24,11 @@ export class SvgGridComponent implements OnInit {
     return result;
   }
 
-  players(): [{ids: [number], c: Coordinate}] {
+  players(): [{id: number, c: Coordinate}] {
     return this.playground.players()
   }
 
-  blocks(): [{ids: [number], c: Coordinate}] {
+  blocks(): [{id: number, c: Coordinate}] {
     return this.playground.blocks()
   }
 
