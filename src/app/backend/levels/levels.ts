@@ -43,12 +43,12 @@ function createSquareBoundary(width: number, height: number): Coordinate[] {
 
 export const LEVEL_1 = new Level(
   10,10,
-  new Map<number, Coordinate>([[1, new Coordinate(5, 3)]]),
+  new Map<number, Coordinate>([[1, new Coordinate(3, 3)], [2, new Coordinate(6, 3)]]),
   new Map<number, Coordinate>(),
   [],
   createSquareBoundary(10, 10),
-  new Map<number, Coordinate>([[1, new Coordinate(5, 5)]]),
-  new Map<number, Coordinate>([[1, new Coordinate(5, 7)]])
+  new Map<number, Coordinate>([[1, new Coordinate(3, 5)], [2, new Coordinate(6, 5)]]),
+  new Map<number, Coordinate>([[1, new Coordinate(3, 7)], [2, new Coordinate(6, 7)]])
 );
 
 export const allLevels: Level[] = [LEVEL_1];
