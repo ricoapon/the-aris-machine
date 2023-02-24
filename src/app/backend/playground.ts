@@ -1,7 +1,8 @@
 import {EventEmitter} from "@angular/core";
-import {MyMap} from "./my-map";
+import {MyMap, ObjectWithId} from "./my-map";
 import {Level} from "./levels/levels";
 import {MySet} from "./my-set";
+import {Coordinate} from "./coordinate";
 
 export class Playground {
   private readonly updated = new EventEmitter<undefined>();
@@ -42,34 +43,57 @@ export class Playground {
     const newCoordinate = calculateNewCoordinate(oldCoordinate);
 
     this.playerCoordinates.set(player, newCoordinate);
+
+    if (player.holdsBlock != undefined) {
+      this.blockCoordinates.set(player.holdsBlock, newCoordinate)
+    }
   }
 
   moveUp() {
     for (const player of this.playerCoordinates.keys()) {
-      this.updatePlayerCoordinate(player, (c) => {return {x: c.x, y: c.y + 1}})
+      this.updatePlayerCoordinate(player, (c) => {return new Coordinate(c.x, c.y + 1)})
     }
     this.updated.emit()
   }
 
   moveDown() {
     for (const player of this.playerCoordinates.keys()) {
-      this.updatePlayerCoordinate(player, (c) => {return {x: c.x, y: c.y - 1}})
+      this.updatePlayerCoordinate(player, (c) => {return new Coordinate(c.x, c.y - 1)})
     }
     this.updated.emit()
   }
 
   moveRight() {
     for (const player of this.playerCoordinates.keys()) {
-      this.updatePlayerCoordinate(player, (c) => {return {x: c.x + 1, y: c.y}})
+      this.updatePlayerCoordinate(player, (c) => {return new Coordinate(c.x + 1, c.y)})
     }
     this.updated.emit()
   }
 
   moveLeft() {
     for (const player of this.playerCoordinates.keys()) {
-      this.updatePlayerCoordinate(player, (c) => {return {x: c.x - 1, y: c.y}})
+      this.updatePlayerCoordinate(player, (c) => {return new Coordinate(c.x - 1, c.y)})
     }
     this.updated.emit()
+  }
+
+  pickUp() {
+    const reverseBlockMap = new MyMap<Coordinate, Block>();
+    this.blockCoordinates.forEach((value: Coordinate, key: Block) => {
+      reverseBlockMap.set(value, key)
+    })
+    for (const player of this.playerCoordinates.keys()) {
+      const playerCoordinate = this.playerCoordinates.get(player)
+      if (reverseBlockMap.has(playerCoordinate)) {
+        player.holdsBlock = reverseBlockMap.get(playerCoordinate)
+      }
+    }
+  }
+
+  drop() {
+    for (const player of this.playerCoordinates.keys()) {
+      player.holdsBlock = undefined
+    }
   }
 
   pits(): Coordinate[] {
@@ -92,7 +116,7 @@ export class Playground {
   blocks(): [{id: number, c: Coordinate}] {
     // @ts-ignore
     const result: [{id: number, c: Coordinate}] = []
-    this.blockCoordinates.forEach((value: Coordinate, key: Player) => {
+    this.blockCoordinates.forEach((value: Coordinate, key: Block) => {
       result.push({id: key.id, c: value})
     })
     return result
@@ -103,27 +127,16 @@ export class Playground {
   }
 }
 
-export type Coordinate = {
-  x: number,
-  y: number,
-}
-
-export interface PlaygroundTile {
-
-}
-
-class Block implements PlaygroundTile {
-  public readonly id: number;
-
+class Block extends ObjectWithId {
   constructor(id: number) {
-    this.id = id;
+    super(id);
   }
 }
 
-export class Player implements PlaygroundTile {
-  public readonly id: number;
+export class Player extends ObjectWithId {
+  holdsBlock: Block | undefined;
 
   constructor(id: number) {
-    this.id = id;
+    super(id);
   }
 }

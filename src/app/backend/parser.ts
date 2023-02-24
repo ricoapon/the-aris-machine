@@ -42,4 +42,12 @@ class MyListener implements HumansListener {
       this.playground.moveLeft();
     }
   }
+
+  enterPickUp(): void {
+    this.playground.pickUp()
+  }
+
+  enterDrop(): void {
+    this.playground.drop()
+  }
 }

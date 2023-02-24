@@ -1,7 +1,7 @@
-export class MyMap<K, V> {
+export class MyMap<K extends ObjectWithId, V> {
   // Store the stringify version of keys, because equality on objects doesn't work.
-  private map: Map<string, V> = new Map<string, V>();
-  private myKeys: Map<string, K> = new Map<string, K>();
+  private map: Map<number, V> = new Map<number, V>();
+  private myKeys: Map<number, K> = new Map<number, K>();
 
   constructor(entries?: (K | V)[][]) {
     if (entries != undefined) {
@@ -15,18 +15,17 @@ export class MyMap<K, V> {
   }
 
   clear(): void {
-    this.map = new Map<string, V>()
-    this.myKeys = new Map<string, K>()
+    this.map = new Map<number, V>()
+    this.myKeys = new Map<number, K>()
   }
 
   delete(key: K): boolean {
-    const keyAsString = JSON.stringify(key);
-    if (!this.map.has(keyAsString)) {
+    if (!this.map.has(key.id)) {
       return false;
     }
 
-    this.map.delete(keyAsString);
-    this.myKeys.delete(keyAsString);
+    this.map.delete(key.id);
+    this.myKeys.delete(key.id);
     return true;
   }
 
@@ -37,17 +36,15 @@ export class MyMap<K, V> {
   }
 
   get(key: K): V {
-    const keyAsString = JSON.stringify(key);
-    const result = this.map.get(keyAsString);
+    const result = this.map.get(key.id);
     if (result == undefined) {
-      throw Error("Key '" + JSON.stringify(key) + "' could not be found")
+      throw Error("Key '" + key.id + "' could not be found")
     }
     return result;
   }
 
   has(key: K): boolean {
-    const keyAsString = JSON.stringify(key);
-    return this.map.has(keyAsString);
+    return this.map.has(key.id);
   }
 
   values(): IterableIterator<V> {
@@ -59,13 +56,20 @@ export class MyMap<K, V> {
   }
 
   set(key: K, value: V): this {
-    const keyAsString = JSON.stringify(key);
-    this.map.set(keyAsString, value);
-    this.myKeys.set(keyAsString, key);
+    this.map.set(key.id, value);
+    this.myKeys.set(key.id, key);
     return this;
   }
 
   size() {
     return this.map.size;
+  }
+}
+
+export abstract class ObjectWithId {
+  readonly id: number;
+
+  protected constructor(id: number) {
+    this.id = id;
   }
 }

@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {Coordinate, Playground} from "../backend/playground";
+import {Playground} from "../backend/playground";
+import {Coordinate} from "../backend/coordinate";
 
 @Component({
   selector: 'app-svg-grid',

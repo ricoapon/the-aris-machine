@@ -1,4 +1,4 @@
-import {Coordinate} from "../playground";
+import {Coordinate} from "../coordinate";
 
 export class Level {
   readonly width: number;
@@ -26,16 +26,16 @@ function createSquareBoundary(width: number, height: number): Coordinate[] {
   const result: Coordinate[] = [];
 
   for (let x = 0; x < width; x++) {
-    result.push({x: x, y: 0})
+    result.push(new Coordinate(x, 0))
   }
   for (let x = 0; x < width; x++) {
-    result.push({x: x, y: height - 1})
+    result.push(new Coordinate(x, height - 1))
   }
   for (let y = 1; y < height; y++) {
-    result.push({x: 0, y: y})
+    result.push(new Coordinate(0, y))
   }
   for (let y = 1; y < height; y++) {
-    result.push({x: width - 1, y: y})
+    result.push(new Coordinate(width - 1, y))
   }
 
   return result;
@@ -43,12 +43,12 @@ function createSquareBoundary(width: number, height: number): Coordinate[] {
 
 export const LEVEL_1 = new Level(
   10,10,
-  new Map<number, Coordinate>([[1, {x: 5, y: 3}]]),
+  new Map<number, Coordinate>([[1, new Coordinate(5, 3)]]),
   new Map<number, Coordinate>(),
   [],
   createSquareBoundary(10, 10),
-  new Map<number, Coordinate>([[1, {x: 5, y: 5}]]),
-  new Map<number, Coordinate>([[1, {x: 5, y: 7}]])
+  new Map<number, Coordinate>([[1, new Coordinate(5, 5)]]),
+  new Map<number, Coordinate>([[1, new Coordinate(5, 7)]])
 );
 
 export const allLevels: Level[] = [LEVEL_1];
