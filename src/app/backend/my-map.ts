@@ -21,7 +21,7 @@ export class MyMap<K extends ObjectWithId, V> {
 
   delete(key: K): boolean {
     if (!this.map.has(key.id)) {
-      return false;
+      throw Error("Deleting element "  + key.id + " that is not present")
     }
 
     this.map.delete(key.id);

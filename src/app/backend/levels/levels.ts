@@ -51,4 +51,15 @@ export const LEVEL_1 = new Level(
   new Map<number, Coordinate>([[1, new Coordinate(3, 7)], [2, new Coordinate(6, 7)]])
 );
 
+export const LEVEL_2 = new Level(
+  10,10,
+  new Map<number, Coordinate>([[1, new Coordinate(3, 3)], [2, new Coordinate(6, 3)]]),
+  new Map<number, Coordinate>(),
+  [new Coordinate(3, 4), new Coordinate(6, 4) , new Coordinate(3, 7), new Coordinate(6, 7)],
+  createSquareBoundary(10, 10),
+  new Map<number, Coordinate>([[1, new Coordinate(3, 5)], [2, new Coordinate(6, 5)]]),
+  new Map<number, Coordinate>([[1, new Coordinate(3, 7)], [2, new Coordinate(6, 7)]])
+);
+
+
 export const allLevels: Level[] = [LEVEL_1];

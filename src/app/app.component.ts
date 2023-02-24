@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Parser} from "./backend/parser";
 import {Playground} from "./backend/playground";
-import {LEVEL_1} from "./backend/levels/levels";
+import {LEVEL_2} from "./backend/levels/levels";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import {LEVEL_1} from "./backend/levels/levels";
 })
 export class AppComponent {
   title = 'humans-clone';
-  playground = new Playground(LEVEL_1)
+  playground = new Playground(LEVEL_2)
 
   execute(input: any) {
     new Parser(this.playground).parse(input)

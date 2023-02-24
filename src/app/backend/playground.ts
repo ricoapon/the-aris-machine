@@ -10,7 +10,9 @@ export class Playground {
   public readonly height: number;
 
   private readonly playerCoordinates: MyMap<Player, Coordinate>;
+  private readonly invertedPlayerCoordinates: MyMap<Coordinate, Player>
   private readonly blockCoordinates: MyMap<Block, Coordinate>;
+  private readonly invertedBlockCoordinates: MyMap<Coordinate, Block>
   private readonly _pits: MySet<Coordinate>
   private readonly _walls: MySet<Coordinate>
 
@@ -18,12 +20,18 @@ export class Playground {
     this.width = level.width;
     this.height = level.height;
     this.playerCoordinates = new MyMap<Player, Coordinate>()
-    level.startingPositionPlayers.forEach((value: Coordinate, key: number) => {
-      this.playerCoordinates.set(new Player(key), value)
+    this.invertedPlayerCoordinates = new MyMap<Coordinate, Player>()
+    level.startingPositionPlayers.forEach((coordinate: Coordinate, id: number) => {
+      const player = new Player(id)
+      this.playerCoordinates.set(player, coordinate)
+      this.invertedPlayerCoordinates.set(coordinate, player)
     })
     this.blockCoordinates = new MyMap<Block, Coordinate>()
-    level.startingPositionBlocks.forEach((value: Coordinate, key: number) => {
-      this.blockCoordinates.set(new Block(key), value)
+    this.invertedBlockCoordinates = new MyMap<Coordinate, Block>()
+    level.startingPositionBlocks.forEach((coordinate: Coordinate, id: number) => {
+      let block = new Block(id);
+      this.blockCoordinates.set(block, coordinate)
+      this.invertedBlockCoordinates.set(coordinate, block)
     })
     this._pits = new MySet<Coordinate>()
     level.pits.forEach((c: Coordinate) => {
@@ -40,12 +48,32 @@ export class Playground {
     if (oldCoordinate == undefined) {
       throw Error("This should not happen!")
     }
+
+    if (this._pits.has(oldCoordinate)) {
+      // If we are in a pit, we stop doing anything.
+      return
+    }
+
     const newCoordinate = calculateNewCoordinate(oldCoordinate);
 
+    if (this._walls.has(newCoordinate)) {
+      // We cannot walk through walls.
+      return
+    }
+
+    if (this.invertedPlayerCoordinates.has(newCoordinate)) {
+      // We cannot walk through other players.
+      return
+    }
+
     this.playerCoordinates.set(player, newCoordinate);
+    this.invertedPlayerCoordinates.delete(oldCoordinate)
+    this.invertedPlayerCoordinates.set(newCoordinate, player)
 
     if (player.holdsBlock != undefined) {
       this.blockCoordinates.set(player.holdsBlock, newCoordinate)
+      this.invertedBlockCoordinates.delete(oldCoordinate)
+      this.invertedBlockCoordinates.set(newCoordinate, player.holdsBlock)
     }
   }
 
