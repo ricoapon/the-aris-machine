@@ -35,7 +35,7 @@ condition_part
  ;
 
 move: 'move' DIRECTION;
-pickUp: 'pick'('u'|'U')'p';
+pickUp: 'pickup';
 drop: 'drop';
 scan: 'scan' DIRECTION;
 

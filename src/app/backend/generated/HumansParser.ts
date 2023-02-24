@@ -34,21 +34,18 @@ export class HumansParser extends Parser {
 	public static readonly T__3 = 4;
 	public static readonly T__4 = 5;
 	public static readonly T__5 = 6;
-	public static readonly T__6 = 7;
-	public static readonly T__7 = 8;
-	public static readonly T__8 = 9;
-	public static readonly OPERATOR = 10;
-	public static readonly DIRECTION = 11;
-	public static readonly OBJECT = 12;
-	public static readonly NEWLINE = 13;
-	public static readonly IF = 14;
-	public static readonly ROUND_BRACKET_OPEN = 15;
-	public static readonly ROUND_BRACKET_CLOSE = 16;
-	public static readonly CURLY_BRACKET_OPEN = 17;
-	public static readonly CURLY_BRACKET_CLOSE = 18;
-	public static readonly WHITESPACE = 19;
-	public static readonly LINE_COMMENT = 20;
-	public static readonly ERROR_CHARACTER = 21;
+	public static readonly OPERATOR = 7;
+	public static readonly DIRECTION = 8;
+	public static readonly OBJECT = 9;
+	public static readonly NEWLINE = 10;
+	public static readonly IF = 11;
+	public static readonly ROUND_BRACKET_OPEN = 12;
+	public static readonly ROUND_BRACKET_CLOSE = 13;
+	public static readonly CURLY_BRACKET_OPEN = 14;
+	public static readonly CURLY_BRACKET_CLOSE = 15;
+	public static readonly WHITESPACE = 16;
+	public static readonly LINE_COMMENT = 17;
+	public static readonly ERROR_CHARACTER = 18;
 	public static readonly RULE_program = 0;
 	public static readonly RULE_line = 1;
 	public static readonly RULE_expression = 2;
@@ -67,14 +64,14 @@ export class HumansParser extends Parser {
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
-		undefined, "' and '", "' or '", "'move'", "'pick'", "'u'", "'U'", "'p'", 
-		"'drop'", "'scan'", undefined, undefined, undefined, undefined, "'if'",
+		undefined, "' and '", "' or '", "'move'", "'pickup'", "'drop'", "'scan'", 
+		undefined, undefined, undefined, undefined, "'if'",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
 		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, "OPERATOR", "DIRECTION", "OBJECT", "NEWLINE", 
-		"IF", "ROUND_BRACKET_OPEN", "ROUND_BRACKET_CLOSE", "CURLY_BRACKET_OPEN", 
-		"CURLY_BRACKET_CLOSE", "WHITESPACE", "LINE_COMMENT", "ERROR_CHARACTER",
+		"OPERATOR", "DIRECTION", "OBJECT", "NEWLINE", "IF", "ROUND_BRACKET_OPEN", 
+		"ROUND_BRACKET_CLOSE", "CURLY_BRACKET_OPEN", "CURLY_BRACKET_CLOSE", "WHITESPACE", 
+		"LINE_COMMENT", "ERROR_CHARACTER",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(HumansParser._LITERAL_NAMES, HumansParser._SYMBOLIC_NAMES, []);
 
@@ -123,7 +120,7 @@ export class HumansParser extends Parser {
 				this.state = 25;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << HumansParser.T__2) | (1 << HumansParser.T__3) | (1 << HumansParser.T__7) | (1 << HumansParser.IF))) !== 0));
+			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << HumansParser.T__2) | (1 << HumansParser.T__3) | (1 << HumansParser.T__4) | (1 << HumansParser.IF))) !== 0));
 			this.state = 27;
 			this.match(HumansParser.EOF);
 			}
@@ -192,7 +189,7 @@ export class HumansParser extends Parser {
 			switch (this._input.LA(1)) {
 			case HumansParser.T__2:
 			case HumansParser.T__3:
-			case HumansParser.T__7:
+			case HumansParser.T__4:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 36;
@@ -246,7 +243,7 @@ export class HumansParser extends Parser {
 				this.pickUp();
 				}
 				break;
-			case HumansParser.T__7:
+			case HumansParser.T__4:
 				this.enterOuterAlt(_localctx, 3);
 				{
 				this.state = 42;
@@ -437,7 +434,7 @@ export class HumansParser extends Parser {
 				this.match(HumansParser.OBJECT);
 				}
 				break;
-			case HumansParser.T__8:
+			case HumansParser.T__5:
 				this.enterOuterAlt(_localctx, 2);
 				{
 				this.state = 76;
@@ -493,26 +490,11 @@ export class HumansParser extends Parser {
 	public pickUp(): PickUpContext {
 		let _localctx: PickUpContext = new PickUpContext(this._ctx, this.state);
 		this.enterRule(_localctx, 16, HumansParser.RULE_pickUp);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 82;
 			this.match(HumansParser.T__3);
-			this.state = 83;
-			_la = this._input.LA(1);
-			if (!(_la === HumansParser.T__4 || _la === HumansParser.T__5)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
-			this.state = 84;
-			this.match(HumansParser.T__6);
 			}
 		}
 		catch (re) {
@@ -536,8 +518,8 @@ export class HumansParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 86;
-			this.match(HumansParser.T__7);
+			this.state = 84;
+			this.match(HumansParser.T__4);
 			}
 		}
 		catch (re) {
@@ -561,9 +543,9 @@ export class HumansParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 88;
-			this.match(HumansParser.T__8);
-			this.state = 89;
+			this.state = 86;
+			this.match(HumansParser.T__5);
+			this.state = 87;
 			this.match(HumansParser.DIRECTION);
 			}
 		}
@@ -601,7 +583,7 @@ export class HumansParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\x17^\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\x14\\\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x03\x02\x06\x02" +
 		"\x1A\n\x02\r\x02\x0E\x02\x1B\x03\x02\x03\x02\x03\x03\x03\x03\x07\x03\"" +
@@ -610,33 +592,32 @@ export class HumansParser extends Parser {
 		"\x06\x05\x066\n\x06\x03\x06\x03\x06\x05\x06:\n\x06\x03\x06\x03\x06\x03" +
 		"\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03" +
 		"\x07\x03\x07\x07\x07I\n\x07\f\x07\x0E\x07L\v\x07\x03\b\x03\b\x05\bP\n" +
-		"\b\x03\t\x03\t\x03\t\x03\n\x03\n\x03\n\x03\n\x03\v\x03\v\x03\f\x03\f\x03" +
-		"\f\x03\f\x02\x02\x03\f\r\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02\x0E" +
-		"\x02\x10\x02\x12\x02\x14\x02\x16\x02\x02\x03\x03\x02\x07\b\x02\\\x02\x19" +
-		"\x03\x02\x02\x02\x04\x1F\x03\x02\x02\x02\x06(\x03\x02\x02\x02\b-\x03\x02" +
-		"\x02\x02\n/\x03\x02\x02\x02\f=\x03\x02\x02\x02\x0EO\x03\x02\x02\x02\x10" +
-		"Q\x03\x02\x02\x02\x12T\x03\x02\x02\x02\x14X\x03\x02\x02\x02\x16Z\x03\x02" +
-		"\x02\x02\x18\x1A\x05\x04\x03\x02\x19\x18\x03\x02\x02\x02\x1A\x1B\x03\x02" +
-		"\x02\x02\x1B\x19\x03\x02\x02\x02\x1B\x1C\x03\x02\x02\x02\x1C\x1D\x03\x02" +
-		"\x02\x02\x1D\x1E\x07\x02\x02\x03\x1E\x03\x03\x02\x02\x02\x1F#\x05\x06" +
-		"\x04\x02 \"\x07\x0F\x02\x02! \x03\x02\x02\x02\"%\x03\x02\x02\x02#!\x03" +
-		"\x02\x02\x02#$\x03\x02\x02\x02$\x05\x03\x02\x02\x02%#\x03\x02\x02\x02" +
-		"&)\x05\b\x05\x02\')\x05\n\x06\x02(&\x03\x02\x02\x02(\'\x03\x02\x02\x02" +
-		")\x07\x03\x02\x02\x02*.\x05\x10\t\x02+.\x05\x12\n\x02,.\x05\x14\v\x02" +
-		"-*\x03\x02\x02\x02-+\x03\x02\x02\x02-,\x03\x02\x02\x02.\t\x03\x02\x02" +
-		"\x02/0\x07\x10\x02\x0201\x07\x11\x02\x0212\x05\f\x07\x0223\x07\x12\x02" +
-		"\x0235\x07\x13\x02\x0246\x07\x0F\x02\x0254\x03\x02\x02\x0256\x03\x02\x02" +
-		"\x0267\x03\x02\x02\x0279\x05\x06\x04\x028:\x07\x0F\x02\x0298\x03\x02\x02" +
-		"\x029:\x03\x02\x02\x02:;\x03\x02\x02\x02;<\x07\x14\x02\x02<\v\x03\x02" +
-		"\x02\x02=>\b\x07\x01\x02>?\x05\x0E\b\x02?@\x07\f\x02\x02@A\x05\x0E\b\x02" +
-		"AJ\x03\x02\x02\x02BC\f\x05\x02\x02CD\x07\x03\x02\x02DI\x05\f\x07\x06E" +
-		"F\f\x04\x02\x02FG\x07\x04\x02\x02GI\x05\f\x07\x05HB\x03\x02\x02\x02HE" +
-		"\x03\x02\x02\x02IL\x03\x02\x02\x02JH\x03\x02\x02\x02JK\x03\x02\x02\x02" +
-		"K\r\x03\x02\x02\x02LJ\x03\x02\x02\x02MP\x07\x0E\x02\x02NP\x05\x16\f\x02" +
-		"OM\x03\x02\x02\x02ON\x03\x02\x02\x02P\x0F\x03\x02\x02\x02QR\x07\x05\x02" +
-		"\x02RS\x07\r\x02\x02S\x11\x03\x02\x02\x02TU\x07\x06\x02\x02UV\t\x02\x02" +
-		"\x02VW\x07\t\x02\x02W\x13\x03\x02\x02\x02XY\x07\n\x02\x02Y\x15\x03\x02" +
-		"\x02\x02Z[\x07\v\x02\x02[\\\x07\r\x02\x02\\\x17\x03\x02\x02\x02\v\x1B" +
+		"\b\x03\t\x03\t\x03\t\x03\n\x03\n\x03\v\x03\v\x03\f\x03\f\x03\f\x03\f\x02" +
+		"\x02\x03\f\r\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02" +
+		"\x12\x02\x14\x02\x16\x02\x02\x02\x02Z\x02\x19\x03\x02\x02\x02\x04\x1F" +
+		"\x03\x02\x02\x02\x06(\x03\x02\x02\x02\b-\x03\x02\x02\x02\n/\x03\x02\x02" +
+		"\x02\f=\x03\x02\x02\x02\x0EO\x03\x02\x02\x02\x10Q\x03\x02\x02\x02\x12" +
+		"T\x03\x02\x02\x02\x14V\x03\x02\x02\x02\x16X\x03\x02\x02\x02\x18\x1A\x05" +
+		"\x04\x03\x02\x19\x18\x03\x02\x02\x02\x1A\x1B\x03\x02\x02\x02\x1B\x19\x03" +
+		"\x02\x02\x02\x1B\x1C\x03\x02\x02\x02\x1C\x1D\x03\x02\x02\x02\x1D\x1E\x07" +
+		"\x02\x02\x03\x1E\x03\x03\x02\x02\x02\x1F#\x05\x06\x04\x02 \"\x07\f\x02" +
+		"\x02! \x03\x02\x02\x02\"%\x03\x02\x02\x02#!\x03\x02\x02\x02#$\x03\x02" +
+		"\x02\x02$\x05\x03\x02\x02\x02%#\x03\x02\x02\x02&)\x05\b\x05\x02\')\x05" +
+		"\n\x06\x02(&\x03\x02\x02\x02(\'\x03\x02\x02\x02)\x07\x03\x02\x02\x02*" +
+		".\x05\x10\t\x02+.\x05\x12\n\x02,.\x05\x14\v\x02-*\x03\x02\x02\x02-+\x03" +
+		"\x02\x02\x02-,\x03\x02\x02\x02.\t\x03\x02\x02\x02/0\x07\r\x02\x0201\x07" +
+		"\x0E\x02\x0212\x05\f\x07\x0223\x07\x0F\x02\x0235\x07\x10\x02\x0246\x07" +
+		"\f\x02\x0254\x03\x02\x02\x0256\x03\x02\x02\x0267\x03\x02\x02\x0279\x05" +
+		"\x06\x04\x028:\x07\f\x02\x0298\x03\x02\x02\x029:\x03\x02\x02\x02:;\x03" +
+		"\x02\x02\x02;<\x07\x11\x02\x02<\v\x03\x02\x02\x02=>\b\x07\x01\x02>?\x05" +
+		"\x0E\b\x02?@\x07\t\x02\x02@A\x05\x0E\b\x02AJ\x03\x02\x02\x02BC\f\x05\x02" +
+		"\x02CD\x07\x03\x02\x02DI\x05\f\x07\x06EF\f\x04\x02\x02FG\x07\x04\x02\x02" +
+		"GI\x05\f\x07\x05HB\x03\x02\x02\x02HE\x03\x02\x02\x02IL\x03\x02\x02\x02" +
+		"JH\x03\x02\x02\x02JK\x03\x02\x02\x02K\r\x03\x02\x02\x02LJ\x03\x02\x02" +
+		"\x02MP\x07\v\x02\x02NP\x05\x16\f\x02OM\x03\x02\x02\x02ON\x03\x02\x02\x02" +
+		"P\x0F\x03\x02\x02\x02QR\x07\x05\x02\x02RS\x07\n\x02\x02S\x11\x03\x02\x02" +
+		"\x02TU\x07\x06\x02\x02U\x13\x03\x02\x02\x02VW\x07\x07\x02\x02W\x15\x03" +
+		"\x02\x02\x02XY\x07\b\x02\x02YZ\x07\n\x02\x02Z\x17\x03\x02\x02\x02\v\x1B" +
 		"#(-59HJO";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
