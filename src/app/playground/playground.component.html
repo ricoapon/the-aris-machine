@@ -1,8 +1,0 @@
-<div class="container">
-  <div *ngFor="let y of collectionOneToN(playground.width).reverse()" class="row">
-    <div *ngFor="let x of collectionOneToN(playground.height)" class="col">
-      <span *ngFor="let player of players(playground.get(x, y))">{{ player.id }}</span>
-      <span>.</span>
-    </div>
-  </div>
-</div>

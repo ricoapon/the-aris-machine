@@ -42,11 +42,11 @@ function createSquareBoundary(width: number, height: number): Coordinate[] {
 }
 
 export const LEVEL_1 = new Level(
-  10,7,
+  10,10,
   new Map<number, Coordinate>([[1, {x: 5, y: 3}]]),
   new Map<number, Coordinate>(),
   [],
-  createSquareBoundary(10, 7),
+  createSquareBoundary(10, 10),
   new Map<number, Coordinate>([[1, {x: 5, y: 5}]]),
   new Map<number, Coordinate>([[1, {x: 5, y: 7}]])
 );

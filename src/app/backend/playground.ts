@@ -1,44 +1,37 @@
 import {EventEmitter} from "@angular/core";
 import {MyMap} from "./my-map";
 import {Level} from "./levels/levels";
+import {MySet} from "./my-set";
 
 export class Playground {
   private readonly updated = new EventEmitter<undefined>();
   public readonly width: number;
   public readonly height: number;
-  private readonly nrOfPlayers: number;
-  private readonly map: MyMap<Coordinate, Set<PlaygroundTile>>;
+
   private readonly playerCoordinates: MyMap<Player, Coordinate>;
+  private readonly blockCoordinates: MyMap<Block, Coordinate>;
+  private readonly _pits: MySet<Coordinate>
+  private readonly _walls: MySet<Coordinate>
 
   constructor(level: Level) {
     this.width = level.width;
     this.height = level.height;
-    this.map = new MyMap<Coordinate, Set<PlaygroundTile>>()
-    for (let x = 0; x < level.width; x++) {
-      for (let y = 0; y < level.height; y++) {
-        this.map.set({x: x, y: y}, new Set<PlaygroundTile>())
-      }
-    }
     this.playerCoordinates = new MyMap<Player, Coordinate>()
     level.startingPositionPlayers.forEach((value: Coordinate, key: number) => {
       this.playerCoordinates.set(new Player(key), value)
     })
+    this.blockCoordinates = new MyMap<Block, Coordinate>()
     level.startingPositionBlocks.forEach((value: Coordinate, key: number) => {
-      this.map.get(value).add(new Block(key))
+      this.blockCoordinates.set(new Block(key), value)
     })
+    this._pits = new MySet<Coordinate>()
     level.pits.forEach((c: Coordinate) => {
-      this.map.get(c).add(new Pit())
+      this._pits.add(c)
     })
+    this._walls = new MySet<Coordinate>()
     level.walls.forEach((c: Coordinate) => {
-      this.map.get(c).add(new Wall())
+      this._walls.add(c)
     })
-
-    this.playerCoordinates.forEach((value: Coordinate, key: Player) => {
-      // @ts-ignore
-      this.map.get(value).add(key);
-    });
-
-    this.nrOfPlayers = this.playerCoordinates.size();
   }
 
   private updatePlayerCoordinate(player: Player, calculateNewCoordinate: (c: Coordinate) => Coordinate) {
@@ -49,10 +42,6 @@ export class Playground {
     const newCoordinate = calculateNewCoordinate(oldCoordinate);
 
     this.playerCoordinates.set(player, newCoordinate);
-    // @ts-ignore
-    this.map.get(oldCoordinate).delete(player);
-    // @ts-ignore
-    this.map.get(newCoordinate).add(player);
   }
 
   moveUp() {
@@ -83,12 +72,49 @@ export class Playground {
     this.updated.emit()
   }
 
-  get(x: number, y: number): Set<PlaygroundTile> {
-    const result = this.map.get({x: x, y: y});
-    if (result == undefined) {
-      throw Error("This should not happen!")
-    }
-    return result;
+  pits(): Coordinate[] {
+    return this._pits.toList()
+  }
+
+  walls(): Coordinate[] {
+    return this._walls.toList()
+  }
+
+  players(): [{ids: [number], c: Coordinate}] {
+    const reverseMap: MyMap<Coordinate, [number]> = new MyMap<Coordinate, [number]>()
+    this.playerCoordinates.forEach((value: Coordinate, key: Player) => {
+      if (!reverseMap.has(value)) {
+        reverseMap.set(value, [key.id])
+      } else {
+        reverseMap.get(value).push(key.id)
+      }
+    })
+
+    // @ts-ignore
+    const result: [{ids: [number], c: Coordinate}] = []
+    reverseMap.forEach((value: [number], key: Coordinate) => {
+      result.push({ids: value, c: key})
+    })
+    return result
+  }
+
+  blocks(): [{ids: [number], c: Coordinate}] {
+    const reverseMap: MyMap<Coordinate, [number]> = new MyMap<Coordinate, [number]>()
+    this.blockCoordinates.forEach((value: Coordinate, key: Player) => {
+      if (!reverseMap.has(value)) {
+        reverseMap.set(value, [key.id])
+      } else {
+        reverseMap.get(value).push(key.id)
+      }
+    })
+
+    // @ts-ignore
+    const result: [{ids: [number], c: Coordinate}] = []
+    reverseMap.forEach((value: [number], key: Coordinate) => {
+      result.push({ids: value, c: key})
+    })
+    return result
+
   }
 
   updateEmitter(): EventEmitter<undefined> {
@@ -119,12 +145,4 @@ export class Player implements PlaygroundTile {
   constructor(id: number) {
     this.id = id;
   }
-}
-
-class Pit implements PlaygroundTile {
-
-}
-
-class Wall implements PlaygroundTile {
-
 }
