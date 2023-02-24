@@ -7,6 +7,7 @@ import {FormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {EditorComponent} from './editor/editor.component';
 import {SvgGridComponent} from './svg-grid/svg-grid.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {SvgGridComponent} from './svg-grid/svg-grid.component';
     BrowserModule,
     CodemirrorModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

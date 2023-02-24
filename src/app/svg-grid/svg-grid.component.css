@@ -10,6 +10,11 @@
   margin-bottom: 20px;
 }
 
+.main-memory {
+  width: 100px;
+  height: 100px;
+}
+
 .memory-slot {
   width: 100px;
   height: 100px;
@@ -30,5 +35,11 @@
   text-align: center;
   vertical-align: middle;
   line-height: 45px;
+  margin-top: 20px;
+}
+
+.memory-slot-value-empty {
+  width: 50px;
+  height: 50px;
   margin-top: 20px;
 }

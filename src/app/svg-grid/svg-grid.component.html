@@ -1,8 +1,14 @@
+<button (click)="moveInputToMemory()">Move input to memory</button>
+<button (click)="moveMemoryToOutput()">Move memory to output</button>
+<button (click)="copyMemoryToSlotOne()">copyMemoryToSlotOne</button>
+
 <div class="row text-center">
   <div class="col border-end border-dark">
     <h1>IN</h1>
     <div class="d-flex flex-column align-items-center">
-      <div *ngFor="let n of input" class="block">{{ n }}</div>
+      <ng-container *ngFor="let n of input; let i = index">
+        <div @moveUp *ngIf="i < 4" class="block">{{ n }}</div>
+      </ng-container>
     </div>
   </div>
 
@@ -10,13 +16,16 @@
     <div class="row">
       <div class="col d-flex flex-column align-items-center">
         <h1>MEMORY</h1>
-        <p class="block">{{ memory }}</p>
+        <div class="main-memory border border-dark d-flex flex-wrap justify-content-center align-items-center">
+          <p @fadeIn @fadeOut *ngIf="memory != undefined" class="block m-0">{{ memory }}</p>
+        </div>
       </div>
     </div>
     <div class="d-flex flex-wrap justify-content-center">
       <div *ngFor="let memorySlot of memorySlots; let i = index"
            class="memory-slot d-flex flex-column align-items-center">
-        <div class="memory-slot-value">{{ memorySlot }}</div>
+        <div *ngIf="memorySlot != undefined" class="memory-slot-value">{{ memorySlot }}</div>
+        <div *ngIf="memorySlot == undefined" class="memory-slot-value-empty"></div>
         <div class="memory-slot-index">{{ i }}</div>
       </div>
     </div>
@@ -25,7 +34,9 @@
   <div class="col">
     <h1>OUT</h1>
     <div class="d-flex flex-column align-items-center">
-      <p *ngFor="let n of output" class="block">{{ n }}</p>
+      <ng-container *ngFor="let n of output.reverse(); let i = index">
+        <p @fadeIn *ngIf="i < 4" class="block">{{ n }}</p>
+      </ng-container>
     </div>
   </div>
 </div>
