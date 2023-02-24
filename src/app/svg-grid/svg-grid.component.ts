@@ -25,7 +25,7 @@ export class SvgGridComponent implements OnInit {
     return result;
   }
 
-  players(): [{id: number, c: Coordinate}] {
+  players(): [{id: number, holdsBlock: boolean, c: Coordinate}] {
     return this.playground.players()
   }
 

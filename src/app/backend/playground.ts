@@ -88,12 +88,14 @@ export class Playground {
         player.holdsBlock = reverseBlockMap.get(playerCoordinate)
       }
     }
+    this.updated.emit()
   }
 
   drop() {
     for (const player of this.playerCoordinates.keys()) {
       player.holdsBlock = undefined
     }
+    this.updated.emit()
   }
 
   pits(): Coordinate[] {
@@ -104,11 +106,11 @@ export class Playground {
     return this._walls.toList()
   }
 
-  players(): [{id: number, c: Coordinate}] {
+  players(): [{id: number, holdsBlock: boolean, c: Coordinate}] {
     // @ts-ignore
-    const result: [{id: number, c: Coordinate}] = []
+    const result: [{id: number, holdsBlock: boolean, c: Coordinate}] = []
     this.playerCoordinates.forEach((value: Coordinate, key: Player) => {
-      result.push({id: key.id, c: value})
+      result.push({id: key.id, holdsBlock: key.holdsBlock != undefined, c: value})
     })
     return result
   }
