@@ -32,6 +32,7 @@ class MyListener implements HumansListener {
   }
 
   enterMove(ctx: MoveContext): void {
+    console.log(ctx.start)
     if (ctx.DIRECTION().text == "up") {
       this.playground.moveUp()
     } else if (ctx.DIRECTION().text == "down") {

@@ -1,55 +1,37 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {Playground} from "../backend/playground";
-import {Coordinate} from "../backend/coordinate";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-svg-grid',
   templateUrl: './svg-grid.component.html',
   styleUrls: ['./svg-grid.component.css']
 })
-export class SvgGridComponent implements OnInit {
-  @Input() playground: Playground
+export class SvgGridComponent {
+  private readonly startingPosition: StartingPosition;
+  input: number[];
+  output: number[];
+  memory: number;
+  memorySlots: number[];
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
-  }
-
-  ngOnInit() {
-    this.playground.updateEmitter().subscribe(() => this.changeDetectorRef.detectChanges())
-  }
-
-  intervals(): number[] {
-    const result: number[] = []
-    for (let i = 0; i <= 2000; i += 100) {
-      result.push(i);
+  constructor() {
+    this.startingPosition = new StartingPosition([6, 6, 9, -3, 0, 0], [6, 0], 3)
+    this.input = this.startingPosition.input
+    this.memorySlots = [];
+    for (let i = 0; i < this.startingPosition.memorySlots; i++) {
+      this.memorySlots.push(0)
     }
-    return result;
+    this.output = [];
+    this.memory = 0;
   }
+}
 
-  players(): [{id: number, holdsBlock: boolean, c: Coordinate}] {
-    return this.playground.players()
-  }
+class StartingPosition {
+  input: number[];
+  expectedOut: number[];
+  memorySlots: number;
 
-  blocks(): [{id: number, c: Coordinate}] {
-    return this.playground.blocks()
-  }
-
-  convertIdToColor(id: number): string {
-    if (id == 1) {
-      return "blue";
-    } else if (id == 2) {
-      return "red"
-    } else if (id == 3) {
-      return "purple"
-    }
-
-    return "black";
-  }
-
-  walls(): Coordinate[] {
-    return this.playground.walls();
-  }
-
-  pits(): Coordinate[] {
-    return this.playground.pits();
+  constructor(input: number[], expectedOut: number[], memorySlots: number) {
+    this.input = input;
+    this.expectedOut = expectedOut;
+    this.memorySlots = memorySlots;
   }
 }
