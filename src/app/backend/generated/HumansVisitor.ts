@@ -7,13 +7,9 @@ import { ProgramContext } from "./HumansParser";
 import { LineContext } from "./HumansParser";
 import { ExpressionContext } from "./HumansParser";
 import { ActionContext } from "./HumansParser";
-import { If_statementContext } from "./HumansParser";
-import { ConditionContext } from "./HumansParser";
-import { Condition_partContext } from "./HumansParser";
-import { MoveContext } from "./HumansParser";
-import { PickUpContext } from "./HumansParser";
-import { DropContext } from "./HumansParser";
-import { ScanContext } from "./HumansParser";
+import { CopytoContext } from "./HumansParser";
+import { InboxContext } from "./HumansParser";
+import { OutboxContext } from "./HumansParser";
 
 
 /**
@@ -53,52 +49,24 @@ export interface HumansVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitAction?: (ctx: ActionContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `HumansParser.if_statement`.
+	 * Visit a parse tree produced by `HumansParser.copyto`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitIf_statement?: (ctx: If_statementContext) => Result;
+	visitCopyto?: (ctx: CopytoContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `HumansParser.condition`.
+	 * Visit a parse tree produced by `HumansParser.inbox`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitCondition?: (ctx: ConditionContext) => Result;
+	visitInbox?: (ctx: InboxContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `HumansParser.condition_part`.
+	 * Visit a parse tree produced by `HumansParser.outbox`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitCondition_part?: (ctx: Condition_partContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `HumansParser.move`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitMove?: (ctx: MoveContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `HumansParser.pickUp`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitPickUp?: (ctx: PickUpContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `HumansParser.drop`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitDrop?: (ctx: DropContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `HumansParser.scan`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitScan?: (ctx: ScanContext) => Result;
+	visitOutbox?: (ctx: OutboxContext) => Result;
 }
 

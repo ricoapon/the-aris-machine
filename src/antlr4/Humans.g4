@@ -10,46 +10,24 @@ line
 
 expression
  : action
- | if_statement
  ;
 
 action
- : move
- | pickUp
- | drop
+ : copyto
+ | inbox
+ | outbox
  ;
 
-if_statement
- : IF ROUND_BRACKET_OPEN condition ROUND_BRACKET_CLOSE CURLY_BRACKET_OPEN NEWLINE? expression NEWLINE? CURLY_BRACKET_CLOSE
- ;
+copyto: 'copyto' MEMORY_SLOT;
+inbox: 'inbox';
+outbox: 'outbox';
 
-condition
- : condition ' and ' condition
- | condition ' or ' condition
- | condition_part OPERATOR condition_part
- ;
-
-condition_part
- : OBJECT
- | scan
- ;
-
-move: 'move' DIRECTION;
-pickUp: 'pickup';
-drop: 'drop';
-scan: 'scan' DIRECTION;
-
-OPERATOR: ('=='|'!=');
-DIRECTION: ('up'|'down'|'left'|'right');
-OBJECT: ('wall'|'empty'|'block');
-NEWLINE: ('\r'? '\n' | '\r')+;
-IF: 'if';
-ROUND_BRACKET_OPEN: ' '? '(' ' '?;
-ROUND_BRACKET_CLOSE: ' '? ')' ' '?;
-CURLY_BRACKET_OPEN: ' '? '{' ' '?;
-CURLY_BRACKET_CLOSE: ' '? '}' ' '?;
+MEMORY_SLOT_NUMBER: [0-9]+;
+MEMORY_SLOT_NAME: [a-z]+;
+MEMORY_SLOT: (MEMORY_SLOT_NUMBER | MEMORY_SLOT_NAME);
 
 WHITESPACE: (' '|'\t') -> skip;
+NEWLINE: ('\r'? '\n' | '\r')+;
 LINE_COMMENT: '//' .*? NEWLINE -> skip;
 
 // By adding this, every character will always be parsed and the lexer will never give an error.

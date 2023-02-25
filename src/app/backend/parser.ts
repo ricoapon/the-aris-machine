@@ -1,18 +1,18 @@
 import {HumansListener} from "./generated/HumansListener";
-import {HumansParser, MoveContext} from "./generated/HumansParser";
+import {HumansParser} from "./generated/HumansParser";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {HumansLexer} from "./generated/HumansLexer";
 import {ParseTreeWalker} from "antlr4ts/tree";
-import {Playground} from "./playground";
+import {Machine, MachineGUI} from "./machine";
 
 export class Parser {
-  private readonly playground: Playground
+  private readonly playground: Machine
 
-  constructor(playground: Playground) {
+  constructor(playground: Machine) {
     this.playground = playground
   }
 
-  parse(input: string): void {
+  parse(input: string): ((machineGUI: MachineGUI) => void)[] {
     const inputStream = CharStreams.fromString(input);
     const lexer = new HumansLexer(inputStream);
     const tokenStream = new CommonTokenStream(lexer);
@@ -21,34 +21,27 @@ export class Parser {
 
     // @ts-ignore
     ParseTreeWalker.DEFAULT.walk(listener, parser.program());
+
+    return this.playground.guiActions;
   }
 }
 
 class MyListener implements HumansListener {
-  private readonly playground: Playground
+  private readonly playground: Machine
 
-  constructor(playground: Playground) {
+  constructor(playground: Machine) {
     this.playground = playground
   }
 
-  enterMove(ctx: MoveContext): void {
-    console.log(ctx.start)
-    if (ctx.DIRECTION().text == "up") {
-      this.playground.moveUp()
-    } else if (ctx.DIRECTION().text == "down") {
-      this.playground.moveDown();
-    } else if (ctx.DIRECTION().text == "right") {
-      this.playground.moveRight();
-    } else if (ctx.DIRECTION().text == "left") {
-      this.playground.moveLeft();
-    }
+  enterInbox(): void {
+    this.playground.moveInputToMemory();
   }
 
-  enterPickUp(): void {
-    this.playground.pickUp()
+  enterOutbox(): void {
+    this.playground.moveMemoryToOutput();
   }
 
-  enterDrop(): void {
-    this.playground.drop()
+  exitProgram(): void {
+    this.playground.checkWinningCondition();
   }
 }

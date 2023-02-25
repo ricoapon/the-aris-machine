@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
-import {concatMap, from, of} from "rxjs";
-import { delay } from "rxjs/operators";
+import {Level} from "../backend/levels";
+import {MachineGUI} from "../backend/machine";
 
 @Component({
   selector: 'app-svg-grid',
@@ -32,36 +32,53 @@ import { delay } from "rxjs/operators";
     ])
   ]
 })
-export class SvgGridComponent implements SvgGrid{
-  private readonly startingPosition: StartingPosition;
+export class SvgGridComponent implements MachineGUI {
   input: number[];
   output: number[];
   memory: number | undefined;
   memorySlots: (number | undefined)[];
 
-  constructor() {
-    this.startingPosition = new StartingPosition([6, 6, 9, -3, 0, 0], [6, 0], 3)
-    this.input = this.startingPosition.input
-    this.memorySlots = [];
-    for (let i = 0; i < this.startingPosition.memorySlots; i++) {
-      this.memorySlots.push(undefined)
-    }
-    this.output = [];
-    this.memory = undefined;
+  constructor(private changeDetectorRef: ChangeDetectorRef) {
+    // Add some values so the HTML stuff doesn't break.
+    this.input = []
+    this.output = []
+    this.memory = undefined
+    this.memorySlots = []
   }
 
-  execute(fnList: ((svgGrid: SvgGrid) => void)[]) {
-    if (fnList.length == 0) {
-      return
+  detectChanges(): void {
+    this.changeDetectorRef.detectChanges()
+  }
+
+  initialize(level: Level): void {
+    // Clone the array to make sure no changes from the outside affect this class.
+    this.input = [...level.input]
+    this.output = [];
+    this.memory = undefined;
+    this.memorySlots = [];
+    for (let i = 0; i < level.nrOfMemorySlots; i++) {
+      this.memorySlots.push(undefined)
     }
-    
-    // The trick to add delays in between also applies to the first element. So we do this one manually.
-    fnList[0](this)
-    fnList.shift()
-    from(fnList).pipe(concatMap(item => of(item).pipe(delay(1000))))
-      .subscribe((fn: (svgGrid: SvgGrid) => void) => {
-        fn(this);
-      });
+  }
+
+  moveMemoryToMemorySlot(i: number): void {
+    this.memorySlots[i] = this.memory
+    this.memory = undefined
+  }
+
+  addMemorySlotToMemory(i: number): void {
+    // @ts-ignore
+    this.memory += this.memorySlots[i]
+  }
+
+  error(message: string): boolean {
+    alert(message)
+    return false
+  }
+
+  finished(): boolean {
+    alert('Finished!')
+    return true;
   }
 
   moveInputToMemory() {
@@ -75,37 +92,4 @@ export class SvgGridComponent implements SvgGrid{
       this.memory = undefined
     }
   }
-  copyMemoryToSlot(i: number): void {
-    if (this.memory != undefined) {
-      this.memorySlots[i] = this.memory
-      this.memory = undefined
-    }
-  }
-
-  start() {
-    this.execute([
-      (svgGrid: SvgGrid) => {svgGrid.moveInputToMemory()},
-      (svgGrid: SvgGrid) => {svgGrid.moveMemoryToOutput()}
-    ])
-  }
-}
-
-class StartingPosition {
-  input: number[];
-  expectedOut: number[];
-  memorySlots: number;
-
-  constructor(input: number[], expectedOut: number[], memorySlots: number) {
-    this.input = input;
-    this.expectedOut = expectedOut;
-    this.memorySlots = memorySlots;
-  }
-}
-
-interface SvgGrid {
-  moveInputToMemory(): void;
-
-  moveMemoryToOutput(): void;
-
-  copyMemoryToSlot(i: number): void;
 }

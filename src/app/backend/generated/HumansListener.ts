@@ -7,13 +7,9 @@ import { ProgramContext } from "./HumansParser";
 import { LineContext } from "./HumansParser";
 import { ExpressionContext } from "./HumansParser";
 import { ActionContext } from "./HumansParser";
-import { If_statementContext } from "./HumansParser";
-import { ConditionContext } from "./HumansParser";
-import { Condition_partContext } from "./HumansParser";
-import { MoveContext } from "./HumansParser";
-import { PickUpContext } from "./HumansParser";
-import { DropContext } from "./HumansParser";
-import { ScanContext } from "./HumansParser";
+import { CopytoContext } from "./HumansParser";
+import { InboxContext } from "./HumansParser";
+import { OutboxContext } from "./HumansParser";
 
 
 /**
@@ -66,80 +62,36 @@ export interface HumansListener extends ParseTreeListener {
 	exitAction?: (ctx: ActionContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `HumansParser.if_statement`.
+	 * Enter a parse tree produced by `HumansParser.copyto`.
 	 * @param ctx the parse tree
 	 */
-	enterIf_statement?: (ctx: If_statementContext) => void;
+	enterCopyto?: (ctx: CopytoContext) => void;
 	/**
-	 * Exit a parse tree produced by `HumansParser.if_statement`.
+	 * Exit a parse tree produced by `HumansParser.copyto`.
 	 * @param ctx the parse tree
 	 */
-	exitIf_statement?: (ctx: If_statementContext) => void;
+	exitCopyto?: (ctx: CopytoContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `HumansParser.condition`.
+	 * Enter a parse tree produced by `HumansParser.inbox`.
 	 * @param ctx the parse tree
 	 */
-	enterCondition?: (ctx: ConditionContext) => void;
+	enterInbox?: (ctx: InboxContext) => void;
 	/**
-	 * Exit a parse tree produced by `HumansParser.condition`.
+	 * Exit a parse tree produced by `HumansParser.inbox`.
 	 * @param ctx the parse tree
 	 */
-	exitCondition?: (ctx: ConditionContext) => void;
+	exitInbox?: (ctx: InboxContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `HumansParser.condition_part`.
+	 * Enter a parse tree produced by `HumansParser.outbox`.
 	 * @param ctx the parse tree
 	 */
-	enterCondition_part?: (ctx: Condition_partContext) => void;
+	enterOutbox?: (ctx: OutboxContext) => void;
 	/**
-	 * Exit a parse tree produced by `HumansParser.condition_part`.
+	 * Exit a parse tree produced by `HumansParser.outbox`.
 	 * @param ctx the parse tree
 	 */
-	exitCondition_part?: (ctx: Condition_partContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `HumansParser.move`.
-	 * @param ctx the parse tree
-	 */
-	enterMove?: (ctx: MoveContext) => void;
-	/**
-	 * Exit a parse tree produced by `HumansParser.move`.
-	 * @param ctx the parse tree
-	 */
-	exitMove?: (ctx: MoveContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `HumansParser.pickUp`.
-	 * @param ctx the parse tree
-	 */
-	enterPickUp?: (ctx: PickUpContext) => void;
-	/**
-	 * Exit a parse tree produced by `HumansParser.pickUp`.
-	 * @param ctx the parse tree
-	 */
-	exitPickUp?: (ctx: PickUpContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `HumansParser.drop`.
-	 * @param ctx the parse tree
-	 */
-	enterDrop?: (ctx: DropContext) => void;
-	/**
-	 * Exit a parse tree produced by `HumansParser.drop`.
-	 * @param ctx the parse tree
-	 */
-	exitDrop?: (ctx: DropContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `HumansParser.scan`.
-	 * @param ctx the parse tree
-	 */
-	enterScan?: (ctx: ScanContext) => void;
-	/**
-	 * Exit a parse tree produced by `HumansParser.scan`.
-	 * @param ctx the parse tree
-	 */
-	exitScan?: (ctx: ScanContext) => void;
+	exitOutbox?: (ctx: OutboxContext) => void;
 }
 
