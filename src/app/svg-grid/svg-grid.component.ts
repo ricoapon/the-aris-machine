@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
+import {concatMap, from, of} from "rxjs";
+import { delay } from "rxjs/operators";
 
 @Component({
   selector: 'app-svg-grid',
@@ -30,7 +32,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
     ])
   ]
 })
-export class SvgGridComponent {
+export class SvgGridComponent implements SvgGrid{
   private readonly startingPosition: StartingPosition;
   input: number[];
   output: number[];
@@ -48,6 +50,20 @@ export class SvgGridComponent {
     this.memory = undefined;
   }
 
+  execute(fnList: ((svgGrid: SvgGrid) => void)[]) {
+    if (fnList.length == 0) {
+      return
+    }
+    
+    // The trick to add delays in between also applies to the first element. So we do this one manually.
+    fnList[0](this)
+    fnList.shift()
+    from(fnList).pipe(concatMap(item => of(item).pipe(delay(1000))))
+      .subscribe((fn: (svgGrid: SvgGrid) => void) => {
+        fn(this);
+      });
+  }
+
   moveInputToMemory() {
     this.memory = this.input[0]
     this.input.shift()
@@ -59,12 +75,18 @@ export class SvgGridComponent {
       this.memory = undefined
     }
   }
-
-  copyMemoryToSlotOne() {
+  copyMemoryToSlot(i: number): void {
     if (this.memory != undefined) {
-      this.memorySlots[0] = this.memory
+      this.memorySlots[i] = this.memory
       this.memory = undefined
     }
+  }
+
+  start() {
+    this.execute([
+      (svgGrid: SvgGrid) => {svgGrid.moveInputToMemory()},
+      (svgGrid: SvgGrid) => {svgGrid.moveMemoryToOutput()}
+    ])
   }
 }
 
@@ -78,4 +100,12 @@ class StartingPosition {
     this.expectedOut = expectedOut;
     this.memorySlots = memorySlots;
   }
+}
+
+interface SvgGrid {
+  moveInputToMemory(): void;
+
+  moveMemoryToOutput(): void;
+
+  copyMemoryToSlot(i: number): void;
 }
