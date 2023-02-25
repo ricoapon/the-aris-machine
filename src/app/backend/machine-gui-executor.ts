@@ -26,18 +26,17 @@ export class MachineGuiExecutor {
     const subscribe = from(actions).pipe(concatMap(item => of(item).pipe(delay(1000))))
       .subscribe((fn: (machineGUI: MachineGUI) => void) => {
         const continueMethods = this.callMethod(fn)
-        if (!continueMethods) {
+        if (continueMethods != undefined) {
           subscribe.unsubscribe()
         }
       });
   }
 
-  private callMethod(fn: (machineGUI: MachineGUI) => void | boolean): boolean {
+  private callMethod(fn: (machineGUI: MachineGUI) => void | boolean): boolean | void {
     const result = fn(this.machineGUI);
     this.machineGUI.detectChanges()
     if (result != undefined) {
       return result;
     }
-    return true;
   }
 }

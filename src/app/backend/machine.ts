@@ -19,7 +19,7 @@ export class Machine {
     this.guiActions = []
   }
 
-  moveInputToMemory(): boolean {
+  moveInputToMemory(): boolean | void {
     if (this.input.length == 0) {
       this.guiActions.push((machineGUI) => machineGUI.error('Cannot read from input anymore'))
       return false
@@ -27,10 +27,9 @@ export class Machine {
     this.memory = this.input[0]
     this.input.shift()
     this.guiActions.push((machineGUI) => machineGUI.moveInputToMemory())
-    return true;
   }
 
-  moveMemoryToOutput(): boolean {
+  moveMemoryToOutput(): boolean | void {
     if (this.memory == undefined) {
       this.guiActions.push((machineGUI) => machineGUI.error('No memory to move to output'))
       return false
@@ -44,7 +43,11 @@ export class Machine {
 
     this.guiActions.push((machineGUI) => machineGUI.moveMemoryToOutput())
     this.memory = undefined
-    return true
+
+    if (this.expectedOut.length == 0) {
+      this.guiActions.push((machineGUI) => machineGUI.finished())
+      return true
+    }
   }
 
   checkWinningCondition(): boolean {
