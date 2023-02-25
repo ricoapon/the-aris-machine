@@ -13,7 +13,6 @@ import {MachineGuiExecutor} from "./backend/machine-gui-executor";
 export class AppComponent implements AfterViewInit {
   readonly level: Level = LEVEL_1;
   title = 'humans-clone';
-  playground = new Machine(this.level)
   @ViewChild('svgGrid') svgGridComponent: SvgGridComponent;
   machineGuiExecutor: MachineGuiExecutor;
 
@@ -24,7 +23,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   execute(input: any) {
-    const guiActions = new Parser(this.playground).parse(input)
+    const guiActions = new Parser(new Machine(this.level)).parse(input)
     this.machineGuiExecutor.execute(guiActions)
   }
 }

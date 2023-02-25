@@ -6,10 +6,10 @@ import {ParseTreeWalker} from "antlr4ts/tree";
 import {Machine, MachineGUI} from "./machine";
 
 export class Parser {
-  private readonly playground: Machine
+  private readonly machine: Machine
 
-  constructor(playground: Machine) {
-    this.playground = playground
+  constructor(machine: Machine) {
+    this.machine = machine
   }
 
   parse(input: string): ((machineGUI: MachineGUI) => void)[] {
@@ -17,31 +17,31 @@ export class Parser {
     const lexer = new HumansLexer(inputStream);
     const tokenStream = new CommonTokenStream(lexer);
     const parser = new HumansParser(tokenStream);
-    const listener = new MyListener(this.playground);
+    const listener = new MyListener(this.machine);
 
     // @ts-ignore
     ParseTreeWalker.DEFAULT.walk(listener, parser.program());
 
-    return this.playground.guiActions;
+    return this.machine.guiActions;
   }
 }
 
 class MyListener implements HumansListener {
-  private readonly playground: Machine
+  private readonly machine: Machine
 
-  constructor(playground: Machine) {
-    this.playground = playground
+  constructor(machine: Machine) {
+    this.machine = machine
   }
 
   enterInbox(): void {
-    this.playground.moveInputToMemory();
+    this.machine.moveInputToMemory();
   }
 
   enterOutbox(): void {
-    this.playground.moveMemoryToOutput();
+    this.machine.moveMemoryToOutput();
   }
 
   exitProgram(): void {
-    this.playground.checkWinningCondition();
+    this.machine.checkWinningCondition();
   }
 }
