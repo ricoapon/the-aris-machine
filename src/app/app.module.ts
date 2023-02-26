@@ -8,12 +8,14 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {EditorComponent} from './editor/editor.component';
 import {SvgGridComponent} from './svg-grid/svg-grid.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { ControlPanelComponent } from './control-panel/control-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EditorComponent,
-    SvgGridComponent
+    SvgGridComponent,
+    ControlPanelComponent
   ],
   imports: [
     BrowserModule,

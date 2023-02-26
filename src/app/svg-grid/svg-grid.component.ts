@@ -1,7 +1,8 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
 import {Level} from "../backend/levels";
 import {MachineGUI} from "../backend/machine";
+import {MachineGuiExecutor} from "../backend/machine-gui-executor";
 
 @Component({
   selector: 'app-svg-grid',
@@ -33,6 +34,8 @@ import {MachineGUI} from "../backend/machine";
   ]
 })
 export class SvgGridComponent implements MachineGUI {
+  @Input() machineGuiExecutor: MachineGuiExecutor;
+
   input: number[];
   output: number[];
   memory: number | undefined;

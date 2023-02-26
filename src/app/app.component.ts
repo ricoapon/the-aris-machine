@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {Parser} from "./backend/parser";
 import {Machine} from "./backend/machine";
-import {Level, LEVEL_1} from "./backend/levels";
+import {Level, LEVEL_1, LEVEL_2} from "./backend/levels";
 import {SvgGridComponent} from "./svg-grid/svg-grid.component";
 import {MachineGuiExecutor} from "./backend/machine-gui-executor";
 
@@ -11,7 +11,7 @@ import {MachineGuiExecutor} from "./backend/machine-gui-executor";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
-  readonly level: Level = LEVEL_1;
+  readonly level: Level = LEVEL_2;
   title = 'humans-clone';
   @ViewChild('svgGrid') svgGridComponent: SvgGridComponent;
   machineGuiExecutor: MachineGuiExecutor;
