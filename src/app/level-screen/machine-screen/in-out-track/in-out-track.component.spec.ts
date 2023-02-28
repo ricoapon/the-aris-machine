@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SvgGridComponent } from './svg-grid.component';
+import { InOutTrackComponent } from './in-out-track.component';
 
-describe('SvgGridComponent', () => {
-  let component: SvgGridComponent;
-  let fixture: ComponentFixture<SvgGridComponent>;
+describe('InOutTrackComponent', () => {
+  let component: InOutTrackComponent;
+  let fixture: ComponentFixture<InOutTrackComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SvgGridComponent ]
+      declarations: [ InOutTrackComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SvgGridComponent);
+    fixture = TestBed.createComponent(InOutTrackComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -4,24 +4,30 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {CodemirrorModule} from "@ctrl/ngx-codemirror";
 import {FormsModule} from "@angular/forms";
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {EditorComponent} from './editor/editor.component';
-import {SvgGridComponent} from './svg-grid/svg-grid.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { ControlPanelComponent } from './control-panel/control-panel.component';
+import {LevelScreenComponent} from './level-screen/level-screen.component';
+import {MachineScreenComponent} from './level-screen/machine-screen/machine-screen.component';
+import {InOutTrackComponent} from './level-screen/machine-screen/in-out-track/in-out-track.component';
+import {MemoryComponent} from './level-screen/machine-screen/memory/memory.component';
+import {ControlPanelComponent} from './level-screen/machine-screen/control-panel/control-panel.component';
+import {EditorComponent} from "./level-screen/editor/editor.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     EditorComponent,
-    SvgGridComponent,
-    ControlPanelComponent
+    LevelScreenComponent,
+    MachineScreenComponent,
+    InOutTrackComponent,
+    MemoryComponent,
+    ControlPanelComponent,
+    EditorComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,
     CodemirrorModule,
     FormsModule,
-    NgbModule,
     BrowserAnimationsModule
   ],
   providers: [],

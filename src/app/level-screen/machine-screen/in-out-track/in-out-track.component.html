@@ -1,0 +1,19 @@
+<div class="track-container" [style.padding-right]="isIn ? '40px' : 0" [style.padding-left]="isIn ? 0 : '40px'">
+  <div *ngIf="!isIn" class="title">
+    <h1>OUT -></h1>
+  </div>
+  <div class="line"
+       [style.justify-content]="isIn ? 'flex-end' : 'flex-start'"
+       [style.padding-right]="isIn ? '64px' : 0"
+       [style.padding-left]="isIn ? 0 : '64px'">
+    <div class="memory-block">
+      5
+    </div>
+    <div class="memory-block">
+      7
+    </div>
+  </div>
+  <div *ngIf="isIn" class="title">
+    <h1>-> IN</h1>
+  </div>
+</div>

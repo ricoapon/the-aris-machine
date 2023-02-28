@@ -1,0 +1,31 @@
+.control-panel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.control-panel {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 64px;
+  padding: 40px;
+}
+
+button {
+  padding: 24px 32px;
+  font-size: 32px;
+  color: white;
+}
+
+.btn-stop {
+  background-color: #E03600;
+}
+.btn-start {
+  background-color: #3AE000;
+}
+.btn-enter {
+  background-color: #00AAE0;
+}
+

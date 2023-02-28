@@ -1,14 +1,11 @@
-import {Component, EventEmitter, Output, ViewEncapsulation} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-editor',
-  templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.css'],
-  encapsulation: ViewEncapsulation.None
+  selector: 'app-level-screen',
+  templateUrl: './level-screen.component.html',
+  styleUrls: ['./level-screen.component.css']
 })
-export class EditorComponent {
-  @Output() runCode = new EventEmitter<String>()
-
+export class LevelScreenComponent {
   content = 'inbox\noutbox\n';
   options = {
     value: this.content,
@@ -26,11 +23,11 @@ export class EditorComponent {
       "Ctrl-Enter": this.execute(this)
     }
   }
-
   // A bit of a hacky workaround, but I didn't know how else to get this to work.
   execute(_this: any) {
     return () => {
       _this.runCode.emit(_this.content)
     }
   }
+
 }

@@ -1,5 +1,4 @@
-import {Component, Input} from '@angular/core';
-import {MachineGuiExecutor} from "../backend/machine-gui-executor";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-control-panel',
@@ -7,7 +6,5 @@ import {MachineGuiExecutor} from "../backend/machine-gui-executor";
   styleUrls: ['./control-panel.component.css']
 })
 export class ControlPanelComponent {
-  @Input() machineGuiExecutor: MachineGuiExecutor;
-
 
 }
