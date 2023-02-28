@@ -4,20 +4,20 @@
 .cm-s-humans .CodeMirror-linenumber {color: white;}
 .cm-s-humans .CodeMirror-cursor {border-left: 1px solid #c0c0c0 !important;}
 
-.cm-s-humans span.cm-comment {color: #3300ff;}
+.cm-s-humans span.cm-comment {color: #00AAE0;}
 .cm-s-humans span.cm-atom {color: #cc00ff;}
 .cm-s-humans span.cm-number {color: #cc00ff;}
 
-.cm-s-humans span.cm-property, .cm-s-humans span.cm-attribute {color: #33ff00;}
-.cm-s-humans span.cm-keyword {color: #ff0000;}
+.cm-s-humans span.cm-property, .cm-s-humans span.cm-attribute {color: #00AAE0;}
+.cm-s-humans span.cm-keyword {color: #E03600;}
 .cm-s-humans span.cm-string {color: #ff0099;}
 
-.cm-s-humans span.cm-variable {color: #33ff00;}
-.cm-s-humans span.cm-variable-2 {color: #0066ff;}
+.cm-s-humans span.cm-variable {color: #3AE000;}
+.cm-s-humans span.cm-variable-2 {color: #00AAE0;}
 .cm-s-humans span.cm-def {color: #ff9900;}
-.cm-s-humans span.cm-error {background: #ff0000; color: #c0c0c0;}
+.cm-s-humans span.cm-error {background: #E03600; color: #c0c0c0;}
 .cm-s-humans span.cm-bracket {color: #e0e0e0;}
-.cm-s-humans span.cm-tag {color: #ff0000;}
+.cm-s-humans span.cm-tag {color: #E03600;}
 .cm-s-humans span.cm-link {color: #cc00ff;}
 
 .cm-s-humans .CodeMirror-matchingbracket { text-decoration: underline; color: white !important;}
