@@ -11,6 +11,8 @@ import {InOutTrackComponent} from './level-screen/machine-screen/in-out-track/in
 import {MemoryComponent} from './level-screen/machine-screen/memory/memory.component';
 import {ControlPanelComponent} from './level-screen/machine-screen/control-panel/control-panel.component';
 import {EditorComponent} from "./level-screen/editor/editor.component";
+import { HomeComponent } from './home/home.component';
+import { LevelSelectionComponent } from './level-selection/level-selection.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import {EditorComponent} from "./level-screen/editor/editor.component";
     MemoryComponent,
     ControlPanelComponent,
     EditorComponent,
-    EditorComponent
+    EditorComponent,
+    HomeComponent,
+    LevelSelectionComponent
   ],
   imports: [
     BrowserModule,

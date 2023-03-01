@@ -34,3 +34,19 @@ p {
   width: 64px;
   height: 64px;
 }
+
+.bg-purple {
+  background-color: #A600E0;
+}
+
+.bg-blue {
+  background-color: #00AAE0;
+}
+
+.bg-green {
+  background-color: #3AE000;
+}
+
+.bg-red {
+  background-color: #E03600;
+}

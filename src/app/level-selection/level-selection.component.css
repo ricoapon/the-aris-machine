@@ -1,0 +1,35 @@
+.main-container {
+  height: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.level-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+h1 {
+  color: white;
+}
+
+.levels {
+  width: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+button {
+  padding: 4px 0;
+  font-size: 32px;
+  border-radius: 100px;
+  color: white;
+  width: 60px;
+}
