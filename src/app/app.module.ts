@@ -13,6 +13,7 @@ import {ControlPanelComponent} from './level-screen/machine-screen/control-panel
 import {EditorComponent} from "./level-screen/editor/editor.component";
 import { HomeComponent } from './home/home.component';
 import { LevelSelectionComponent } from './level-selection/level-selection.component';
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { LevelSelectionComponent } from './level-selection/level-selection.compo
     BrowserModule,
     CodemirrorModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

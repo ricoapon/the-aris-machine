@@ -17,3 +17,14 @@ export const LEVEL_2 = new Level([4, 5, 1, 7, 8, 9], [5, 4, 7, 1, 8, 9], 3)
 
 // Put the sum of two elements in the output. Repeat.
 export const LEVEL_3 = new Level([3, 6, 6, 8, -1, 8, 5, -5], [9, 14, 7, 0], 3)
+
+export function getLevel(i: number): Level {
+  if (i == 1) {
+    return LEVEL_1
+  } else if (i == 2) {
+    return LEVEL_2
+  } else if (i == 3) {
+    return LEVEL_3
+  }
+  throw Error("Level " + i + " does not exist!")
+}

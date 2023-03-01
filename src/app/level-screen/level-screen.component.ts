@@ -1,33 +1,30 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {getLevel, Level} from "../backend/levels";
 
 @Component({
   selector: 'app-level-screen',
   templateUrl: './level-screen.component.html',
   styleUrls: ['./level-screen.component.css']
 })
-export class LevelScreenComponent {
-  content = 'inbox\noutbox\n';
-  options = {
-    value: this.content,
-    // Let's just use a language that looks similar. Good enough for now, should be custom later.
-    mode: 'javascript',
-    // Essential!
-    lineNumbers: true,
-    // Maybe make this customizable later on.
-    theme: 'material',
-    // Do not allow tabs at all. Everything should be spaces.
-    extraKeys: {
-      "Tab": function (cm: any) {
-        cm.replaceSelection("  ", "end");
-      },
-      "Ctrl-Enter": this.execute(this)
-    }
-  }
-  // A bit of a hacky workaround, but I didn't know how else to get this to work.
-  execute(_this: any) {
-    return () => {
-      _this.runCode.emit(_this.content)
-    }
+export class LevelScreenComponent implements OnInit {
+  level: Level;
+  constructor(private route: ActivatedRoute, private router: Router) {
   }
 
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(paramMap => {
+      const levelId = paramMap.get('id')
+      try {
+        if (levelId == null) {
+          // noinspection ExceptionCaughtLocallyJS
+          throw Error('No valid level')
+        }
+
+        this.level = getLevel(+levelId)
+      } catch (e) {
+        this.router.navigate(['/'])
+      }
+    })
+  }
 }
