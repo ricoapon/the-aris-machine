@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-memory',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./memory.component.css']
 })
 export class MemoryComponent {
-
+  @Input() memorySlots: (number | undefined)[] = [];
 }

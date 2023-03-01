@@ -27,10 +27,10 @@
   flex-direction: column;
   align-items: center;
 }
-.memory-0 {
+.memory-bg-white {
   background-color: #E1D9D9;
 }
-.memory-1 {
+.memory-bg-gray {
   background-color: #AEAEAE;
 }
 .memory-number {

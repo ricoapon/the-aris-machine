@@ -9,10 +9,7 @@ import {Component, EventEmitter, Output, ViewEncapsulation} from '@angular/core'
 export class EditorComponent {
   @Output() runCode = new EventEmitter<String>()
 
-  content = 'function() {\n' +
-    '  // Look at this cool shit.\n' +
-    '  move up\n' +
-    '}\n';
+  content = 'move input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\n';
   options = {
     value: this.content,
     // Let's just use a language that looks similar. Good enough for now, should be custom later.

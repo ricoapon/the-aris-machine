@@ -3,14 +3,11 @@
     <h1>OUT -></h1>
   </div>
   <div class="line"
-       [style.justify-content]="isIn ? 'flex-end' : 'flex-start'"
        [style.padding-right]="isIn ? '64px' : 0"
-       [style.padding-left]="isIn ? 0 : '64px'">
-    <div class="memory-block">
-      5
-    </div>
-    <div class="memory-block">
-      7
+       [style.padding-left]="isIn ? 0 : '64px'"
+       [style.flex-direction]="isIn ? 'row-reverse' : 'row'">
+    <div *ngFor="let value of values" class="memory-block">
+      {{ value }}
     </div>
   </div>
   <div *ngIf="isIn" class="title">

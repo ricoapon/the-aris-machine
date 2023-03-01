@@ -7,4 +7,5 @@ import {Component, Input} from '@angular/core';
 })
 export class InOutTrackComponent {
   @Input() isIn: boolean;
+  @Input() values: number[] = []
 }

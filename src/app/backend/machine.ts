@@ -19,109 +19,149 @@ export class Machine {
 
   moveInputToOutput(): boolean | void {
     if (this.input.length == 0) {
-      this.guiActions.push((machineGUI) => machineGUI.error('Cannot read from input anymore'))
-      return false
+      return this.error('Cannot read from input anymore')
     }
 
     const expectedOutNumber = this.expectedOut.shift()
     if (expectedOutNumber != this.input[0]) {
-      this.guiActions.push((machineGUI) => machineGUI.error('Output is not correct'))
-      return false
+      return this.error('Output is not correct')
     }
 
-    this.guiActions.push((machineGUI) => machineGUI.shiftInput())
-    // @ts-ignore
-    this.guiActions.push((machineGUI) => machineGUI.addToOutput(this.input.shift()))
+    this.handle({
+      shiftInput: true,
+      addValueToOutput: this.input.shift()
+    })
 
     if (this.expectedOut.length == 0) {
-      this.guiActions.push((machineGUI) => machineGUI.finished())
-      return true
+      return this.finished()
     }
   }
 
   moveInputToMemorySlot(i: number): boolean | void {
     if (this.input.length == 0) {
-      this.guiActions.push((machineGUI) => machineGUI.error('Cannot read from input anymore'))
-      return false
+      return this.error('Cannot read from input anymore')
     }
     this.memorySlots[i] = this.input.shift()
-    this.guiActions.push((machineGUI) => machineGUI.shiftInput())
-    this.guiActions.push((machineGUI) => machineGUI.setMemorySlotValue(i, this.memorySlots[i]))
+    this.handle({
+      shiftInput: true,
+      memory: [{
+        index: i,
+        value: this.memorySlots[i]
+      }]
+    })
   }
 
   moveMemorySlotToOutput(i: number): boolean | void {
     if (this.memorySlots[i] == undefined) {
-      this.guiActions.push((machineGUI) => machineGUI.error('No value to move to output'))
-      return false
+      return this.error('No value to move to output')
     }
 
     const expectedOutNumber = this.expectedOut.shift()
     if (expectedOutNumber != this.memorySlots[i]) {
-      this.guiActions.push((machineGUI) => machineGUI.error('Output is not correct'))
-      return false
+      return this.error('Output is not correct')
     }
 
     // @ts-ignore
-    this.guiActions.push((machineGUI) => machineGUI.addToOutput(this.memorySlots[i]))
-    this.guiActions.push((machineGUI) => machineGUI.setMemorySlotValue(i, undefined))
+    this.handle({
+      addValueToOutput: this.memorySlots[i],
+      memory: [{
+        index: i,
+        value: undefined
+      }]
+    })
     this.memorySlots[i] = undefined
 
     if (this.expectedOut.length == 0) {
-      this.guiActions.push((machineGUI) => machineGUI.finished())
-      return true
+      this.finished()
     }
   }
 
   moveMemorySlotToMemorySlot(from: number, to: number): boolean | void {
     if (this.memorySlots[from] == undefined) {
-      this.guiActions.push((machineGUI) => machineGUI.error('No value to move to memory slot ' + to))
-      return false
+      return this.error('No value to move to memory slot ' + to)
     }
 
     this.memorySlots[to] = this.memorySlots[from]
     this.memorySlots[from] = undefined
-    this.guiActions.push((machineGUI) => machineGUI.setMemorySlotValue(to, this.memorySlots[to]))
-    this.guiActions.push((machineGUI) => machineGUI.setMemorySlotValue(from, undefined))
+    this.handle({
+      memory: [
+        {
+          index: to,
+          value: this.memorySlots[to]
+        },
+        {
+          index: from,
+          value: undefined
+        }
+      ]
+    })
   }
 
   copyMemorySlotToMemorySlot(from: number, to: number): boolean | void {
     if (this.memorySlots[from] == undefined) {
-      this.guiActions.push((machineGUI) => machineGUI.error('No value to move to memory slot ' + to))
-      return false
+      return this.error('No value to move to memory slot ' + to)
     }
 
     this.memorySlots[to] = this.memorySlots[from]
-    this.guiActions.push((machineGUI) => machineGUI.setMemorySlotValue(to, this.memorySlots[to]))
+    this.handle({
+      memory: [{
+        index: to,
+        value: this.memorySlots[to]
+      }]
+    })
   }
 
   checkWinningCondition(): boolean {
     if (this.expectedOut.length != 0) {
-      this.guiActions.push((machineGUI) => machineGUI.error('Output is not correct'))
-      return false
+      return this.error('More output is expected!')
     }
 
-    this.guiActions.push((machineGUI) => machineGUI.finished())
-    return true
+    return this.finished()
   }
 
   addMemorySlotToMemorySlot(from: number, to: number): boolean | void {
     if (this.memorySlots[from] == undefined || this.memorySlots[to] == undefined) {
-      this.guiActions.push((machineGUI) => machineGUI.error('No value to move to memory slot ' + to))
-      return false
+      return this.error('No value to move to memory slot ' + to)
     }
 
     // @ts-ignore
     this.memorySlots[to] += this.memorySlots[from]
-    this.guiActions.push((machineGUI) => machineGUI.setMemorySlotValue(to, this.memorySlots[to]))
+    this.handle({
+      memory: [{
+        index: to,
+        value: this.memorySlots[to]
+      }]
+    })
+  }
+
+  private handle(machineGUIAction: MachineGUIAction): void {
+    this.guiActions.push((machineGUI) => machineGUI.handle(machineGUIAction))
+  }
+
+  private error(message: string): boolean {
+    this.guiActions.push((machineGUI) => machineGUI.handle({error: message}))
+    return false
+  }
+
+  private finished(): boolean {
+    this.guiActions.push((machineGUI) => machineGUI.handle({finished: true}))
+    return true
   }
 }
 
 export interface MachineGUI {
   detectChanges(): void;
+
   initialize(level: Level): void;
-  shiftInput(): void;
-  addToOutput(value: number): void;
-  setMemorySlotValue(i: number, value: number | undefined): void;
-  error(message: string): boolean;
-  finished(): boolean;
+
+  handle(machineGUIAction: MachineGUIAction): void;
+}
+
+export type MachineGUIAction = {
+  shiftInput?: boolean,
+  addValueToOutput?: number,
+  // I am not sure how this could be done different (like index: value). This worked.
+  memory?: { index: number, value: number | undefined }[]
+  error?: string,
+  finished?: boolean,
 }

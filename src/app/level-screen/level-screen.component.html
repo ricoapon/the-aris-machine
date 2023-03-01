@@ -14,10 +14,10 @@
         accumsan.</p>
     </div>
     <div class="editor">
-      <app-editor></app-editor>
+      <app-editor (runCode)="runCode($event)"></app-editor>
     </div>
   </div>
   <div class="machine-container">
-    <app-machine-screen></app-machine-screen>
+    <app-machine-screen #machineScreenComponent></app-machine-screen>
   </div>
 </div>

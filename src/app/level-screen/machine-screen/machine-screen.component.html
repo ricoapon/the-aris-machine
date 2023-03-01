@@ -1,9 +1,9 @@
 <div class="machine-container">
-  <app-in-out-track [isIn]="true"></app-in-out-track>
+  <app-in-out-track [isIn]="true" [values]="input"></app-in-out-track>
 
-  <app-memory></app-memory>
+  <app-memory [memorySlots]="memorySlots"></app-memory>
 
-  <app-in-out-track [isIn]="false"></app-in-out-track>
+  <app-in-out-track [isIn]="false" [values]="output"></app-in-out-track>
 
   <app-control-panel></app-control-panel>
 </div>
