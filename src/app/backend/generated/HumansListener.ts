@@ -7,9 +7,9 @@ import { ProgramContext } from "./HumansParser";
 import { LineContext } from "./HumansParser";
 import { ExpressionContext } from "./HumansParser";
 import { ActionContext } from "./HumansParser";
-import { CopytoContext } from "./HumansParser";
-import { InboxContext } from "./HumansParser";
-import { OutboxContext } from "./HumansParser";
+import { MoveContext } from "./HumansParser";
+import { CopyContext } from "./HumansParser";
+import { AddContext } from "./HumansParser";
 
 
 /**
@@ -62,36 +62,36 @@ export interface HumansListener extends ParseTreeListener {
 	exitAction?: (ctx: ActionContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `HumansParser.copyto`.
+	 * Enter a parse tree produced by `HumansParser.move`.
 	 * @param ctx the parse tree
 	 */
-	enterCopyto?: (ctx: CopytoContext) => void;
+	enterMove?: (ctx: MoveContext) => void;
 	/**
-	 * Exit a parse tree produced by `HumansParser.copyto`.
+	 * Exit a parse tree produced by `HumansParser.move`.
 	 * @param ctx the parse tree
 	 */
-	exitCopyto?: (ctx: CopytoContext) => void;
+	exitMove?: (ctx: MoveContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `HumansParser.inbox`.
+	 * Enter a parse tree produced by `HumansParser.copy`.
 	 * @param ctx the parse tree
 	 */
-	enterInbox?: (ctx: InboxContext) => void;
+	enterCopy?: (ctx: CopyContext) => void;
 	/**
-	 * Exit a parse tree produced by `HumansParser.inbox`.
+	 * Exit a parse tree produced by `HumansParser.copy`.
 	 * @param ctx the parse tree
 	 */
-	exitInbox?: (ctx: InboxContext) => void;
+	exitCopy?: (ctx: CopyContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `HumansParser.outbox`.
+	 * Enter a parse tree produced by `HumansParser.add`.
 	 * @param ctx the parse tree
 	 */
-	enterOutbox?: (ctx: OutboxContext) => void;
+	enterAdd?: (ctx: AddContext) => void;
 	/**
-	 * Exit a parse tree produced by `HumansParser.outbox`.
+	 * Exit a parse tree produced by `HumansParser.add`.
 	 * @param ctx the parse tree
 	 */
-	exitOutbox?: (ctx: OutboxContext) => void;
+	exitAdd?: (ctx: AddContext) => void;
 }
 

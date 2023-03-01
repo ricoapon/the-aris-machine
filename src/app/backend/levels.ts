@@ -10,7 +10,7 @@ export class Level {
   }
 }
 
-export const LEVEL_1 = new Level([9, 6, 4], [9, 6, 4], 0)
+export const LEVEL_1 = new Level([9, 6, 4], [9, 6, 4], 1)
 
 // Reverse two inputs and put them into the output. Repeat.
 export const LEVEL_2 = new Level([4, 5, 1, 7, 8, 9], [5, 4, 7, 1, 8, 9], 3)

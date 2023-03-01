@@ -13,22 +13,32 @@ expression
  ;
 
 action
- : copyto
- | inbox
- | outbox
+ : copy
+ | move
+ | add
  ;
 
-copyto: 'copyto' MEMORY_SLOT;
-inbox: 'inbox';
-outbox: 'outbox';
+move: MOVE (MEMORY_SLOT|INPUT) TO (MEMORY_SLOT|OUTPUT);
+copy: COPY MEMORY_SLOT TO MEMORY_SLOT;
+add: ADD MEMORY_SLOT TO MEMORY_SLOT;
 
+ADD: 'add';
+COPY: 'copy';
+MOVE: 'move';
+TO: 'to';
+INPUT: 'input';
+OUTPUT: 'output';
+MEMORY_SLOT: (MEMORY_SLOT_NUMBER | MEMORY_SLOT_NAME);
 MEMORY_SLOT_NUMBER: [0-9]+;
 MEMORY_SLOT_NAME: [a-z]+;
-MEMORY_SLOT: (MEMORY_SLOT_NUMBER | MEMORY_SLOT_NAME);
 
-WHITESPACE: (' '|'\t') -> skip;
 NEWLINE: ('\r'? '\n' | '\r')+;
 LINE_COMMENT: '//' .*? NEWLINE -> skip;
 
-// By adding this, every character will always be parsed and the lexer will never give an error.
+// We want to prevent commands like "move1to2" to be invalid, so we ensure that entire words are captured.
+// After this, we can skip spaces.
+UNIDENTIFIED: [a-z0-9_-]+;
+WHITESPACE: (' '|'\t') -> skip;
+
+// To prevent errors, catch any other character that we did not define.
 ERROR_CHARACTER: .;

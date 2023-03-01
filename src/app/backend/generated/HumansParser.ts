@@ -28,34 +28,39 @@ import { HumansVisitor } from "./HumansVisitor";
 
 
 export class HumansParser extends Parser {
-	public static readonly T__0 = 1;
-	public static readonly T__1 = 2;
-	public static readonly T__2 = 3;
-	public static readonly MEMORY_SLOT_NUMBER = 4;
-	public static readonly MEMORY_SLOT_NAME = 5;
-	public static readonly MEMORY_SLOT = 6;
-	public static readonly WHITESPACE = 7;
-	public static readonly NEWLINE = 8;
-	public static readonly LINE_COMMENT = 9;
-	public static readonly ERROR_CHARACTER = 10;
+	public static readonly ADD = 1;
+	public static readonly COPY = 2;
+	public static readonly MOVE = 3;
+	public static readonly TO = 4;
+	public static readonly INPUT = 5;
+	public static readonly OUTPUT = 6;
+	public static readonly MEMORY_SLOT = 7;
+	public static readonly MEMORY_SLOT_NUMBER = 8;
+	public static readonly MEMORY_SLOT_NAME = 9;
+	public static readonly NEWLINE = 10;
+	public static readonly LINE_COMMENT = 11;
+	public static readonly UNIDENTIFIED = 12;
+	public static readonly WHITESPACE = 13;
+	public static readonly ERROR_CHARACTER = 14;
 	public static readonly RULE_program = 0;
 	public static readonly RULE_line = 1;
 	public static readonly RULE_expression = 2;
 	public static readonly RULE_action = 3;
-	public static readonly RULE_copyto = 4;
-	public static readonly RULE_inbox = 5;
-	public static readonly RULE_outbox = 6;
+	public static readonly RULE_move = 4;
+	public static readonly RULE_copy = 5;
+	public static readonly RULE_add = 6;
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
-		"program", "line", "expression", "action", "copyto", "inbox", "outbox",
+		"program", "line", "expression", "action", "move", "copy", "add",
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
-		undefined, "'copyto'", "'inbox'", "'outbox'",
+		undefined, "'add'", "'copy'", "'move'", "'to'", "'input'", "'output'",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
-		undefined, undefined, undefined, undefined, "MEMORY_SLOT_NUMBER", "MEMORY_SLOT_NAME", 
-		"MEMORY_SLOT", "WHITESPACE", "NEWLINE", "LINE_COMMENT", "ERROR_CHARACTER",
+		undefined, "ADD", "COPY", "MOVE", "TO", "INPUT", "OUTPUT", "MEMORY_SLOT", 
+		"MEMORY_SLOT_NUMBER", "MEMORY_SLOT_NAME", "NEWLINE", "LINE_COMMENT", "UNIDENTIFIED", 
+		"WHITESPACE", "ERROR_CHARACTER",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(HumansParser._LITERAL_NAMES, HumansParser._SYMBOLIC_NAMES, []);
 
@@ -104,7 +109,7 @@ export class HumansParser extends Parser {
 				this.state = 17;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << HumansParser.T__0) | (1 << HumansParser.T__1) | (1 << HumansParser.T__2))) !== 0));
+			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << HumansParser.ADD) | (1 << HumansParser.COPY) | (1 << HumansParser.MOVE))) !== 0));
 			this.state = 19;
 			this.match(HumansParser.EOF);
 			}
@@ -196,25 +201,25 @@ export class HumansParser extends Parser {
 			this.state = 33;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case HumansParser.T__0:
+			case HumansParser.COPY:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 30;
-				this.copyto();
+				this.copy();
 				}
 				break;
-			case HumansParser.T__1:
+			case HumansParser.MOVE:
 				this.enterOuterAlt(_localctx, 2);
 				{
 				this.state = 31;
-				this.inbox();
+				this.move();
 				}
 				break;
-			case HumansParser.T__2:
+			case HumansParser.ADD:
 				this.enterOuterAlt(_localctx, 3);
 				{
 				this.state = 32;
-				this.outbox();
+				this.add();
 				}
 				break;
 			default:
@@ -236,15 +241,71 @@ export class HumansParser extends Parser {
 		return _localctx;
 	}
 	// @RuleVersion(0)
-	public copyto(): CopytoContext {
-		let _localctx: CopytoContext = new CopytoContext(this._ctx, this.state);
-		this.enterRule(_localctx, 8, HumansParser.RULE_copyto);
+	public move(): MoveContext {
+		let _localctx: MoveContext = new MoveContext(this._ctx, this.state);
+		this.enterRule(_localctx, 8, HumansParser.RULE_move);
+		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 35;
-			this.match(HumansParser.T__0);
+			this.match(HumansParser.MOVE);
 			this.state = 36;
+			_la = this._input.LA(1);
+			if (!(_la === HumansParser.INPUT || _la === HumansParser.MEMORY_SLOT)) {
+			this._errHandler.recoverInline(this);
+			} else {
+				if (this._input.LA(1) === Token.EOF) {
+					this.matchedEOF = true;
+				}
+
+				this._errHandler.reportMatch(this);
+				this.consume();
+			}
+			this.state = 37;
+			this.match(HumansParser.TO);
+			this.state = 38;
+			_la = this._input.LA(1);
+			if (!(_la === HumansParser.OUTPUT || _la === HumansParser.MEMORY_SLOT)) {
+			this._errHandler.recoverInline(this);
+			} else {
+				if (this._input.LA(1) === Token.EOF) {
+					this.matchedEOF = true;
+				}
+
+				this._errHandler.reportMatch(this);
+				this.consume();
+			}
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public copy(): CopyContext {
+		let _localctx: CopyContext = new CopyContext(this._ctx, this.state);
+		this.enterRule(_localctx, 10, HumansParser.RULE_copy);
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 40;
+			this.match(HumansParser.COPY);
+			this.state = 41;
+			this.match(HumansParser.MEMORY_SLOT);
+			this.state = 42;
+			this.match(HumansParser.TO);
+			this.state = 43;
 			this.match(HumansParser.MEMORY_SLOT);
 			}
 		}
@@ -263,39 +324,20 @@ export class HumansParser extends Parser {
 		return _localctx;
 	}
 	// @RuleVersion(0)
-	public inbox(): InboxContext {
-		let _localctx: InboxContext = new InboxContext(this._ctx, this.state);
-		this.enterRule(_localctx, 10, HumansParser.RULE_inbox);
+	public add(): AddContext {
+		let _localctx: AddContext = new AddContext(this._ctx, this.state);
+		this.enterRule(_localctx, 12, HumansParser.RULE_add);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 38;
-			this.match(HumansParser.T__1);
-			}
-		}
-		catch (re) {
-			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
-				this._errHandler.reportError(this, re);
-				this._errHandler.recover(this, re);
-			} else {
-				throw re;
-			}
-		}
-		finally {
-			this.exitRule();
-		}
-		return _localctx;
-	}
-	// @RuleVersion(0)
-	public outbox(): OutboxContext {
-		let _localctx: OutboxContext = new OutboxContext(this._ctx, this.state);
-		this.enterRule(_localctx, 12, HumansParser.RULE_outbox);
-		try {
-			this.enterOuterAlt(_localctx, 1);
-			{
-			this.state = 40;
-			this.match(HumansParser.T__2);
+			this.state = 45;
+			this.match(HumansParser.ADD);
+			this.state = 46;
+			this.match(HumansParser.MEMORY_SLOT);
+			this.state = 47;
+			this.match(HumansParser.TO);
+			this.state = 48;
+			this.match(HumansParser.MEMORY_SLOT);
 			}
 		}
 		catch (re) {
@@ -314,25 +356,28 @@ export class HumansParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\f-\x04\x02\t" +
-		"\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07\t" +
-		"\x07\x04\b\t\b\x03\x02\x06\x02\x12\n\x02\r\x02\x0E\x02\x13\x03\x02\x03" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\x105\x04\x02" +
+		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
+		"\t\x07\x04\b\t\b\x03\x02\x06\x02\x12\n\x02\r\x02\x0E\x02\x13\x03\x02\x03" +
 		"\x02\x03\x03\x03\x03\x07\x03\x1A\n\x03\f\x03\x0E\x03\x1D\v\x03\x03\x04" +
 		"\x03\x04\x03\x05\x03\x05\x03\x05\x05\x05$\n\x05\x03\x06\x03\x06\x03\x06" +
-		"\x03\x07\x03\x07\x03\b\x03\b\x03\b\x02\x02\x02\t\x02\x02\x04\x02\x06\x02" +
-		"\b\x02\n\x02\f\x02\x0E\x02\x02\x02\x02)\x02\x11\x03\x02\x02\x02\x04\x17" +
-		"\x03\x02\x02\x02\x06\x1E\x03\x02\x02\x02\b#\x03\x02\x02\x02\n%\x03\x02" +
-		"\x02\x02\f(\x03\x02\x02\x02\x0E*\x03\x02\x02\x02\x10\x12\x05\x04\x03\x02" +
-		"\x11\x10\x03\x02\x02\x02\x12\x13\x03\x02\x02\x02\x13\x11\x03\x02\x02\x02" +
-		"\x13\x14\x03\x02\x02\x02\x14\x15\x03\x02\x02\x02\x15\x16\x07\x02\x02\x03" +
-		"\x16\x03\x03\x02\x02\x02\x17\x1B\x05\x06\x04\x02\x18\x1A\x07\n\x02\x02" +
-		"\x19\x18\x03\x02\x02\x02\x1A\x1D\x03\x02\x02\x02\x1B\x19\x03\x02\x02\x02" +
-		"\x1B\x1C\x03\x02\x02\x02\x1C\x05\x03\x02\x02\x02\x1D\x1B\x03\x02\x02\x02" +
-		"\x1E\x1F\x05\b\x05\x02\x1F\x07\x03\x02\x02\x02 $\x05\n\x06\x02!$\x05\f" +
-		"\x07\x02\"$\x05\x0E\b\x02# \x03\x02\x02\x02#!\x03\x02\x02\x02#\"\x03\x02" +
-		"\x02\x02$\t\x03\x02\x02\x02%&\x07\x03\x02\x02&\'\x07\b\x02\x02\'\v\x03" +
-		"\x02\x02\x02()\x07\x04\x02\x02)\r\x03\x02\x02\x02*+\x07\x05\x02\x02+\x0F" +
-		"\x03\x02\x02\x02\x05\x13\x1B#";
+		"\x03\x06\x03\x06\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\b\x03\b\x03" +
+		"\b\x03\b\x03\b\x03\b\x02\x02\x02\t\x02\x02\x04\x02\x06\x02\b\x02\n\x02" +
+		"\f\x02\x0E\x02\x02\x04\x04\x02\x07\x07\t\t\x03\x02\b\t\x021\x02\x11\x03" +
+		"\x02\x02\x02\x04\x17\x03\x02\x02\x02\x06\x1E\x03\x02\x02\x02\b#\x03\x02" +
+		"\x02\x02\n%\x03\x02\x02\x02\f*\x03\x02\x02\x02\x0E/\x03\x02\x02\x02\x10" +
+		"\x12\x05\x04\x03\x02\x11\x10\x03\x02\x02\x02\x12\x13\x03\x02\x02\x02\x13" +
+		"\x11\x03\x02\x02\x02\x13\x14\x03\x02\x02\x02\x14\x15\x03\x02\x02\x02\x15" +
+		"\x16\x07\x02\x02\x03\x16\x03\x03\x02\x02\x02\x17\x1B\x05\x06\x04\x02\x18" +
+		"\x1A\x07\f\x02\x02\x19\x18\x03\x02\x02\x02\x1A\x1D\x03\x02\x02\x02\x1B" +
+		"\x19\x03\x02\x02\x02\x1B\x1C\x03\x02\x02\x02\x1C\x05\x03\x02\x02\x02\x1D" +
+		"\x1B\x03\x02\x02\x02\x1E\x1F\x05\b\x05\x02\x1F\x07\x03\x02\x02\x02 $\x05" +
+		"\f\x07\x02!$\x05\n\x06\x02\"$\x05\x0E\b\x02# \x03\x02\x02\x02#!\x03\x02" +
+		"\x02\x02#\"\x03\x02\x02\x02$\t\x03\x02\x02\x02%&\x07\x05\x02\x02&\'\t" +
+		"\x02\x02\x02\'(\x07\x06\x02\x02()\t\x03\x02\x02)\v\x03\x02\x02\x02*+\x07" +
+		"\x04\x02\x02+,\x07\t\x02\x02,-\x07\x06\x02\x02-.\x07\t\x02\x02.\r\x03" +
+		"\x02\x02\x02/0\x07\x03\x02\x0201\x07\t\x02\x0212\x07\x06\x02\x0223\x07" +
+		"\t\x02\x023\x0F\x03\x02\x02\x02\x05\x13\x1B#";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!HumansParser.__ATN) {
@@ -457,14 +502,14 @@ export class ExpressionContext extends ParserRuleContext {
 
 
 export class ActionContext extends ParserRuleContext {
-	public copyto(): CopytoContext | undefined {
-		return this.tryGetRuleContext(0, CopytoContext);
+	public copy(): CopyContext | undefined {
+		return this.tryGetRuleContext(0, CopyContext);
 	}
-	public inbox(): InboxContext | undefined {
-		return this.tryGetRuleContext(0, InboxContext);
+	public move(): MoveContext | undefined {
+		return this.tryGetRuleContext(0, MoveContext);
 	}
-	public outbox(): OutboxContext | undefined {
-		return this.tryGetRuleContext(0, OutboxContext);
+	public add(): AddContext | undefined {
+		return this.tryGetRuleContext(0, AddContext);
 	}
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
@@ -494,29 +539,41 @@ export class ActionContext extends ParserRuleContext {
 }
 
 
-export class CopytoContext extends ParserRuleContext {
-	public MEMORY_SLOT(): TerminalNode { return this.getToken(HumansParser.MEMORY_SLOT, 0); }
+export class MoveContext extends ParserRuleContext {
+	public MOVE(): TerminalNode { return this.getToken(HumansParser.MOVE, 0); }
+	public TO(): TerminalNode { return this.getToken(HumansParser.TO, 0); }
+	public MEMORY_SLOT(): TerminalNode[];
+	public MEMORY_SLOT(i: number): TerminalNode;
+	public MEMORY_SLOT(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(HumansParser.MEMORY_SLOT);
+		} else {
+			return this.getToken(HumansParser.MEMORY_SLOT, i);
+		}
+	}
+	public INPUT(): TerminalNode | undefined { return this.tryGetToken(HumansParser.INPUT, 0); }
+	public OUTPUT(): TerminalNode | undefined { return this.tryGetToken(HumansParser.OUTPUT, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_copyto; }
+	public get ruleIndex(): number { return HumansParser.RULE_move; }
 	// @Override
 	public enterRule(listener: HumansListener): void {
-		if (listener.enterCopyto) {
-			listener.enterCopyto(this);
+		if (listener.enterMove) {
+			listener.enterMove(this);
 		}
 	}
 	// @Override
 	public exitRule(listener: HumansListener): void {
-		if (listener.exitCopyto) {
-			listener.exitCopyto(this);
+		if (listener.exitMove) {
+			listener.exitMove(this);
 		}
 	}
 	// @Override
 	public accept<Result>(visitor: HumansVisitor<Result>): Result {
-		if (visitor.visitCopyto) {
-			return visitor.visitCopyto(this);
+		if (visitor.visitMove) {
+			return visitor.visitMove(this);
 		} else {
 			return visitor.visitChildren(this);
 		}
@@ -524,28 +581,39 @@ export class CopytoContext extends ParserRuleContext {
 }
 
 
-export class InboxContext extends ParserRuleContext {
+export class CopyContext extends ParserRuleContext {
+	public COPY(): TerminalNode { return this.getToken(HumansParser.COPY, 0); }
+	public MEMORY_SLOT(): TerminalNode[];
+	public MEMORY_SLOT(i: number): TerminalNode;
+	public MEMORY_SLOT(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(HumansParser.MEMORY_SLOT);
+		} else {
+			return this.getToken(HumansParser.MEMORY_SLOT, i);
+		}
+	}
+	public TO(): TerminalNode { return this.getToken(HumansParser.TO, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_inbox; }
+	public get ruleIndex(): number { return HumansParser.RULE_copy; }
 	// @Override
 	public enterRule(listener: HumansListener): void {
-		if (listener.enterInbox) {
-			listener.enterInbox(this);
+		if (listener.enterCopy) {
+			listener.enterCopy(this);
 		}
 	}
 	// @Override
 	public exitRule(listener: HumansListener): void {
-		if (listener.exitInbox) {
-			listener.exitInbox(this);
+		if (listener.exitCopy) {
+			listener.exitCopy(this);
 		}
 	}
 	// @Override
 	public accept<Result>(visitor: HumansVisitor<Result>): Result {
-		if (visitor.visitInbox) {
-			return visitor.visitInbox(this);
+		if (visitor.visitCopy) {
+			return visitor.visitCopy(this);
 		} else {
 			return visitor.visitChildren(this);
 		}
@@ -553,28 +621,39 @@ export class InboxContext extends ParserRuleContext {
 }
 
 
-export class OutboxContext extends ParserRuleContext {
+export class AddContext extends ParserRuleContext {
+	public ADD(): TerminalNode { return this.getToken(HumansParser.ADD, 0); }
+	public MEMORY_SLOT(): TerminalNode[];
+	public MEMORY_SLOT(i: number): TerminalNode;
+	public MEMORY_SLOT(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(HumansParser.MEMORY_SLOT);
+		} else {
+			return this.getToken(HumansParser.MEMORY_SLOT, i);
+		}
+	}
+	public TO(): TerminalNode { return this.getToken(HumansParser.TO, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_outbox; }
+	public get ruleIndex(): number { return HumansParser.RULE_add; }
 	// @Override
 	public enterRule(listener: HumansListener): void {
-		if (listener.enterOutbox) {
-			listener.enterOutbox(this);
+		if (listener.enterAdd) {
+			listener.enterAdd(this);
 		}
 	}
 	// @Override
 	public exitRule(listener: HumansListener): void {
-		if (listener.exitOutbox) {
-			listener.exitOutbox(this);
+		if (listener.exitAdd) {
+			listener.exitAdd(this);
 		}
 	}
 	// @Override
 	public accept<Result>(visitor: HumansVisitor<Result>): Result {
-		if (visitor.visitOutbox) {
-			return visitor.visitOutbox(this);
+		if (visitor.visitAdd) {
+			return visitor.visitAdd(this);
 		} else {
 			return visitor.visitChildren(this);
 		}

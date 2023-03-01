@@ -7,9 +7,9 @@ import { ProgramContext } from "./HumansParser";
 import { LineContext } from "./HumansParser";
 import { ExpressionContext } from "./HumansParser";
 import { ActionContext } from "./HumansParser";
-import { CopytoContext } from "./HumansParser";
-import { InboxContext } from "./HumansParser";
-import { OutboxContext } from "./HumansParser";
+import { MoveContext } from "./HumansParser";
+import { CopyContext } from "./HumansParser";
+import { AddContext } from "./HumansParser";
 
 
 /**
@@ -49,24 +49,24 @@ export interface HumansVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitAction?: (ctx: ActionContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `HumansParser.copyto`.
+	 * Visit a parse tree produced by `HumansParser.move`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitCopyto?: (ctx: CopytoContext) => Result;
+	visitMove?: (ctx: MoveContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `HumansParser.inbox`.
+	 * Visit a parse tree produced by `HumansParser.copy`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitInbox?: (ctx: InboxContext) => Result;
+	visitCopy?: (ctx: CopyContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `HumansParser.outbox`.
+	 * Visit a parse tree produced by `HumansParser.add`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitOutbox?: (ctx: OutboxContext) => Result;
+	visitAdd?: (ctx: AddContext) => Result;
 }
 

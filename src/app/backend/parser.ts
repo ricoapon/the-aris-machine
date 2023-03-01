@@ -1,5 +1,5 @@
 import {HumansListener} from "./generated/HumansListener";
-import {HumansParser} from "./generated/HumansParser";
+import {AddContext, CopyContext, HumansParser, MoveContext} from "./generated/HumansParser";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {HumansLexer} from "./generated/HumansLexer";
 import {ParseTreeWalker} from "antlr4ts/tree";
@@ -33,12 +33,32 @@ class MyListener implements HumansListener {
     this.machine = machine
   }
 
-  enterInbox(): void {
-    this.machine.moveInputToMemory();
+  enterMove(ctx: MoveContext): void {
+    if (ctx.INPUT() != undefined && ctx.OUTPUT() != undefined) {
+      this.machine.moveInputToOutput()
+    } else if (ctx.INPUT() != undefined) {
+      const memorySlot = +ctx.MEMORY_SLOT(0).text
+      this.machine.moveInputToMemorySlot(memorySlot)
+    } else if (ctx.OUTPUT() != undefined) {
+      const memorySlot = +ctx.MEMORY_SLOT(0).text
+      this.machine.moveMemorySlotToOutput(memorySlot)
+    } else {
+      const from = +ctx.MEMORY_SLOT(0).text
+      const to = +ctx.MEMORY_SLOT(1).text
+      this.machine.moveMemorySlotToMemorySlot(from, to)
+    }
   }
 
-  enterOutbox(): void {
-    this.machine.moveMemoryToOutput();
+  enterCopy(ctx: CopyContext): void {
+    const from = +ctx.MEMORY_SLOT(0)
+    const to = +ctx.MEMORY_SLOT(1)
+    this.machine.copyMemorySlotToMemorySlot(from, to)
+  }
+
+  enterAdd(ctx: AddContext): void {
+    const from = +ctx.MEMORY_SLOT(0)
+    const to = +ctx.MEMORY_SLOT(1)
+    this.machine.addMemorySlotToMemorySlot(from, to)
   }
 
   exitProgram(): void {
