@@ -4,13 +4,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
 .level-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 16px;
 }
 
@@ -32,4 +32,8 @@ button {
   border-radius: 100px;
   color: white;
   width: 60px;
+}
+
+.back {
+  width: 200px;
 }
