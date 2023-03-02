@@ -43,12 +43,13 @@ export class MachineScreenComponent implements MachineGUI {
     return true
   }
 
-  handle(machineGUIAction: MachineGUIAction): void {
+  handle(machineGUIAction: MachineGUIAction): boolean | void {
     if (machineGUIAction.finished == true) {
       this.finished()
-      return
+      return true
     } else if (machineGUIAction.error != undefined) {
       this.error(machineGUIAction.error)
+      return false
     }
 
     if (machineGUIAction.shiftInput == true) {

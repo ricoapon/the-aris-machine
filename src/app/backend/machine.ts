@@ -154,7 +154,7 @@ export interface MachineGUI {
 
   initialize(level: Level): void;
 
-  handle(machineGUIAction: MachineGUIAction): void;
+  handle(machineGUIAction: MachineGUIAction): boolean | void;
 }
 
 export type MachineGUIAction = {
