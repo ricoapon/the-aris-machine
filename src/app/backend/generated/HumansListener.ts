@@ -10,6 +10,7 @@ import { ActionContext } from "./HumansParser";
 import { MoveContext } from "./HumansParser";
 import { CopyContext } from "./HumansParser";
 import { AddContext } from "./HumansParser";
+import { LoopContext } from "./HumansParser";
 
 
 /**
@@ -93,5 +94,16 @@ export interface HumansListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAdd?: (ctx: AddContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `HumansParser.loop`.
+	 * @param ctx the parse tree
+	 */
+	enterLoop?: (ctx: LoopContext) => void;
+	/**
+	 * Exit a parse tree produced by `HumansParser.loop`.
+	 * @param ctx the parse tree
+	 */
+	exitLoop?: (ctx: LoopContext) => void;
 }
 

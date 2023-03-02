@@ -23,7 +23,7 @@ const LEVELS: Level[] = [
     "all the input numbers to the output with only four lines of code!<br>" +
     "<br>" +
     "You can use the command <code>while (input not empty) { ... }</code> to loop."),
-  new Level([4, 5, 1, 7, 8, 9], [5, 4, 7, 1, 8, 9], 3,
+  new Level([4, 5, 1, 7, 8, 9], [5, 4, 7, 1, 9, 8], 3,
     "If every level was just moving the input to the output, this game would be too simple! Let's switch it up: " +
     "you have to grab the first TWO numbers from the input and move them to the output in REVERSE order.<br>" +
     "<br>" +

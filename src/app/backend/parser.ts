@@ -1,9 +1,10 @@
-import {HumansListener} from "./generated/HumansListener";
-import {AddContext, CopyContext, HumansParser, MoveContext} from "./generated/HumansParser";
+import {AddContext, CopyContext, HumansParser, LoopContext, MoveContext} from "./generated/HumansParser";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {HumansLexer} from "./generated/HumansLexer";
-import {ParseTreeWalker} from "antlr4ts/tree";
+import {ErrorNode, ParseTree, RuleNode} from "antlr4ts/tree";
 import {Machine, MachineGUI} from "./machine";
+import {HumansVisitor} from "./generated/HumansVisitor";
+import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 
 export class Parser {
   private readonly machine: Machine
@@ -17,51 +18,92 @@ export class Parser {
     const lexer = new HumansLexer(inputStream);
     const tokenStream = new CommonTokenStream(lexer);
     const parser = new HumansParser(tokenStream);
-    const listener = new MyListener(this.machine);
+    const visitor = new MyVisitor(this.machine);
 
-    // @ts-ignore
-    ParseTreeWalker.DEFAULT.walk(listener, parser.program());
+    visitor.visit(parser.program())
 
     return this.machine.guiActions;
   }
 }
 
-class MyListener implements HumansListener {
+class MyVisitor implements HumansVisitor<void> {
   private readonly machine: Machine
+  private continueProgram = true
 
   constructor(machine: Machine) {
     this.machine = machine
   }
 
-  enterMove(ctx: MoveContext): void {
+  visit(tree: ParseTree): void {
+    for (let i = 0; i < tree.childCount; i++) {
+      this.call(tree.getChild(i))
+    }
+    this.machine.checkWinningCondition();
+  }
+
+  visitErrorNode(node: ErrorNode): void {
+  }
+
+  visitTerminal(node: TerminalNode): void {
+  }
+
+  visitMove(ctx: MoveContext) {
+    let result
     if (ctx.INPUT() != undefined && ctx.OUTPUT() != undefined) {
-      this.machine.moveInputToOutput()
+      result = this.machine.moveInputToOutput()
     } else if (ctx.INPUT() != undefined) {
       const memorySlot = +ctx.MEMORY_SLOT(0).text
-      this.machine.moveInputToMemorySlot(memorySlot)
+      result = this.machine.moveInputToMemorySlot(memorySlot)
     } else if (ctx.OUTPUT() != undefined) {
       const memorySlot = +ctx.MEMORY_SLOT(0).text
-      this.machine.moveMemorySlotToOutput(memorySlot)
+      result = this.machine.moveMemorySlotToOutput(memorySlot)
     } else {
       const from = +ctx.MEMORY_SLOT(0).text
       const to = +ctx.MEMORY_SLOT(1).text
-      this.machine.moveMemorySlotToMemorySlot(from, to)
+      result = this.machine.moveMemorySlotToMemorySlot(from, to)
+    }
+
+    this.parseResult(result)
+  }
+
+  visitCopy(ctx: CopyContext) {
+    const from = +ctx.MEMORY_SLOT(0)
+    const to = +ctx.MEMORY_SLOT(1)
+    this.parseResult(this.machine.copyMemorySlotToMemorySlot(from, to))
+  }
+
+  visitAdd(ctx: AddContext) {
+    const from = +ctx.MEMORY_SLOT(0)
+    const to = +ctx.MEMORY_SLOT(1)
+    this.parseResult(this.machine.addMemorySlotToMemorySlot(from, to))
+  }
+
+  visitLoop(ctx: LoopContext) {
+    // To prevent loops to go infinite, we set a max that we will never reach in normal situations.
+    let counter = 0;
+    while (counter < 1000 && this.continueProgram) {
+      for (let i = 0; i < ctx.line().length; i++) {
+        this.call(ctx.line()[i])
+      }
+      counter++
     }
   }
 
-  enterCopy(ctx: CopyContext): void {
-    const from = +ctx.MEMORY_SLOT(0)
-    const to = +ctx.MEMORY_SLOT(1)
-    this.machine.copyMemorySlotToMemorySlot(from, to)
+  visitChildren(node: RuleNode): void {
+    for (let i = 0; i < node.childCount; i++) {
+      this.call(node.getChild(i))
+    }
   }
 
-  enterAdd(ctx: AddContext): void {
-    const from = +ctx.MEMORY_SLOT(0)
-    const to = +ctx.MEMORY_SLOT(1)
-    this.machine.addMemorySlotToMemorySlot(from, to)
+  private call(tree: ParseTree) {
+    if (this.continueProgram) {
+      tree.accept(this)
+    }
   }
 
-  exitProgram(): void {
-    this.machine.checkWinningCondition();
+  private parseResult(result: boolean | void) {
+    if (result != undefined && !result) {
+      this.continueProgram = false
+    }
   }
 }

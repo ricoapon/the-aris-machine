@@ -10,6 +10,7 @@ import { ActionContext } from "./HumansParser";
 import { MoveContext } from "./HumansParser";
 import { CopyContext } from "./HumansParser";
 import { AddContext } from "./HumansParser";
+import { LoopContext } from "./HumansParser";
 
 
 /**
@@ -68,5 +69,12 @@ export interface HumansVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitAdd?: (ctx: AddContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `HumansParser.loop`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitLoop?: (ctx: LoopContext) => Result;
 }
 

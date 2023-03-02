@@ -16,11 +16,13 @@ action
  : copy
  | move
  | add
+ | loop
  ;
 
 move: MOVE (MEMORY_SLOT|INPUT) TO (MEMORY_SLOT|OUTPUT);
 copy: COPY MEMORY_SLOT TO MEMORY_SLOT;
 add: ADD MEMORY_SLOT TO MEMORY_SLOT;
+loop: LOOP CURLY_OPEN NEWLINE line* CURLY_CLOSED;
 
 ADD: 'add';
 COPY: 'copy';
@@ -28,6 +30,9 @@ MOVE: 'move';
 TO: 'to';
 INPUT: 'input';
 OUTPUT: 'output';
+LOOP: 'loop';
+CURLY_OPEN: '{';
+CURLY_CLOSED: '}';
 MEMORY_SLOT: (MEMORY_SLOT_NUMBER | MEMORY_SLOT_NAME);
 MEMORY_SLOT_NUMBER: [0-9]+;
 MEMORY_SLOT_NAME: [a-z]+;
