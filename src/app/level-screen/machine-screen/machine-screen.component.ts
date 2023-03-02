@@ -60,7 +60,8 @@ export class MachineScreenComponent implements MachineGUI {
       })
     }
     if (machineGUIAction.addValueToOutput != undefined) {
-      this.output.push(machineGUIAction.addValueToOutput)
+      // To make sure the output is shown in the correct order, we need to add at the start instead of at the end.
+      this.output.unshift(machineGUIAction.addValueToOutput)
     }
   }
 }
