@@ -4,7 +4,7 @@ export class Machine {
   input: number[];
   expectedOut: number[];
   memorySlots: (undefined | number)[];
-  guiActions: ((machineGUI: MachineGUI) => void)[]
+  machineGUIActions: MachineGUIAction[]
 
   constructor(level: Level) {
     // Clone arrays to make sure that we don't change the level object.
@@ -14,7 +14,7 @@ export class Machine {
     for (let i = 0; i < level.nrOfMemorySlots; i++) {
       this.memorySlots.push(undefined)
     }
-    this.guiActions = []
+    this.machineGUIActions = []
   }
 
   moveInputToOutput(): boolean | void {
@@ -72,7 +72,7 @@ export class Machine {
     this.memorySlots[i] = undefined
 
     if (this.expectedOut.length == 0) {
-      this.finished()
+      return this.finished()
     }
   }
 
@@ -135,26 +135,18 @@ export class Machine {
   }
 
   private handle(machineGUIAction: MachineGUIAction): void {
-    this.guiActions.push((machineGUI) => machineGUI.handle(machineGUIAction))
+    this.machineGUIActions.push(machineGUIAction)
   }
 
   private error(message: string): boolean {
-    this.guiActions.push((machineGUI) => machineGUI.handle({error: message}))
+    this.machineGUIActions.push({error: message})
     return false
   }
 
   private finished(): boolean {
-    this.guiActions.push((machineGUI) => machineGUI.handle({finished: true}))
+    this.machineGUIActions.push({finished: true})
     return true
   }
-}
-
-export interface MachineGUI {
-  detectChanges(): void;
-
-  initialize(level: Level): void;
-
-  handle(machineGUIAction: MachineGUIAction): boolean | void;
 }
 
 export type MachineGUIAction = {

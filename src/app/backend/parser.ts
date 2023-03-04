@@ -2,7 +2,7 @@ import {AddContext, CopyContext, HumansParser, LoopContext, MoveContext} from ".
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {HumansLexer} from "./generated/HumansLexer";
 import {ErrorNode, ParseTree, RuleNode} from "antlr4ts/tree";
-import {Machine, MachineGUI} from "./machine";
+import {Machine, MachineGUIAction} from "./machine";
 import {HumansVisitor} from "./generated/HumansVisitor";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 
@@ -13,7 +13,7 @@ export class Parser {
     this.machine = machine
   }
 
-  parse(input: string): ((machineGUI: MachineGUI) => void)[] {
+  parse(input: string): MachineGUIAction[] {
     const inputStream = CharStreams.fromString(input);
     const lexer = new HumansLexer(inputStream);
     const tokenStream = new CommonTokenStream(lexer);
@@ -22,7 +22,7 @@ export class Parser {
 
     visitor.visit(parser.program())
 
-    return this.machine.guiActions;
+    return this.machine.machineGUIActions;
   }
 }
 

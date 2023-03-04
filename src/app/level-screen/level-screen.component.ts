@@ -44,6 +44,7 @@ export class LevelScreenComponent implements OnInit, AfterViewInit {
 
   runCode(input: any) {
     const guiActions = new Parser(new Machine(this.level)).parse(input)
-    this.machineGuiExecutor.execute(guiActions)
+    this.machineGuiExecutor.initialize(guiActions)
+    this.machineGuiExecutor.execute()
   }
 }
