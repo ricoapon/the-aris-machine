@@ -13,12 +13,12 @@ export class Level {
 }
 
 const LEVELS: Level[] = [
-  new Level([9, 6, 4], [9, 6, 4], 0,
+  new Level([9, 6, 4], [9, 6, 4], 1,
     "Write commands in the editor below to build a program. Your task is to use the numbers (the purple boxes) in the input to " +
     "get the expected output. In this first simple program, you can move the input to the output without modifications.<br>" +
     "<br>" +
     "You can use the command <code>move input to output</code>."),
-  new Level([9, 6, 4, 9, 6, 4, 9, 6, 4, 9, 6, 4], [9, 6, 4, 9, 6, 4, 9, 6, 4, 9, 6, 4], 0,
+  new Level([9, 6, 4, 9, 6, 4, 9, 6, 4, 9, 6, 4], [9, 6, 4, 9, 6, 4, 9, 6, 4, 9, 6, 4], 1,
     "Writing out every line by hand is very tedious work. We can do that far easier: use a loop! Try and move " +
     "all the input numbers to the output with only four lines of code!<br>" +
     "<br>" +
