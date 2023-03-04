@@ -11,10 +11,10 @@
       <p [innerHTML]="level.description"></p>
     </div>
     <div class="editor">
-      <app-editor (runCode)="runCode($event)"></app-editor>
+      <app-editor></app-editor>
     </div>
   </div>
   <div class="machine-container">
-    <app-machine-screen #machineScreenComponent [machineGuiExecutor]="machineGuiExecutor"></app-machine-screen>
+    <app-machine-screen #machineScreenComponent></app-machine-screen>
   </div>
 </div>

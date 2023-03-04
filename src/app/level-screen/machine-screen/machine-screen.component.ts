@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {MachineGUIAction} from "../../backend/machine";
 import {Level} from "../../backend/levels";
-import {MachineGUI, MachineGuiExecutor} from "../../backend/machine-gui-executor";
+import {MachineGUI} from "../../backend/machine-gui-executor";
 
 @Component({
   selector: 'app-machine-screen',
@@ -9,7 +9,6 @@ import {MachineGUI, MachineGuiExecutor} from "../../backend/machine-gui-executor
   styleUrls: ['./machine-screen.component.css']
 })
 export class MachineScreenComponent implements MachineGUI {
-  @Input() machineGuiExecutor: MachineGuiExecutor;
   input: number[];
   output: number[];
   memorySlots: (number | undefined)[];

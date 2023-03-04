@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {getLevel, Level} from "../backend/levels";
-import {Parser} from "../backend/parser";
-import {Machine} from "../backend/machine";
 import {MachineGuiExecutor} from "../backend/machine-gui-executor";
 import {MachineScreenComponent} from "./machine-screen/machine-screen.component";
 
@@ -13,10 +11,9 @@ import {MachineScreenComponent} from "./machine-screen/machine-screen.component"
 })
 export class LevelScreenComponent implements OnInit, AfterViewInit {
   level: Level;
-  machineGuiExecutor: MachineGuiExecutor;
   @ViewChild('machineScreenComponent') machineScreenComponent: MachineScreenComponent;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private machineGuiExecutor: MachineGuiExecutor) {
   }
 
   ngOnInit(): void {
@@ -38,13 +35,7 @@ export class LevelScreenComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.machineScreenComponent.initialize(this.level)
     this.machineScreenComponent.detectChanges()
-    this.machineGuiExecutor = new MachineGuiExecutor(this.level, this.machineScreenComponent)
-  }
-
-
-  runCode(input: any) {
-    const guiActions = new Parser(new Machine(this.level)).parse(input)
-    this.machineGuiExecutor.initialize(guiActions)
-    this.machineGuiExecutor.execute()
+    this.machineGuiExecutor.setLevel(this.level)
+    this.machineGuiExecutor.setMachineGUI(this.machineScreenComponent)
   }
 }

@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Output, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {MachineGuiExecutor} from "../../backend/machine-gui-executor";
 
 @Component({
   selector: 'app-editor',
@@ -7,8 +8,6 @@ import {Component, EventEmitter, Output, ViewEncapsulation} from '@angular/core'
   encapsulation: ViewEncapsulation.None
 })
 export class EditorComponent {
-  @Output() runCode = new EventEmitter<String>()
-
   content = 'move input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\n';
   options = {
     value: this.content,
@@ -27,11 +26,27 @@ export class EditorComponent {
     }
   }
 
-  // A bit of a hacky workaround, but I didn't know how else to get this to work.
-  execute(_this: any) {
-    return () => {
-      _this.runCode.emit(_this.content)
-    }
+  constructor(private machineGuiExecutor: MachineGuiExecutor) {
+    this.machineGuiExecutor.setDetermineCode(() => {
+      return this.content
+    })
   }
 
+  // A bit of a hacky workaround with the this-object, but I didn't know how else to get this to work.
+  execute(_this: any) {
+    return () => {
+      const machineGuiExecutor: MachineGuiExecutor = _this.machineGuiExecutor
+
+      if (machineGuiExecutor.isRunning()) {
+        return
+      }
+
+      if (!machineGuiExecutor.isReadyForExecution()) {
+        machineGuiExecutor.initialize()
+        machineGuiExecutor.execute()
+      } else {
+        machineGuiExecutor.execute()
+      }
+    }
+  }
 }
