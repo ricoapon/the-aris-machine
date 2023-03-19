@@ -7,6 +7,11 @@ html, body {
   background-color: black;
 }
 
+a {
+  color: #A600E0;
+  text-decoration: none;
+}
+
 h1, p {
   padding: 0;
   margin: 0;
