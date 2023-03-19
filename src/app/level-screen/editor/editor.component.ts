@@ -1,11 +1,6 @@
 import {Component} from '@angular/core';
 import {MachineGuiExecutor} from "../../backend/machine-gui-executor";
-import {
-  createMonacoEditorOptions,
-  getMonacoEditor,
-  GLOBAL_MONACO,
-  MONACO_EDITOR_VARIABLE_SET
-} from "../../monaco-config/global";
+import {MonacoVariables, MonacoVariablesFactory} from "../../monaco-config/global";
 
 @Component({
   selector: 'app-editor',
@@ -13,16 +8,20 @@ import {
   styleUrls: ['./editor.component.css'],
 })
 export class EditorComponent {
+  readonly monacoVariables: MonacoVariables;
+  readonly options: any;
   content = 'move input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\n';
-  options = createMonacoEditorOptions();
 
-  constructor(private machineGuiExecutor: MachineGuiExecutor) {
+  constructor(private machineGuiExecutor: MachineGuiExecutor, private monacoVariablesFactory: MonacoVariablesFactory) {
+    this.monacoVariables = monacoVariablesFactory.get()
+    this.options = this.monacoVariables.createMonacoEditorOptions();
+
     this.machineGuiExecutor.setDetermineCode(() => {
       return this.content
     })
 
-    MONACO_EDITOR_VARIABLE_SET.subscribe(() => {
-      getMonacoEditor(this.options).addCommand(GLOBAL_MONACO.KeyMod.CtrlCmd | GLOBAL_MONACO.KeyCode.Enter, () => {
+    this.monacoVariables.observableMonacoFinishedInitializing().subscribe(() => {
+      this.monacoVariables.getMonacoEditor(this.options).addCommand(this.monacoVariables.KeyMod().CtrlCmd | this.monacoVariables.KeyCode().Enter, () => {
         this.execute()
       })
     })

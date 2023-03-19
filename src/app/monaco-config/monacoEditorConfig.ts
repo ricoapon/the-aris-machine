@@ -1,7 +1,7 @@
 import {NgxMonacoEditorConfig} from "ngx-monaco-editor-v2";
 import {loadAutoComplete} from "./auto-complete";
 import {loadSyntaxHighlighting} from "./syntax-highlighting";
-import {setMonacoVariables} from "./global";
+import {MonacoVariables} from "./global";
 
 declare let monaco: any;
 export const MONACO_CUSTOM_LANGUAGE_NAME = 'humans-language'
@@ -11,7 +11,7 @@ export function myMonacoLoad() {
   monaco.languages.register({ id: MONACO_CUSTOM_LANGUAGE_NAME });
   loadAutoComplete(monaco, MONACO_CUSTOM_LANGUAGE_NAME)
   loadSyntaxHighlighting(monaco, MONACO_CUSTOM_LANGUAGE_NAME, MONACO_CUSTOM_THEME_NAME)
-  setMonacoVariables(monaco);
+  MonacoVariables.setGlobalMonacoVariable(monaco);
 }
 
 export const monacoEditorConfig: NgxMonacoEditorConfig = {

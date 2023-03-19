@@ -1,8 +1,8 @@
 import {Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
-import {createMonacoEditorOptions, getMonacoEditor, MONACO_EDITOR_VARIABLE_SET} from "../../monaco-config/global";
 import {ScenarioEvent} from "../scenarios/scenario-definitions";
 import {concatMap, delay, of, Subscription} from "rxjs";
 import {getScenario} from "../scenarios/scenarios";
+import {MonacoVariables, MonacoVariablesFactory} from "../../monaco-config/global";
 
 @Component({
   selector: 'app-monaco-demo',
@@ -10,15 +10,19 @@ import {getScenario} from "../scenarios/scenarios";
   styleUrls: ['./monaco-demo.component.css']
 })
 export class MonacoDemoComponent implements OnDestroy {
+  readonly monacoVariables: MonacoVariables;
+  readonly options: any;
+
   @Input() scenarioId: number;
   @ViewChild('editor') editor: ElementRef;
   @ViewChild('container') container: ElementRef;
-  options = createMonacoEditorOptions();
   content = ''
   currentSubscription: Subscription;
 
-  constructor() {
-    MONACO_EDITOR_VARIABLE_SET.subscribe(() => this.play())
+  constructor(private monacoVariablesFactory: MonacoVariablesFactory) {
+    this.monacoVariables = monacoVariablesFactory.get();
+    this.monacoVariables.observableMonacoFinishedInitializing().subscribe(() => this.play())
+    this.options = this.monacoVariables.createMonacoEditorOptions();
   }
 
   private clearSubscription() {
@@ -34,7 +38,7 @@ export class MonacoDemoComponent implements OnDestroy {
 
     this.clearSubscription()
 
-    const actualEditor = getMonacoEditor(this.options)
+    const actualEditor = this.monacoVariables.getMonacoEditor(this.options)
     // You cannot clear the content of the editor using "this.content = ''". I don't know why.
     // This does work and this.content is updated to the correct value.
     actualEditor.getModel().setValue('')

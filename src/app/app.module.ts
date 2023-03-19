@@ -10,15 +10,16 @@ import {InOutTrackComponent} from './level-screen/machine-screen/in-out-track/in
 import {MemoryComponent} from './level-screen/machine-screen/memory/memory.component';
 import {ControlPanelComponent} from './level-screen/machine-screen/control-panel/control-panel.component';
 import {EditorComponent} from "./level-screen/editor/editor.component";
-import { HomeComponent } from './navigation/home/home.component';
-import { LevelSelectionComponent } from './navigation/level-selection/level-selection.component';
+import {HomeComponent} from './navigation/home/home.component';
+import {LevelSelectionComponent} from './navigation/level-selection/level-selection.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {MonacoEditorModule} from "ngx-monaco-editor-v2";
 import {monacoEditorConfig} from "./monaco-config/monacoEditorConfig";
-import { MonacoDemoComponent } from './monaco-demo-overview/monaco-demo/monaco-demo.component';
-import { MonacoDemoOverviewComponent } from './monaco-demo-overview/monaco-demo-overview.component';
-import { DocsComponent } from './navigation/docs/docs.component';
-import { LanguageDocumentationComponent } from './language-documentation/language-documentation.component';
+import {MonacoDemoComponent} from './monaco-demo-overview/monaco-demo/monaco-demo.component';
+import {MonacoDemoOverviewComponent} from './monaco-demo-overview/monaco-demo-overview.component';
+import {DocsComponent} from './navigation/docs/docs.component';
+import {LanguageDocumentationComponent} from './language-documentation/language-documentation.component';
+import {MonacoVariablesFactory} from "./monaco-config/global";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,9 @@ import { LanguageDocumentationComponent } from './language-documentation/languag
     AppRoutingModule,
     MonacoEditorModule.forRoot(monacoEditorConfig),
   ],
-  providers: [],
+  providers: [
+    MonacoVariablesFactory
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
