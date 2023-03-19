@@ -18,6 +18,7 @@ export class EditorComponent {
     fontFamily: "Consolas, monospace",
     fontSize: "16px",
     overviewRulerLanes: 0,
+    fixedOverflowWidgets: true
   };
 
   constructor(private machineGuiExecutor: MachineGuiExecutor) {
