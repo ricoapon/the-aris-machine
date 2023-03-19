@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
 import {createMonacoEditorOptions, getMonacoEditor, MONACO_EDITOR_VARIABLE_SET} from "../../monaco-config/global";
 import {ScenarioEvent} from "../scenarios/scenario-definitions";
 import {concatMap, delay, of, Subscription} from "rxjs";
@@ -9,7 +9,7 @@ import {getScenario} from "../scenarios/scenarios";
   templateUrl: './monaco-demo.component.html',
   styleUrls: ['./monaco-demo.component.css']
 })
-export class MonacoDemoComponent {
+export class MonacoDemoComponent implements OnDestroy {
   @Input() scenarioId: number;
   @ViewChild('editor') editor: ElementRef;
   @ViewChild('container') container: ElementRef;
@@ -21,14 +21,18 @@ export class MonacoDemoComponent {
     MONACO_EDITOR_VARIABLE_SET.subscribe(() => this.play())
   }
 
+  private clearSubscription() {
+    if (this.currentSubscription != undefined) {
+      this.currentSubscription.unsubscribe()
+    }
+  }
+
   play() {
     // If we disable the text area, there is no way for the user to disturb the actions.
     // Since it is deeply nested in the container, we search it like this.
     this.container!.nativeElement!.querySelector('textarea').disabled = true
 
-    if (this.currentSubscription != undefined) {
-      this.currentSubscription.unsubscribe()
-    }
+    this.clearSubscription()
 
     const actualEditor = getMonacoEditor(this.options)
     // You cannot clear the content of the editor using "this.content = ''". I don't know why.
@@ -45,5 +49,9 @@ export class MonacoDemoComponent {
       .subscribe((scenarioEvent: ScenarioEvent) => {
         scenarioEvent.event.call(this, this)
       });
+  }
+
+  ngOnDestroy(): void {
+    this.clearSubscription()
   }
 }
