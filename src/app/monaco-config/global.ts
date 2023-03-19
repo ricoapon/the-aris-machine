@@ -1,4 +1,5 @@
 import {EventEmitter} from "@angular/core";
+import {MONACO_CUSTOM_LANGUAGE_NAME, MONACO_CUSTOM_THEME_NAME} from "./monacoEditorConfig";
 
 export let GLOBAL_MONACO: any = null;
 
@@ -20,3 +21,14 @@ export function setMonacoVariables(monaco: any) {
   // We do this in a very stupid way, but it works.
   setTimeout(() => MONACO_EDITOR_VARIABLE_SET.emit(), 500);
 }
+
+export const MONACO_EDITOR_OPTIONS = {
+  theme: MONACO_CUSTOM_THEME_NAME,
+  language: MONACO_CUSTOM_LANGUAGE_NAME,
+  scrollBeyondLastLine: false,
+  minimap: {enabled: false},
+  fontFamily: "Consolas, monospace",
+  fontSize: "16px",
+  overviewRulerLanes: 0,
+  fixedOverflowWidgets: true
+};

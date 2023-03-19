@@ -1,0 +1,24 @@
+import {Scenario} from "./scenario-definitions";
+import {ScenarioEventsBuilder} from "./scenario-events-builder";
+
+export function getScenario(scenarioId: number, editor: any) {
+  return allScenarios(editor).filter(scenario => scenario.id == scenarioId)[0];
+}
+
+export function allScenarios(editor: any): Scenario[] {
+  // Hardcoding ID's makes it easy to make mistakes. Incrementing variable prevents that.
+  let scenarioId = 1
+  return [
+    {
+      id: scenarioId++,
+      scenarioEvents: new ScenarioEventsBuilder(editor)
+        .typeText('loo')
+        .openSuggestions()
+        .acceptSuggestion()
+        .build(),
+      description: "Suggestions are automatically made while typing, and you can also press " +
+        "<div class='hotkeys'>CTRL + SPACE</div> for showing all possible suggestions. You can press it again to hide " +
+        "or show the documentation corresponding to the suggestion."
+    }
+  ]
+}
