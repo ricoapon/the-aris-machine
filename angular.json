@@ -29,8 +29,7 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "antlr4ts",
-              "codemirror/mode/javascript/javascript"
+              "antlr4ts"
             ]
           },
           "configurations": {
