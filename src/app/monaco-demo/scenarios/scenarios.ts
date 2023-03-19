@@ -19,6 +19,17 @@ export function allScenarios(editor: any): Scenario[] {
       description: "Suggestions are automatically made while typing, and you can also press " +
         "<div class='hotkeys'>CTRL + SPACE</div> for showing all possible suggestions. You can press it again to hide " +
         "or show the documentation corresponding to the suggestion."
-    }
+    },
+    {
+      id: scenarioId++,
+      scenarioEvents: new ScenarioEventsBuilder(editor)
+        .typeText('i')
+        .openSuggestions()
+        .acceptSuggestion()
+        .build(),
+      description: "Suggestions are automatically made while typing, and you can also press " +
+        "<div class='hotkeys'>CTRL + SPACE</div> for showing all possible suggestions. You can press it again to hide " +
+        "or show the documentation corresponding to the suggestion."
+    },
   ]
 }
