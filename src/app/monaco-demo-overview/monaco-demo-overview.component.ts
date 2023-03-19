@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NR_OF_SCENARIOS} from "../monaco-demo/scenarios/scenarios";
+import {NR_OF_SCENARIOS} from "./scenarios/scenarios";
 
 @Component({
   selector: 'app-monaco-demo-overview',

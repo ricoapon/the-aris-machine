@@ -15,7 +15,7 @@ import { LevelSelectionComponent } from './level-selection/level-selection.compo
 import {AppRoutingModule} from "./app-routing.module";
 import {MonacoEditorModule} from "ngx-monaco-editor-v2";
 import {monacoEditorConfig} from "./monaco-config/monacoEditorConfig";
-import { MonacoDemoComponent } from './monaco-demo/monaco-demo.component';
+import { MonacoDemoComponent } from './monaco-demo-overview/monaco-demo/monaco-demo.component';
 import { MonacoDemoOverviewComponent } from './monaco-demo-overview/monaco-demo-overview.component';
 
 @NgModule({

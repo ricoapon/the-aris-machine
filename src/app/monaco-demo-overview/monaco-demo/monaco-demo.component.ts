@@ -1,8 +1,8 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {createMonacoEditorOptions, getMonacoEditor, MONACO_EDITOR_VARIABLE_SET} from "../monaco-config/global";
-import {ScenarioEvent} from "./scenarios/scenario-definitions";
+import {createMonacoEditorOptions, getMonacoEditor, MONACO_EDITOR_VARIABLE_SET} from "../../monaco-config/global";
+import {ScenarioEvent} from "../scenarios/scenario-definitions";
 import {concatMap, delay, of, Subscription} from "rxjs";
-import {getScenario} from "./scenarios/scenarios";
+import {getScenario} from "../scenarios/scenarios";
 
 @Component({
   selector: 'app-monaco-demo',
