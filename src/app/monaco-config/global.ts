@@ -45,5 +45,9 @@ const MONACO_EDITOR_OPTIONS = {
   fontFamily: "Consolas, monospace",
   fontSize: "16px",
   overviewRulerLanes: 0,
-  fixedOverflowWidgets: true,
+  // I am not sure whether we should enable or disable this. I had issues with hover/suggestion boxes that would not show
+  // properly when hovering at the top of the editor. Though now it seems fixed.
+  // We also need it false specifically for the demo overview screen, because scrolling should keep the hover/suggestion
+  // boxes inside the editor. If we set this to true, it will stay fixed on the screen.
+  // fixedOverflowWidgets: true,
 };
