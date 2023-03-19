@@ -26,9 +26,12 @@ export function allScenarios(editor: any): Scenario[] {
     {
       id: scenarioId++,
       scenarioEvents: new ScenarioEventsBuilder(editor)
-        .typeText('i')
+        .typeText('m')
         .openSuggestions()
         .acceptSuggestion()
+        .typeText("input")
+        .nextSnippetPlaceholder()
+        .typeText("0")
         .build(),
       description: "Suggestions are automatically made while typing, and you can also press " +
         "<div class='hotkeys'>CTRL + SPACE</div> for showing all possible suggestions. You can press it again to hide " +

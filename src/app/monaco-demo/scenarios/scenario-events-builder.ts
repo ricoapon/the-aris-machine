@@ -22,6 +22,11 @@ export class ScenarioEventsBuilder {
     return this
   }
 
+  nextSnippetPlaceholder(): ScenarioEventsBuilder {
+    this.createAndAddScenarioEvent(() => this.editor.trigger('editor', 'jumpToNextSnippetPlaceholder'))
+    return this;
+  }
+
   openSuggestions(): ScenarioEventsBuilder {
     this.createAndAddScenarioEvent(() => this.editor.trigger('editor', 'editor.action.triggerSuggest'))
     return this;
