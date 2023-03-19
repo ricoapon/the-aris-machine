@@ -4,6 +4,7 @@ html, body {
   padding: 0;
   height: 100%;
   font-family: "Segoe UI", Arial, sans-serif;
+  background-color: black;
 }
 
 h1, p {
