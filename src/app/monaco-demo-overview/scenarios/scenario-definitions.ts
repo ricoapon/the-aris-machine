@@ -11,4 +11,5 @@ export type Scenario = {
   id: number
   scenarioEvents: ScenarioEvent[]
   description: string
+  heightInNrOfLines: number
 }

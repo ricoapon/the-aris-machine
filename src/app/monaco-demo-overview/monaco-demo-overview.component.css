@@ -4,3 +4,7 @@
   width: 800px;
   margin: 0 auto;
 }
+
+h1, h2 {
+  padding: 8px 0;
+}

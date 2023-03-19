@@ -1,7 +1,7 @@
-import {Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
-import {ScenarioEvent} from "../scenarios/scenario-definitions";
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Scenario, ScenarioEvent} from "../scenarios/scenario-definitions";
 import {concatMap, delay, of, Subscription} from "rxjs";
-import {getScenario} from "../scenarios/scenarios";
+import {getEmptyScenario, getScenario} from "../scenarios/scenarios";
 import {MonacoVariables, MonacoVariablesFactory} from "../../monaco-config/global";
 
 @Component({
@@ -9,7 +9,7 @@ import {MonacoVariables, MonacoVariablesFactory} from "../../monaco-config/globa
   templateUrl: './monaco-demo.component.html',
   styleUrls: ['./monaco-demo.component.css']
 })
-export class MonacoDemoComponent implements OnDestroy {
+export class MonacoDemoComponent implements OnInit, OnDestroy {
   readonly monacoVariables: MonacoVariables;
   readonly options: any;
 
@@ -18,6 +18,7 @@ export class MonacoDemoComponent implements OnDestroy {
   @ViewChild('container') container: ElementRef;
   content = ''
   currentSubscription: Subscription;
+  scenario: Scenario;
 
   constructor(private monacoVariablesFactory: MonacoVariablesFactory) {
     this.monacoVariables = monacoVariablesFactory.get();
@@ -43,10 +44,10 @@ export class MonacoDemoComponent implements OnDestroy {
     // This does work and this.content is updated to the correct value.
     actualEditor.getModel().setValue('')
 
-    const scenario = getScenario(this.scenarioId, actualEditor)
+    this.scenario = getScenario(this.scenarioId, actualEditor)
     // We add another event at the end of the list that calls this method again.
     // This way, it loops forever.
-    const scenarioEvents = scenario.scenarioEvents.concat({event: () => this.play(), delayAfterInMs: 2000})
+    const scenarioEvents = this.scenario.scenarioEvents.concat({event: () => this.play(), delayAfterInMs: 2000})
 
     this.currentSubscription = of(...scenarioEvents)
       .pipe(concatMap(scenarioEvent => of(scenarioEvent).pipe(delay(scenarioEvent.delayAfterInMs))))
@@ -57,5 +58,17 @@ export class MonacoDemoComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.clearSubscription()
+  }
+
+  ngOnInit(): void {
+    // We need to initialize, so that we can determine the height.
+    this.scenario = getEmptyScenario(this.scenarioId);
+  }
+
+  determineHeight(): string {
+    if (this.scenario == undefined) {
+      return "200px";
+    }
+    return (this.scenario.heightInNrOfLines * 20) + "px";
   }
 }

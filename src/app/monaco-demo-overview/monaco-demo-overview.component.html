@@ -1,7 +1,20 @@
 <div class="main-container">
-  <h1>Cool editor overview stuff</h1>
+  <h1>Monaco Text Editor</h1>
+  <p>
+    This game uses the <a href="https://microsoft.github.io/monaco-editor/">Monaco</a> text editor. This is the editor
+    that is used in the popular IDE <a href="https://microsoft.github.io/monaco-editor/">VS Code</a>. This editor is
+    very powerful and contains all kinds of cool functionality out of the box. The editor is extended with functionality
+    like syntax highlighting and auto-complete for the language used in this game.
+  </p>
+  <p>
+    You might or might not be familiar with Monaco or VS Code. To make sure you can get the most out of the editor and
+    make the experience of writing code for this game as pleasant as possible, this page shows you some tips and tricks.
+    Monaco has a huge amount of features, which are all available to help you code. It would be a lot of work to show
+    all the functionality. This page only shows you the most important features you will most certainly use when playing
+    this game.
+  </p>
 
-  <div *ngFor="let scenarioId of scenarioIds()">
-    <app-monaco-demo [scenarioId]="scenarioId"></app-monaco-demo>
-  </div>
+  <h2>Auto complete</h2>
+  <app-monaco-demo [scenarioId]="0"></app-monaco-demo>
+  <app-monaco-demo [scenarioId]="1"></app-monaco-demo>
 </div>
