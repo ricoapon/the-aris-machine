@@ -20,11 +20,13 @@ export function setMonacoVariables(monaco: any) {
 
 // It is difficult to get the right editor if we have multiple on screen, since they are all part of a long list.
 // To make sure we can get the right editor, we add a non-existing option that we can use to identify the editor.
+// We can just use something simple as an incrementing number.
+let identifier = 0;
 export function createMonacoEditorOptions() {
   return {
     ...MONACO_EDITOR_OPTIONS,
     ...{
-      myIdentifier: generateUUID(4),
+      myIdentifier: identifier++,
     }
   }
 }
@@ -43,15 +45,5 @@ const MONACO_EDITOR_OPTIONS = {
   fontFamily: "Consolas, monospace",
   fontSize: "16px",
   overviewRulerLanes: 0,
-  fixedOverflowWidgets: true
+  fixedOverflowWidgets: true,
 };
-
-function generateUUID(parts: number): string {
-  const stringArr = [];
-  for (let i = 0; i < parts; i++) {
-    // tslint:disable-next-line:no-bitwise
-    const S4 = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    stringArr.push(S4);
-  }
-  return stringArr.join('-');
-}
