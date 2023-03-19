@@ -52,3 +52,12 @@ p {
 code {
   color: #A600E0;
 }
+
+.hover-contents h4, .suggest-details h4 {
+  margin: 8px 0 0 0;
+  font-family: Consolas, monospace;
+}
+
+.hover-contents hr, .suggest-details hr {
+  margin: 8px 0 !important;
+}
