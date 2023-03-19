@@ -7,8 +7,9 @@ export function createRange(model: ITextModel, position: Position): IRange {
   const currentWord = model.getWordAtPosition(position);
   let startColumn, endColumn;
   if (currentWord == undefined) {
-    startColumn = 0;
-    endColumn = 0;
+    // The position starts at 1 weirdly enough.
+    startColumn = 1;
+    endColumn = 1;
   } else {
     startColumn = currentWord.startColumn
     endColumn = currentWord.endColumn
