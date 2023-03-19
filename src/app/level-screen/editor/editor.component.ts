@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {MachineGuiExecutor} from "../../backend/machine-gui-executor";
 import {MONACO_CUSTOM_LANGUAGE_NAME, MONACO_CUSTOM_THEME_NAME} from "../../monaco-config/monacoEditorConfig";
+import {GLOBAL_MONACO, MONACO_EDITOR, MONACO_EDITOR_VARIABLE_SET} from "../../monaco-config/global";
 
 @Component({
   selector: 'app-editor',
@@ -23,23 +24,25 @@ export class EditorComponent {
     this.machineGuiExecutor.setDetermineCode(() => {
       return this.content
     })
+
+    MONACO_EDITOR_VARIABLE_SET.subscribe(() => {
+      const actualEditor = MONACO_EDITOR.getEditors()[0]
+      actualEditor.addCommand(GLOBAL_MONACO.KeyMod.CtrlCmd | GLOBAL_MONACO.KeyCode.Enter, () => {
+        this.execute()
+      })
+    })
   }
 
-  // A bit of a hacky workaround with the this-object, but I didn't know how else to get this to work.
-  execute(_this: any) {
-    return () => {
-      const machineGuiExecutor: MachineGuiExecutor = _this.machineGuiExecutor
+  execute() {
+    if (this.machineGuiExecutor.isRunning()) {
+      return
+    }
 
-      if (machineGuiExecutor.isRunning()) {
-        return
-      }
-
-      if (!machineGuiExecutor.isReadyForExecution()) {
-        machineGuiExecutor.initialize()
-        machineGuiExecutor.execute()
-      } else {
-        machineGuiExecutor.execute()
-      }
+    if (!this.machineGuiExecutor.isReadyForExecution()) {
+      this.machineGuiExecutor.initialize()
+      this.machineGuiExecutor.execute()
+    } else {
+      this.machineGuiExecutor.execute()
     }
   }
 }
