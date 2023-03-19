@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {MachineGuiExecutor} from "../../backend/machine-gui-executor";
+import {MONACO_CUSTOM_LANGUAGE_NAME, MONACO_CUSTOM_THEME_NAME} from "../../monaco-config/monacoEditorConfig";
 
 @Component({
   selector: 'app-editor',
@@ -8,6 +9,15 @@ import {MachineGuiExecutor} from "../../backend/machine-gui-executor";
 })
 export class EditorComponent {
   content = 'move input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\n';
+  editorOptions = {
+    theme: MONACO_CUSTOM_THEME_NAME,
+    language: MONACO_CUSTOM_LANGUAGE_NAME,
+    scrollBeyondLastLine: false,
+    minimap: {enabled: false},
+    fontFamily: "Consolas, monospace",
+    fontSize: "16px",
+    overviewRulerLanes: 0,
+  };
 
   constructor(private machineGuiExecutor: MachineGuiExecutor) {
     this.machineGuiExecutor.setDetermineCode(() => {

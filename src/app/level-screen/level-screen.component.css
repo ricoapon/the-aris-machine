@@ -38,6 +38,5 @@
 
 .editor {
   flex-grow: 1;
-  overflow-y: auto;
-  margin: 16px 32px;
+  overflow: hidden;
 }

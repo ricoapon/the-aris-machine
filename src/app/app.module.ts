@@ -13,6 +13,8 @@ import {EditorComponent} from "./level-screen/editor/editor.component";
 import { HomeComponent } from './home/home.component';
 import { LevelSelectionComponent } from './level-selection/level-selection.component';
 import {AppRoutingModule} from "./app-routing.module";
+import {MonacoEditorModule} from "ngx-monaco-editor-v2";
+import {monacoEditorConfig} from "./monaco-config/monacoEditorConfig";
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import {AppRoutingModule} from "./app-routing.module";
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MonacoEditorModule.forRoot(monacoEditorConfig),
   ],
   providers: [],
   bootstrap: [AppComponent]
