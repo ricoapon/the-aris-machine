@@ -5,9 +5,12 @@ export function getScenario(scenarioId: number, editor: any) {
   return allScenarios(editor).filter(scenario => scenario.id == scenarioId)[0];
 }
 
+// We cannot get scenario's without an editor. So we just keep track of a maximum.
+export const NR_OF_SCENARIOS = 2;
+
 export function allScenarios(editor: any): Scenario[] {
   // Hardcoding ID's makes it easy to make mistakes. Incrementing variable prevents that.
-  let scenarioId = 1
+  let scenarioId = 0
   return [
     {
       id: scenarioId++,
