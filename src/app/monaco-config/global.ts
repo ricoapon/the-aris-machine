@@ -42,6 +42,13 @@ export class MonacoVariables {
   static setGlobalMonacoVariable(monaco: any) {
     MonacoVariables.GLOBAL_MONACO = monaco;
     MonacoVariables.monacoEditorReplaySubject.next();
+
+    // The default keybinding for showing hover is "CTRL + K CTRL + I" (first one, then the other). I find this very
+    // inconvenient. So I changed this to "CTRL + Q". Doing it this way also shows the "CTRL + Q" in the F1 menu!
+    monaco.editor.addKeybindingRule({
+      keybinding: MonacoVariables.GLOBAL_MONACO.KeyMod.CtrlCmd | MonacoVariables.GLOBAL_MONACO.KeyCode.KeyQ,
+      command: "editor.action.showHover",
+    })
   }
 
   // The MonacoVariables class is instantiated for each component. We give it an identifier, so every instance has some
