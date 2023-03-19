@@ -47,10 +47,10 @@ export class MonacoDemoComponent implements OnInit, OnDestroy {
     this.scenario = getScenario(this.scenarioId, actualEditor)
     // We add another event at the end of the list that calls this method again.
     // This way, it loops forever.
-    const scenarioEvents = this.scenario.scenarioEvents.concat({event: () => this.play(), delayAfterInMs: 2000})
+    const scenarioEvents = this.scenario.scenarioEvents.concat({event: () => this.play(), delayBeforeInMs: 2000})
 
     this.currentSubscription = of(...scenarioEvents)
-      .pipe(concatMap(scenarioEvent => of(scenarioEvent).pipe(delay(scenarioEvent.delayAfterInMs))))
+      .pipe(concatMap(scenarioEvent => of(scenarioEvent).pipe(delay(scenarioEvent.delayBeforeInMs))))
       .subscribe((scenarioEvent: ScenarioEvent) => {
         scenarioEvent.event.call(this, this)
       });

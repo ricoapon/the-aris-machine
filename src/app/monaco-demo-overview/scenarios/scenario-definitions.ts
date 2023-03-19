@@ -1,6 +1,6 @@
 export type ScenarioEvent = {
   event: (scenarioExecutor: ScenarioExecutor) => void
-  delayAfterInMs: number
+  delayBeforeInMs: number
 }
 
 export interface ScenarioExecutor {

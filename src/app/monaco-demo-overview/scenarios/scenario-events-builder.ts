@@ -10,7 +10,7 @@ export class ScenarioEventsBuilder {
 
   private createAndAddScenarioEvent(event: (scenarioExecutor: ScenarioExecutor) => void, delayAfterInMs: number = 800) {
     this.events.push({
-      event, delayAfterInMs
+      event, delayBeforeInMs: delayAfterInMs
     })
   }
 
