@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {MachineGuiExecutor} from "../../backend/machine-gui-executor";
 import {
+  createMonacoEditorOptions,
+  getMonacoEditor,
   GLOBAL_MONACO,
-  MONACO_EDITOR,
-  MONACO_EDITOR_OPTIONS,
   MONACO_EDITOR_VARIABLE_SET
 } from "../../monaco-config/global";
 
@@ -14,7 +14,7 @@ import {
 })
 export class EditorComponent {
   content = 'move input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\n';
-  options = MONACO_EDITOR_OPTIONS;
+  options = createMonacoEditorOptions();
 
   constructor(private machineGuiExecutor: MachineGuiExecutor) {
     this.machineGuiExecutor.setDetermineCode(() => {
@@ -22,8 +22,7 @@ export class EditorComponent {
     })
 
     MONACO_EDITOR_VARIABLE_SET.subscribe(() => {
-      const actualEditor = MONACO_EDITOR.getEditors()[0]
-      actualEditor.addCommand(GLOBAL_MONACO.KeyMod.CtrlCmd | GLOBAL_MONACO.KeyCode.Enter, () => {
+      getMonacoEditor(this.options).addCommand(GLOBAL_MONACO.KeyMod.CtrlCmd | GLOBAL_MONACO.KeyCode.Enter, () => {
         this.execute()
       })
     })

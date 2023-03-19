@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {MONACO_EDITOR, MONACO_EDITOR_OPTIONS, MONACO_EDITOR_VARIABLE_SET} from "../monaco-config/global";
+import {createMonacoEditorOptions, getMonacoEditor, MONACO_EDITOR_VARIABLE_SET} from "../monaco-config/global";
 import {ScenarioEvent} from "./scenarios/scenario-definitions";
 import {concatMap, delay, of, Subscription} from "rxjs";
 import {getScenario} from "./scenarios/scenarios";
@@ -13,7 +13,7 @@ export class MonacoDemoComponent {
   @Input() scenarioId: number;
   @ViewChild('editor') editor: ElementRef;
   @ViewChild('container') container: ElementRef;
-  options = MONACO_EDITOR_OPTIONS;
+  options = createMonacoEditorOptions();
   content = ''
   currentSubscription: Subscription;
 
@@ -30,7 +30,7 @@ export class MonacoDemoComponent {
       this.currentSubscription.unsubscribe()
     }
 
-    const actualEditor = MONACO_EDITOR.getEditors()[0]
+    const actualEditor = getMonacoEditor(this.options)
     // You cannot clear the content of the editor using "this.content = ''". I don't know why.
     // This does work and this.content is updated to the correct value.
     actualEditor.getModel().setValue('')

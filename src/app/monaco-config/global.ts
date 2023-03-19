@@ -3,9 +3,6 @@ import {MONACO_CUSTOM_LANGUAGE_NAME, MONACO_CUSTOM_THEME_NAME} from "./monacoEdi
 
 export let GLOBAL_MONACO: any = null;
 
-/* Global variable that can be used */
-export let MONACO_EDITOR: any = null;
-
 /*
 * Emits an event when monacoEditor is set.
 * In terms of lifecycle hooks: this is after AfterViewChecked. So we need this emitter.
@@ -14,7 +11,6 @@ export const MONACO_EDITOR_VARIABLE_SET: EventEmitter<void> = new EventEmitter<v
 
 export function setMonacoVariables(monaco: any) {
   GLOBAL_MONACO = monaco;
-  MONACO_EDITOR = monaco.editor;
 
   // The monaco editor is not really loaded when this function is called.
   // We need to wait for the entire page to be loaded.
@@ -22,7 +18,24 @@ export function setMonacoVariables(monaco: any) {
   setTimeout(() => MONACO_EDITOR_VARIABLE_SET.emit(), 500);
 }
 
-export const MONACO_EDITOR_OPTIONS = {
+// It is difficult to get the right editor if we have multiple on screen, since they are all part of a long list.
+// To make sure we can get the right editor, we add a non-existing option that we can use to identify the editor.
+export function createMonacoEditorOptions() {
+  return {
+    ...MONACO_EDITOR_OPTIONS,
+    ...{
+      myIdentifier: generateUUID(4),
+    }
+  }
+}
+
+export function getMonacoEditor(options: any) {
+  return GLOBAL_MONACO.editor.getEditors()
+    .find((editor: any) =>
+      editor.getRawOptions().myIdentifier === options.myIdentifier)
+}
+
+const MONACO_EDITOR_OPTIONS = {
   theme: MONACO_CUSTOM_THEME_NAME,
   language: MONACO_CUSTOM_LANGUAGE_NAME,
   scrollBeyondLastLine: false,
@@ -32,3 +45,13 @@ export const MONACO_EDITOR_OPTIONS = {
   overviewRulerLanes: 0,
   fixedOverflowWidgets: true
 };
+
+function generateUUID(parts: number): string {
+  const stringArr = [];
+  for (let i = 0; i < parts; i++) {
+    // tslint:disable-next-line:no-bitwise
+    const S4 = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    stringArr.push(S4);
+  }
+  return stringArr.join('-');
+}
