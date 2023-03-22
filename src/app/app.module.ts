@@ -20,6 +20,7 @@ import {MonacoDemoOverviewComponent} from './monaco-demo-overview/monaco-demo-ov
 import {DocsComponent} from './navigation/docs/docs.component';
 import {LanguageDocumentationComponent} from './language-documentation/language-documentation.component';
 import {MonacoVariablesFactory} from "./monaco-config/global";
+import {NavigationComponent} from './navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {MonacoVariablesFactory} from "./monaco-config/global";
     MonacoDemoComponent,
     MonacoDemoOverviewComponent,
     DocsComponent,
-    LanguageDocumentationComponent
+    LanguageDocumentationComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

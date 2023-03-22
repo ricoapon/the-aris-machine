@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-level-selection',
   templateUrl: './level-selection.component.html',
-  styleUrls: ['./level-selection.component.css']
+  styleUrls: ['./level-selection.component.css', '../shared.css']
 })
 export class LevelSelectionComponent {
 

@@ -1,38 +1,12 @@
-.main-container {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.level-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-}
-
-h1 {
-  color: white;
-}
-
 .levels {
-  width: 300px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
 }
 
-button {
-  padding: 4px 0;
-  font-size: 32px;
+.level-button {
+  padding: 4px 0 !important;
   border-radius: 100px;
-  color: white;
   width: 60px;
-}
-
-.back {
-  width: 200px;
 }
