@@ -9,7 +9,7 @@ export class LevelSelectionComponent {
 
   levels(): number[] {
     const result = []
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 16; i++) {
       result.push(i)
     }
     return result

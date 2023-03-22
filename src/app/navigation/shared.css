@@ -6,17 +6,21 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 20px;
 }
 
 h1 {
   text-align: center;
   color: white;
-  font-size: 60px;
   font-family: "Bebas Neue", serif;
+  font-size: 60px;
+  /* The font has a lot of whitespace around it. We already have gaps in the menu, so we reduce the height. */
+  line-height: 40px;
 }
 
 button {
+  width: 100%;
   padding: 4px 8px;
   font-size: 30px;
   border-radius: 100px;
