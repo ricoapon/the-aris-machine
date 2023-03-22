@@ -15,12 +15,13 @@ import {LevelSelectionComponent} from './navigation/level-selection/level-select
 import {AppRoutingModule} from "./app-routing.module";
 import {MonacoEditorModule} from "ngx-monaco-editor-v2";
 import {monacoEditorConfig} from "./monaco-config/monacoEditorConfig";
-import {MonacoDemoComponent} from './monaco-demo-overview/monaco-demo/monaco-demo.component';
-import {MonacoDemoOverviewComponent} from './monaco-demo-overview/monaco-demo-overview.component';
+import {MonacoDemoComponent} from './documentation/monaco-demo-overview/monaco-demo/monaco-demo.component';
+import {MonacoDemoOverviewComponent} from './documentation/monaco-demo-overview/monaco-demo-overview.component';
 import {DocsComponent} from './navigation/docs/docs.component';
-import {LanguageDocumentationComponent} from './language-documentation/language-documentation.component';
+import {LanguageDocumentationComponent} from './documentation/language-documentation/language-documentation.component';
 import {MonacoVariablesFactory} from "./monaco-config/global";
 import {NavigationComponent} from './navigation/navigation.component';
+import { DocumentationComponent } from './documentation/documentation.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {NavigationComponent} from './navigation/navigation.component';
     MonacoDemoOverviewComponent,
     DocsComponent,
     LanguageDocumentationComponent,
-    NavigationComponent
+    NavigationComponent,
+    DocumentationComponent
   ],
   imports: [
     BrowserModule,

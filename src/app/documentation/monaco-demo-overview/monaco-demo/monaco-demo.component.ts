@@ -2,7 +2,7 @@ import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angul
 import {Scenario, ScenarioEvent} from "../scenarios/scenario-definitions";
 import {concatMap, delay, of, Subscription} from "rxjs";
 import {getEmptyScenario, getScenario} from "../scenarios/scenarios";
-import {MonacoVariables, MonacoVariablesFactory} from "../../monaco-config/global";
+import {MonacoVariables, MonacoVariablesFactory} from "../../../monaco-config/global";
 
 @Component({
   selector: 'app-monaco-demo',
