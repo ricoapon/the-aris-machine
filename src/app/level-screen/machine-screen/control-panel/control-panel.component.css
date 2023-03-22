@@ -2,15 +2,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 160px;
 }
 
 .control-panel {
-  background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 64px;
-  padding: 40px;
+  gap: 24px;
+  padding: 10px;
 }
 
 button {

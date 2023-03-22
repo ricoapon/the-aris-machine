@@ -1,20 +1,22 @@
 <div class="main-container">
-  <div class="editor-container">
-    <div class="header">
-      <div class="header-title-hamburger">
-        <div class="hamburger">
-          <img src="assets/Hamburger.svg" alt="menu"/>
-        </div>
-        <h1>The Aris Machine</h1>
+  <div class="fixed-width-height-container">
+    <div class="editor-container">
+      <div class="header">
+        <div class="header-title-hamburger">
+          <div class="hamburger">
+            <img src="assets/Hamburger.svg" alt="menu"/>
+          </div>
+          <h1>The Aris Machine</h1>
 
+        </div>
+        <p [innerHTML]="level.description"></p>
       </div>
-      <p [innerHTML]="level.description"></p>
+      <div class="editor">
+        <app-editor></app-editor>
+      </div>
     </div>
-    <div class="editor">
-      <app-editor></app-editor>
+    <div class="machine-container">
+      <app-machine-screen #machineScreenComponent></app-machine-screen>
     </div>
-  </div>
-  <div class="machine-container">
-    <app-machine-screen #machineScreenComponent></app-machine-screen>
   </div>
 </div>

@@ -1,42 +1,43 @@
 .memory-container {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-.memory {
-  background-color: black;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 16px;
-  gap: 8px;
-}
-
-.memory > * {
-  flex: 0 0 120px;
+.memory-block-section {
+  /* Number of columns is determined dynamically. */
+  display: grid;
+  align-self: center;
 }
 
 .memory-slot {
-  position: relative;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
+  background-image: url("../../../../assets/level-screen/memory-slot.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  flex-direction: column;
   align-items: center;
+  position: relative;
 }
-.memory-bg-white {
-  background-color: #E1D9D9;
+
+.memory-slot-content {
+  width: 40px;
+  height: 40px;
+  background-color: rgb(24, 190, 253, 0.3);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
 }
-.memory-bg-gray {
-  background-color: #AEAEAE;
-}
-.memory-number {
+
+.memory-slot-identifier {
   position: absolute;
-  bottom: 4px;
-  right: 8px;
-  font-weight: bold;
-  color: #818181;
+  bottom: 11px;
+  left: 13px;
+  font-family: Consolas, monospace;
+  font-size: 16px;
 }

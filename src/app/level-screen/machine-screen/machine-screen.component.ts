@@ -20,6 +20,19 @@ export class MachineScreenComponent implements MachineGUI {
     this.memorySlots = []
   }
 
+  rangeToN(n: number): number[] {
+    return Array(n).fill(0).map((x,i)=>i);
+  }
+
+  determineNrOfGridColumns(): number {
+    const length = this.memorySlots.length
+    if (length <= 4) {
+      return length;
+    }
+
+    return length / 2;
+  }
+
   detectChanges(): void {
     this.changeDetectorRef.detectChanges()
   }

@@ -37,7 +37,9 @@ const LEVELS: Level[] = [
     "It is now time to modify the numbers using the power of addition! For each two things in the input, add " +
     "them together and put the result in the output.<br>" +
     "<br>" +
-    "You can use the command <code>add X to Y</code> where X and Y must be memory slots.")
+    "You can use the command <code>add X to Y</code> where X and Y must be memory slots."),
+  new Level([1, 2, 3], [1, 2, 3], 10,
+    "This is only a test level to test the number of memory slots on screen."),
 ]
 
 export function getLevel(i: number): Level {

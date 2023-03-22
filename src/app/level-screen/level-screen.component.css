@@ -1,19 +1,37 @@
 .main-container {
+  background-image: url("../../assets/main-chip.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 2000px;
+
   height: 100%;
+  width: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fixed-width-height-container {
+  width: 1024px;
+  height: 768px;
+  display: flex;
+  background-color: black;
 }
 
 .editor-container {
   flex: 0 0 auto;
-  width: 40%;
-  background-color: black;
+  width: calc(40% - 4px);
   display: flex;
   flex-direction: column;
+
+  border: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(180deg, rgba(24,190,253,1) 0%, rgba(197,54,108,1) 50%);
 }
 
 .header {
   color: white;
-  padding: 16px 32px;
+  padding: 8px 16px;
 }
 
 .header-title-hamburger {
@@ -30,12 +48,13 @@
 
 .machine-container {
   flex: 0 0 auto;
-  width: 60%;
-
-  background-color: #BEBEBE;
-  height: 100%;
+  width: calc(60% - 4px);
+  border: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(180deg, rgba(24,190,253,1) 0%, rgba(197,54,108,1) 50%);
 }
 
 .editor {
   flex-grow: 1;
+  padding: 1px;
 }

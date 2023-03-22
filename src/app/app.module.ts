@@ -21,7 +21,7 @@ import {DocsComponent} from './navigation/docs/docs.component';
 import {LanguageDocumentationComponent} from './documentation/language-documentation/language-documentation.component';
 import {MonacoVariablesFactory} from "./monaco-config/global";
 import {NavigationComponent} from './navigation/navigation.component';
-import { DocumentationComponent } from './documentation/documentation.component';
+import {DocumentationComponent} from './documentation/documentation.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,7 @@ import { DocumentationComponent } from './documentation/documentation.component'
     DocsComponent,
     LanguageDocumentationComponent,
     NavigationComponent,
-    DocumentationComponent
+    DocumentationComponent,
   ],
   imports: [
     BrowserModule,
