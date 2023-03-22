@@ -5,9 +5,6 @@ export function getScenario(scenarioId: number, editor: any) {
   return allScenarios(editor).filter(scenario => scenario.id == scenarioId)[0];
 }
 
-// We cannot get scenario's without an editor. So we just keep track of a maximum.
-export const NR_OF_SCENARIOS = 2;
-
 export function getEmptyScenario(scenarioId: number) {
   return getScenario(scenarioId, null);
 }
