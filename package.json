@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "antlr4": "antlr4ts -visitor src/antlr4/Aris.g4 -o src/app/backend/generated"
+    "antlr4": "antlr4ts -visitor src/antlr4/Aris.g4 -o src/app/backend/generated",
+    "build:github-pages": "ng build --configuration production && cp dist/the-aris-machine/index.html dist/the-aris-machine/404.html && touch dist/the-aris-machine/.nojekyll"
   },
   "private": true,
   "dependencies": {
