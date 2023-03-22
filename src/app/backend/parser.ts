@@ -1,9 +1,9 @@
-import {AddContext, CopyContext, HumansParser, LoopContext, MoveContext} from "./generated/HumansParser";
+import {AddContext, ArisParser, CopyContext, LoopContext, MoveContext} from "./generated/ArisParser";
+import {ArisLexer} from "./generated/ArisLexer";
+import {ArisVisitor} from "./generated/ArisVisitor";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
-import {HumansLexer} from "./generated/HumansLexer";
 import {ErrorNode, ParseTree, RuleNode} from "antlr4ts/tree";
 import {Machine, MachineGUIAction} from "./machine";
-import {HumansVisitor} from "./generated/HumansVisitor";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 
 export class Parser {
@@ -15,9 +15,9 @@ export class Parser {
 
   parse(input: string): MachineGUIAction[] {
     const inputStream = CharStreams.fromString(input);
-    const lexer = new HumansLexer(inputStream);
+    const lexer = new ArisLexer(inputStream);
     const tokenStream = new CommonTokenStream(lexer);
-    const parser = new HumansParser(tokenStream);
+    const parser = new ArisParser(tokenStream);
     const visitor = new MyVisitor(this.machine);
 
     visitor.visit(parser.program())
@@ -26,7 +26,7 @@ export class Parser {
   }
 }
 
-class MyVisitor implements HumansVisitor<void> {
+class MyVisitor implements ArisVisitor<void> {
   private readonly machine: Machine
   private continueProgram = true
 

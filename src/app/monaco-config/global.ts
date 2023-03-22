@@ -1,4 +1,4 @@
-import {MONACO_CUSTOM_LANGUAGE_NAME, MONACO_CUSTOM_THEME_NAME} from "./monacoEditorConfig";
+import {MONACO_ARIS_LANGUAGE_NAME, MONACO_ARIS_THEME_NAME} from "./monacoEditorConfig";
 import {delay, Observable, ReplaySubject} from "rxjs";
 import {Injectable} from "@angular/core";
 
@@ -21,8 +21,8 @@ export class MonacoVariablesFactory {
 @Injectable()
 export class MonacoVariables {
   static readonly MONACO_EDITOR_OPTIONS = {
-    theme: MONACO_CUSTOM_THEME_NAME,
-    language: MONACO_CUSTOM_LANGUAGE_NAME,
+    theme: MONACO_ARIS_THEME_NAME,
+    language: MONACO_ARIS_LANGUAGE_NAME,
     scrollBeyondLastLine: false,
     minimap: {enabled: false},
     fontFamily: "Consolas, monospace",

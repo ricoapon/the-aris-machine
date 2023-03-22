@@ -1,4 +1,4 @@
-// Generated from src/antlr4/Humans.g4 by ANTLR 4.9.0-SNAPSHOT
+// Generated from src/antlr4/Aris.g4 by ANTLR 4.9.0-SNAPSHOT
 
 
 import { ATN } from "antlr4ts/atn/ATN";
@@ -23,11 +23,11 @@ import { VocabularyImpl } from "antlr4ts/VocabularyImpl";
 
 import * as Utils from "antlr4ts/misc/Utils";
 
-import { HumansListener } from "./HumansListener";
-import { HumansVisitor } from "./HumansVisitor";
+import { ArisListener } from "./ArisListener";
+import { ArisVisitor } from "./ArisVisitor";
 
 
-export class HumansParser extends Parser {
+export class ArisParser extends Parser {
 	public static readonly ADD = 1;
 	public static readonly COPY = 2;
 	public static readonly MOVE = 3;
@@ -67,23 +67,23 @@ export class HumansParser extends Parser {
 		"CURLY_CLOSED", "MEMORY_SLOT", "MEMORY_SLOT_NUMBER", "MEMORY_SLOT_NAME", 
 		"NEWLINE", "LINE_COMMENT", "UNIDENTIFIED", "WHITESPACE", "ERROR_CHARACTER",
 	];
-	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(HumansParser._LITERAL_NAMES, HumansParser._SYMBOLIC_NAMES, []);
+	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(ArisParser._LITERAL_NAMES, ArisParser._SYMBOLIC_NAMES, []);
 
 	// @Override
 	// @NotNull
 	public get vocabulary(): Vocabulary {
-		return HumansParser.VOCABULARY;
+		return ArisParser.VOCABULARY;
 	}
 	// tslint:enable:no-trailing-whitespace
 
 	// @Override
-	public get grammarFileName(): string { return "Humans.g4"; }
+	public get grammarFileName(): string { return "Aris.g4"; }
 
 	// @Override
-	public get ruleNames(): string[] { return HumansParser.ruleNames; }
+	public get ruleNames(): string[] { return ArisParser.ruleNames; }
 
 	// @Override
-	public get serializedATN(): string { return HumansParser._serializedATN; }
+	public get serializedATN(): string { return ArisParser._serializedATN; }
 
 	protected createFailedPredicateException(predicate?: string, message?: string): FailedPredicateException {
 		return new FailedPredicateException(this, predicate, message);
@@ -91,12 +91,12 @@ export class HumansParser extends Parser {
 
 	constructor(input: TokenStream) {
 		super(input);
-		this._interp = new ParserATNSimulator(HumansParser._ATN, this);
+		this._interp = new ParserATNSimulator(ArisParser._ATN, this);
 	}
 	// @RuleVersion(0)
 	public program(): ProgramContext {
 		let _localctx: ProgramContext = new ProgramContext(this._ctx, this.state);
-		this.enterRule(_localctx, 0, HumansParser.RULE_program);
+		this.enterRule(_localctx, 0, ArisParser.RULE_program);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -114,9 +114,9 @@ export class HumansParser extends Parser {
 				this.state = 19;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << HumansParser.ADD) | (1 << HumansParser.COPY) | (1 << HumansParser.MOVE) | (1 << HumansParser.LOOP))) !== 0));
+			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ArisParser.ADD) | (1 << ArisParser.COPY) | (1 << ArisParser.MOVE) | (1 << ArisParser.LOOP))) !== 0));
 			this.state = 21;
-			this.match(HumansParser.EOF);
+			this.match(ArisParser.EOF);
 			}
 		}
 		catch (re) {
@@ -136,7 +136,7 @@ export class HumansParser extends Parser {
 	// @RuleVersion(0)
 	public line(): LineContext {
 		let _localctx: LineContext = new LineContext(this._ctx, this.state);
-		this.enterRule(_localctx, 2, HumansParser.RULE_line);
+		this.enterRule(_localctx, 2, ArisParser.RULE_line);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
@@ -146,11 +146,11 @@ export class HumansParser extends Parser {
 			this.state = 27;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la === HumansParser.NEWLINE) {
+			while (_la === ArisParser.NEWLINE) {
 				{
 				{
 				this.state = 24;
-				this.match(HumansParser.NEWLINE);
+				this.match(ArisParser.NEWLINE);
 				}
 				}
 				this.state = 29;
@@ -176,7 +176,7 @@ export class HumansParser extends Parser {
 	// @RuleVersion(0)
 	public expression(): ExpressionContext {
 		let _localctx: ExpressionContext = new ExpressionContext(this._ctx, this.state);
-		this.enterRule(_localctx, 4, HumansParser.RULE_expression);
+		this.enterRule(_localctx, 4, ArisParser.RULE_expression);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -201,33 +201,33 @@ export class HumansParser extends Parser {
 	// @RuleVersion(0)
 	public action(): ActionContext {
 		let _localctx: ActionContext = new ActionContext(this._ctx, this.state);
-		this.enterRule(_localctx, 6, HumansParser.RULE_action);
+		this.enterRule(_localctx, 6, ArisParser.RULE_action);
 		try {
 			this.state = 36;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case HumansParser.COPY:
+			case ArisParser.COPY:
 				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 32;
 				this.copy();
 				}
 				break;
-			case HumansParser.MOVE:
+			case ArisParser.MOVE:
 				this.enterOuterAlt(_localctx, 2);
 				{
 				this.state = 33;
 				this.move();
 				}
 				break;
-			case HumansParser.ADD:
+			case ArisParser.ADD:
 				this.enterOuterAlt(_localctx, 3);
 				{
 				this.state = 34;
 				this.add();
 				}
 				break;
-			case HumansParser.LOOP:
+			case ArisParser.LOOP:
 				this.enterOuterAlt(_localctx, 4);
 				{
 				this.state = 35;
@@ -255,16 +255,16 @@ export class HumansParser extends Parser {
 	// @RuleVersion(0)
 	public move(): MoveContext {
 		let _localctx: MoveContext = new MoveContext(this._ctx, this.state);
-		this.enterRule(_localctx, 8, HumansParser.RULE_move);
+		this.enterRule(_localctx, 8, ArisParser.RULE_move);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 38;
-			this.match(HumansParser.MOVE);
+			this.match(ArisParser.MOVE);
 			this.state = 39;
 			_la = this._input.LA(1);
-			if (!(_la === HumansParser.INPUT || _la === HumansParser.MEMORY_SLOT)) {
+			if (!(_la === ArisParser.INPUT || _la === ArisParser.MEMORY_SLOT)) {
 			this._errHandler.recoverInline(this);
 			} else {
 				if (this._input.LA(1) === Token.EOF) {
@@ -275,10 +275,10 @@ export class HumansParser extends Parser {
 				this.consume();
 			}
 			this.state = 40;
-			this.match(HumansParser.TO);
+			this.match(ArisParser.TO);
 			this.state = 41;
 			_la = this._input.LA(1);
-			if (!(_la === HumansParser.OUTPUT || _la === HumansParser.MEMORY_SLOT)) {
+			if (!(_la === ArisParser.OUTPUT || _la === ArisParser.MEMORY_SLOT)) {
 			this._errHandler.recoverInline(this);
 			} else {
 				if (this._input.LA(1) === Token.EOF) {
@@ -307,18 +307,18 @@ export class HumansParser extends Parser {
 	// @RuleVersion(0)
 	public copy(): CopyContext {
 		let _localctx: CopyContext = new CopyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 10, HumansParser.RULE_copy);
+		this.enterRule(_localctx, 10, ArisParser.RULE_copy);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 43;
-			this.match(HumansParser.COPY);
+			this.match(ArisParser.COPY);
 			this.state = 44;
-			this.match(HumansParser.MEMORY_SLOT);
+			this.match(ArisParser.MEMORY_SLOT);
 			this.state = 45;
-			this.match(HumansParser.TO);
+			this.match(ArisParser.TO);
 			this.state = 46;
-			this.match(HumansParser.MEMORY_SLOT);
+			this.match(ArisParser.MEMORY_SLOT);
 			}
 		}
 		catch (re) {
@@ -338,18 +338,18 @@ export class HumansParser extends Parser {
 	// @RuleVersion(0)
 	public add(): AddContext {
 		let _localctx: AddContext = new AddContext(this._ctx, this.state);
-		this.enterRule(_localctx, 12, HumansParser.RULE_add);
+		this.enterRule(_localctx, 12, ArisParser.RULE_add);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 48;
-			this.match(HumansParser.ADD);
+			this.match(ArisParser.ADD);
 			this.state = 49;
-			this.match(HumansParser.MEMORY_SLOT);
+			this.match(ArisParser.MEMORY_SLOT);
 			this.state = 50;
-			this.match(HumansParser.TO);
+			this.match(ArisParser.TO);
 			this.state = 51;
-			this.match(HumansParser.MEMORY_SLOT);
+			this.match(ArisParser.MEMORY_SLOT);
 			}
 		}
 		catch (re) {
@@ -369,21 +369,21 @@ export class HumansParser extends Parser {
 	// @RuleVersion(0)
 	public loop(): LoopContext {
 		let _localctx: LoopContext = new LoopContext(this._ctx, this.state);
-		this.enterRule(_localctx, 14, HumansParser.RULE_loop);
+		this.enterRule(_localctx, 14, ArisParser.RULE_loop);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 53;
-			this.match(HumansParser.LOOP);
+			this.match(ArisParser.LOOP);
 			this.state = 54;
-			this.match(HumansParser.CURLY_OPEN);
+			this.match(ArisParser.CURLY_OPEN);
 			this.state = 55;
-			this.match(HumansParser.NEWLINE);
+			this.match(ArisParser.NEWLINE);
 			this.state = 59;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << HumansParser.ADD) | (1 << HumansParser.COPY) | (1 << HumansParser.MOVE) | (1 << HumansParser.LOOP))) !== 0)) {
+			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ArisParser.ADD) | (1 << ArisParser.COPY) | (1 << ArisParser.MOVE) | (1 << ArisParser.LOOP))) !== 0)) {
 				{
 				{
 				this.state = 56;
@@ -395,7 +395,7 @@ export class HumansParser extends Parser {
 				_la = this._input.LA(1);
 			}
 			this.state = 62;
-			this.match(HumansParser.CURLY_CLOSED);
+			this.match(ArisParser.CURLY_CLOSED);
 			}
 		}
 		catch (re) {
@@ -443,17 +443,17 @@ export class HumansParser extends Parser {
 		"@A\x07\v\x02\x02A\x11\x03\x02\x02\x02\x06\x15\x1D&=";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
-		if (!HumansParser.__ATN) {
-			HumansParser.__ATN = new ATNDeserializer().deserialize(Utils.toCharArray(HumansParser._serializedATN));
+		if (!ArisParser.__ATN) {
+			ArisParser.__ATN = new ATNDeserializer().deserialize(Utils.toCharArray(ArisParser._serializedATN));
 		}
 
-		return HumansParser.__ATN;
+		return ArisParser.__ATN;
 	}
 
 }
 
 export class ProgramContext extends ParserRuleContext {
-	public EOF(): TerminalNode { return this.getToken(HumansParser.EOF, 0); }
+	public EOF(): TerminalNode { return this.getToken(ArisParser.EOF, 0); }
 	public line(): LineContext[];
 	public line(i: number): LineContext;
 	public line(i?: number): LineContext | LineContext[] {
@@ -467,21 +467,21 @@ export class ProgramContext extends ParserRuleContext {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_program; }
+	public get ruleIndex(): number { return ArisParser.RULE_program; }
 	// @Override
-	public enterRule(listener: HumansListener): void {
+	public enterRule(listener: ArisListener): void {
 		if (listener.enterProgram) {
 			listener.enterProgram(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: HumansListener): void {
+	public exitRule(listener: ArisListener): void {
 		if (listener.exitProgram) {
 			listener.exitProgram(this);
 		}
 	}
 	// @Override
-	public accept<Result>(visitor: HumansVisitor<Result>): Result {
+	public accept<Result>(visitor: ArisVisitor<Result>): Result {
 		if (visitor.visitProgram) {
 			return visitor.visitProgram(this);
 		} else {
@@ -499,30 +499,30 @@ export class LineContext extends ParserRuleContext {
 	public NEWLINE(i: number): TerminalNode;
 	public NEWLINE(i?: number): TerminalNode | TerminalNode[] {
 		if (i === undefined) {
-			return this.getTokens(HumansParser.NEWLINE);
+			return this.getTokens(ArisParser.NEWLINE);
 		} else {
-			return this.getToken(HumansParser.NEWLINE, i);
+			return this.getToken(ArisParser.NEWLINE, i);
 		}
 	}
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_line; }
+	public get ruleIndex(): number { return ArisParser.RULE_line; }
 	// @Override
-	public enterRule(listener: HumansListener): void {
+	public enterRule(listener: ArisListener): void {
 		if (listener.enterLine) {
 			listener.enterLine(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: HumansListener): void {
+	public exitRule(listener: ArisListener): void {
 		if (listener.exitLine) {
 			listener.exitLine(this);
 		}
 	}
 	// @Override
-	public accept<Result>(visitor: HumansVisitor<Result>): Result {
+	public accept<Result>(visitor: ArisVisitor<Result>): Result {
 		if (visitor.visitLine) {
 			return visitor.visitLine(this);
 		} else {
@@ -540,21 +540,21 @@ export class ExpressionContext extends ParserRuleContext {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_expression; }
+	public get ruleIndex(): number { return ArisParser.RULE_expression; }
 	// @Override
-	public enterRule(listener: HumansListener): void {
+	public enterRule(listener: ArisListener): void {
 		if (listener.enterExpression) {
 			listener.enterExpression(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: HumansListener): void {
+	public exitRule(listener: ArisListener): void {
 		if (listener.exitExpression) {
 			listener.exitExpression(this);
 		}
 	}
 	// @Override
-	public accept<Result>(visitor: HumansVisitor<Result>): Result {
+	public accept<Result>(visitor: ArisVisitor<Result>): Result {
 		if (visitor.visitExpression) {
 			return visitor.visitExpression(this);
 		} else {
@@ -581,21 +581,21 @@ export class ActionContext extends ParserRuleContext {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_action; }
+	public get ruleIndex(): number { return ArisParser.RULE_action; }
 	// @Override
-	public enterRule(listener: HumansListener): void {
+	public enterRule(listener: ArisListener): void {
 		if (listener.enterAction) {
 			listener.enterAction(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: HumansListener): void {
+	public exitRule(listener: ArisListener): void {
 		if (listener.exitAction) {
 			listener.exitAction(this);
 		}
 	}
 	// @Override
-	public accept<Result>(visitor: HumansVisitor<Result>): Result {
+	public accept<Result>(visitor: ArisVisitor<Result>): Result {
 		if (visitor.visitAction) {
 			return visitor.visitAction(this);
 		} else {
@@ -606,38 +606,38 @@ export class ActionContext extends ParserRuleContext {
 
 
 export class MoveContext extends ParserRuleContext {
-	public MOVE(): TerminalNode { return this.getToken(HumansParser.MOVE, 0); }
-	public TO(): TerminalNode { return this.getToken(HumansParser.TO, 0); }
+	public MOVE(): TerminalNode { return this.getToken(ArisParser.MOVE, 0); }
+	public TO(): TerminalNode { return this.getToken(ArisParser.TO, 0); }
 	public MEMORY_SLOT(): TerminalNode[];
 	public MEMORY_SLOT(i: number): TerminalNode;
 	public MEMORY_SLOT(i?: number): TerminalNode | TerminalNode[] {
 		if (i === undefined) {
-			return this.getTokens(HumansParser.MEMORY_SLOT);
+			return this.getTokens(ArisParser.MEMORY_SLOT);
 		} else {
-			return this.getToken(HumansParser.MEMORY_SLOT, i);
+			return this.getToken(ArisParser.MEMORY_SLOT, i);
 		}
 	}
-	public INPUT(): TerminalNode | undefined { return this.tryGetToken(HumansParser.INPUT, 0); }
-	public OUTPUT(): TerminalNode | undefined { return this.tryGetToken(HumansParser.OUTPUT, 0); }
+	public INPUT(): TerminalNode | undefined { return this.tryGetToken(ArisParser.INPUT, 0); }
+	public OUTPUT(): TerminalNode | undefined { return this.tryGetToken(ArisParser.OUTPUT, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_move; }
+	public get ruleIndex(): number { return ArisParser.RULE_move; }
 	// @Override
-	public enterRule(listener: HumansListener): void {
+	public enterRule(listener: ArisListener): void {
 		if (listener.enterMove) {
 			listener.enterMove(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: HumansListener): void {
+	public exitRule(listener: ArisListener): void {
 		if (listener.exitMove) {
 			listener.exitMove(this);
 		}
 	}
 	// @Override
-	public accept<Result>(visitor: HumansVisitor<Result>): Result {
+	public accept<Result>(visitor: ArisVisitor<Result>): Result {
 		if (visitor.visitMove) {
 			return visitor.visitMove(this);
 		} else {
@@ -648,36 +648,36 @@ export class MoveContext extends ParserRuleContext {
 
 
 export class CopyContext extends ParserRuleContext {
-	public COPY(): TerminalNode { return this.getToken(HumansParser.COPY, 0); }
+	public COPY(): TerminalNode { return this.getToken(ArisParser.COPY, 0); }
 	public MEMORY_SLOT(): TerminalNode[];
 	public MEMORY_SLOT(i: number): TerminalNode;
 	public MEMORY_SLOT(i?: number): TerminalNode | TerminalNode[] {
 		if (i === undefined) {
-			return this.getTokens(HumansParser.MEMORY_SLOT);
+			return this.getTokens(ArisParser.MEMORY_SLOT);
 		} else {
-			return this.getToken(HumansParser.MEMORY_SLOT, i);
+			return this.getToken(ArisParser.MEMORY_SLOT, i);
 		}
 	}
-	public TO(): TerminalNode { return this.getToken(HumansParser.TO, 0); }
+	public TO(): TerminalNode { return this.getToken(ArisParser.TO, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_copy; }
+	public get ruleIndex(): number { return ArisParser.RULE_copy; }
 	// @Override
-	public enterRule(listener: HumansListener): void {
+	public enterRule(listener: ArisListener): void {
 		if (listener.enterCopy) {
 			listener.enterCopy(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: HumansListener): void {
+	public exitRule(listener: ArisListener): void {
 		if (listener.exitCopy) {
 			listener.exitCopy(this);
 		}
 	}
 	// @Override
-	public accept<Result>(visitor: HumansVisitor<Result>): Result {
+	public accept<Result>(visitor: ArisVisitor<Result>): Result {
 		if (visitor.visitCopy) {
 			return visitor.visitCopy(this);
 		} else {
@@ -688,36 +688,36 @@ export class CopyContext extends ParserRuleContext {
 
 
 export class AddContext extends ParserRuleContext {
-	public ADD(): TerminalNode { return this.getToken(HumansParser.ADD, 0); }
+	public ADD(): TerminalNode { return this.getToken(ArisParser.ADD, 0); }
 	public MEMORY_SLOT(): TerminalNode[];
 	public MEMORY_SLOT(i: number): TerminalNode;
 	public MEMORY_SLOT(i?: number): TerminalNode | TerminalNode[] {
 		if (i === undefined) {
-			return this.getTokens(HumansParser.MEMORY_SLOT);
+			return this.getTokens(ArisParser.MEMORY_SLOT);
 		} else {
-			return this.getToken(HumansParser.MEMORY_SLOT, i);
+			return this.getToken(ArisParser.MEMORY_SLOT, i);
 		}
 	}
-	public TO(): TerminalNode { return this.getToken(HumansParser.TO, 0); }
+	public TO(): TerminalNode { return this.getToken(ArisParser.TO, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_add; }
+	public get ruleIndex(): number { return ArisParser.RULE_add; }
 	// @Override
-	public enterRule(listener: HumansListener): void {
+	public enterRule(listener: ArisListener): void {
 		if (listener.enterAdd) {
 			listener.enterAdd(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: HumansListener): void {
+	public exitRule(listener: ArisListener): void {
 		if (listener.exitAdd) {
 			listener.exitAdd(this);
 		}
 	}
 	// @Override
-	public accept<Result>(visitor: HumansVisitor<Result>): Result {
+	public accept<Result>(visitor: ArisVisitor<Result>): Result {
 		if (visitor.visitAdd) {
 			return visitor.visitAdd(this);
 		} else {
@@ -728,10 +728,10 @@ export class AddContext extends ParserRuleContext {
 
 
 export class LoopContext extends ParserRuleContext {
-	public LOOP(): TerminalNode { return this.getToken(HumansParser.LOOP, 0); }
-	public CURLY_OPEN(): TerminalNode { return this.getToken(HumansParser.CURLY_OPEN, 0); }
-	public NEWLINE(): TerminalNode { return this.getToken(HumansParser.NEWLINE, 0); }
-	public CURLY_CLOSED(): TerminalNode { return this.getToken(HumansParser.CURLY_CLOSED, 0); }
+	public LOOP(): TerminalNode { return this.getToken(ArisParser.LOOP, 0); }
+	public CURLY_OPEN(): TerminalNode { return this.getToken(ArisParser.CURLY_OPEN, 0); }
+	public NEWLINE(): TerminalNode { return this.getToken(ArisParser.NEWLINE, 0); }
+	public CURLY_CLOSED(): TerminalNode { return this.getToken(ArisParser.CURLY_CLOSED, 0); }
 	public line(): LineContext[];
 	public line(i: number): LineContext;
 	public line(i?: number): LineContext | LineContext[] {
@@ -745,21 +745,21 @@ export class LoopContext extends ParserRuleContext {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return HumansParser.RULE_loop; }
+	public get ruleIndex(): number { return ArisParser.RULE_loop; }
 	// @Override
-	public enterRule(listener: HumansListener): void {
+	public enterRule(listener: ArisListener): void {
 		if (listener.enterLoop) {
 			listener.enterLoop(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: HumansListener): void {
+	public exitRule(listener: ArisListener): void {
 		if (listener.exitLoop) {
 			listener.exitLoop(this);
 		}
 	}
 	// @Override
-	public accept<Result>(visitor: HumansVisitor<Result>): Result {
+	public accept<Result>(visitor: ArisVisitor<Result>): Result {
 		if (visitor.visitLoop) {
 			return visitor.visitLoop(this);
 		} else {

@@ -1,4 +1,4 @@
-grammar Humans;
+grammar Aris;
 
 program
  : line+ EOF

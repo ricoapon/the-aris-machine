@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "humans-clone": {
+    "the-aris-machine": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/humans-clone",
+            "outputPath": "dist/the-aris-machine",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "humans-clone:build:production"
+              "browserTarget": "the-aris-machine:build:production"
             },
             "development": {
-              "browserTarget": "humans-clone:build:development"
+              "browserTarget": "the-aris-machine:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "humans-clone:build"
+            "browserTarget": "the-aris-machine:build"
           }
         },
         "test": {

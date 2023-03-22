@@ -123,7 +123,7 @@ function createDictionary(monaco: any): DictionaryItem[] {
     {
       label: 'loop',
       documentation: "#### loop { [code block] }\n---\n" +
-        "Repeats the  nested code block until the `break` command is used. An example:\n```humans-language\nloop {\n  move input to 0\n}\n```\n",
+        "Repeats the  nested code block until the `break` command is used. An example:\n```aris\nloop {\n  move input to 0\n}\n```\n",
       suggestion: {
         kind: monaco.languages.CompletionItemKind.Snippet,
         insertText: 'loop {\n  $0\n}',

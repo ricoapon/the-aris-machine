@@ -1,4 +1,4 @@
-// Generated from src/antlr4/Humans.g4 by ANTLR 4.9.0-SNAPSHOT
+// Generated from src/antlr4/Aris.g4 by ANTLR 4.9.0-SNAPSHOT
 
 
 import { ATN } from "antlr4ts/atn/ATN";
@@ -15,7 +15,7 @@ import { VocabularyImpl } from "antlr4ts/VocabularyImpl";
 import * as Utils from "antlr4ts/misc/Utils";
 
 
-export class HumansLexer extends Lexer {
+export class ArisLexer extends Lexer {
 	public static readonly ADD = 1;
 	public static readonly COPY = 2;
 	public static readonly MOVE = 3;
@@ -59,35 +59,35 @@ export class HumansLexer extends Lexer {
 		"CURLY_CLOSED", "MEMORY_SLOT", "MEMORY_SLOT_NUMBER", "MEMORY_SLOT_NAME", 
 		"NEWLINE", "LINE_COMMENT", "UNIDENTIFIED", "WHITESPACE", "ERROR_CHARACTER",
 	];
-	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(HumansLexer._LITERAL_NAMES, HumansLexer._SYMBOLIC_NAMES, []);
+	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(ArisLexer._LITERAL_NAMES, ArisLexer._SYMBOLIC_NAMES, []);
 
 	// @Override
 	// @NotNull
 	public get vocabulary(): Vocabulary {
-		return HumansLexer.VOCABULARY;
+		return ArisLexer.VOCABULARY;
 	}
 	// tslint:enable:no-trailing-whitespace
 
 
 	constructor(input: CharStream) {
 		super(input);
-		this._interp = new LexerATNSimulator(HumansLexer._ATN, this);
+		this._interp = new LexerATNSimulator(ArisLexer._ATN, this);
 	}
 
 	// @Override
-	public get grammarFileName(): string { return "Humans.g4"; }
+	public get grammarFileName(): string { return "Aris.g4"; }
 
 	// @Override
-	public get ruleNames(): string[] { return HumansLexer.ruleNames; }
+	public get ruleNames(): string[] { return ArisLexer.ruleNames; }
 
 	// @Override
-	public get serializedATN(): string { return HumansLexer._serializedATN; }
+	public get serializedATN(): string { return ArisLexer._serializedATN; }
 
 	// @Override
-	public get channelNames(): string[] { return HumansLexer.channelNames; }
+	public get channelNames(): string[] { return ArisLexer.channelNames; }
 
 	// @Override
-	public get modeNames(): string[] { return HumansLexer.modeNames; }
+	public get modeNames(): string[] { return ArisLexer.modeNames; }
 
 	public static readonly _serializedATN: string =
 		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x02\x13{\b\x01\x04" +
@@ -143,11 +143,11 @@ export class HumansLexer extends Lexer {
 		"\x02\v\x02NSX[_ais\x03\b\x02\x02";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
-		if (!HumansLexer.__ATN) {
-			HumansLexer.__ATN = new ATNDeserializer().deserialize(Utils.toCharArray(HumansLexer._serializedATN));
+		if (!ArisLexer.__ATN) {
+			ArisLexer.__ATN = new ATNDeserializer().deserialize(Utils.toCharArray(ArisLexer._serializedATN));
 		}
 
-		return HumansLexer.__ATN;
+		return ArisLexer.__ATN;
 	}
 
 }

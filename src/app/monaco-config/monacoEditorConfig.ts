@@ -4,13 +4,13 @@ import {loadSyntaxHighlighting} from "./syntax-highlighting";
 import {MonacoVariables} from "./global";
 
 declare let monaco: any;
-export const MONACO_CUSTOM_LANGUAGE_NAME = 'humans-language'
-export const MONACO_CUSTOM_THEME_NAME = 'humans-theme'
+export const MONACO_ARIS_LANGUAGE_NAME = 'aris'
+export const MONACO_ARIS_THEME_NAME = 'aris-theme'
 
 export function myMonacoLoad() {
-  monaco.languages.register({ id: MONACO_CUSTOM_LANGUAGE_NAME });
-  loadAutoComplete(monaco, MONACO_CUSTOM_LANGUAGE_NAME)
-  loadSyntaxHighlighting(monaco, MONACO_CUSTOM_LANGUAGE_NAME, MONACO_CUSTOM_THEME_NAME)
+  monaco.languages.register({ id: MONACO_ARIS_LANGUAGE_NAME });
+  loadAutoComplete(monaco, MONACO_ARIS_LANGUAGE_NAME)
+  loadSyntaxHighlighting(monaco, MONACO_ARIS_LANGUAGE_NAME, MONACO_ARIS_THEME_NAME)
   MonacoVariables.setGlobalMonacoVariable(monaco);
 }
 

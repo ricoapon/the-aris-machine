@@ -1,5 +1,5 @@
 {
-  "name": "humans-clone",
+  "name": "the-aris-machine",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "antlr4": "antlr4ts -visitor src/antlr4/Humans.g4 -o src/app/backend/generated"
+    "antlr4": "antlr4ts -visitor src/antlr4/Aris.g4 -o src/app/backend/generated"
   },
   "private": true,
   "dependencies": {
