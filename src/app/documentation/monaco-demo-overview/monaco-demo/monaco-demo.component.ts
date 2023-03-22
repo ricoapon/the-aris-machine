@@ -33,6 +33,14 @@ export class MonacoDemoComponent implements OnInit, OnDestroy {
   }
 
   play() {
+    // We execute this method after the page is loaded. However, we don't really know when
+    // the page is loaded, so we just use setTimeout. It could be that the user navigated
+    // away from the page in this short period. If this is the case, just do nothing.
+    if (this.container == undefined || this.container.nativeElement == undefined ||
+      this.container!.nativeElement!.querySelector('textarea') == null) {
+      return
+    }
+
     // If we disable the text area, there is no way for the user to disturb the actions.
     // Since it is deeply nested in the container, we search it like this.
     this.container!.nativeElement!.querySelector('textarea').disabled = true
