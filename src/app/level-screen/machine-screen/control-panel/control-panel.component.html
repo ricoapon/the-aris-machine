@@ -1,8 +1,0 @@
-<div class="control-panel-container">
-  <div class="control-panel">
-    <button [disabled]="!canBeStopped()" class="btn-stop" (click)="stop()"><i class="bi bi-stop-fill"></i></button>
-    <button [disabled]="!canBeStarted()" class="btn-start" (click)="start()"><i class="bi bi-play-fill"></i></button>
-    <button [disabled]="isFinished()" class="btn-enter" (click)="singleStep()"><i class="bi bi-arrow-return-right"></i></button>
-    <input type="range" min="1" max="100" [(ngModel)]="speedUpFactor" (change)="updateDelay()" class="slider" id="myRange">
-  </div>
-</div>
