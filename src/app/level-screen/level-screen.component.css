@@ -47,9 +47,24 @@
   align-items: center;
 }
 
+.resize-slider {
+  height: 100%;
+  cursor: ew-resize;
+}
+
+.resize-slider::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 100%;
+  background: black;
+  margin: 0 auto;
+}
+
 .machine-container {
   flex: 0 0 auto;
-  width: calc(60% - 4px);
+  /* Minus border and resize width. */
+  width: calc(60% - 8px);
   border: 2px solid;
   border-image-slice: 1;
   border-image-source: linear-gradient(180deg, rgba(24,190,253,1) 0%, rgba(197,54,108,1) 50%);

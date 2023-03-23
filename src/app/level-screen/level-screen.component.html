@@ -1,6 +1,6 @@
 <div class="main-container">
-  <div class="fixed-width-height-container">
-    <div class="editor-container">
+  <div class="fixed-width-height-container" #container>
+    <div class="editor-container" #left>
       <div class="header">
         <div class="header-title-hamburger">
           <div class="hamburger">
@@ -15,7 +15,11 @@
         <app-editor></app-editor>
       </div>
     </div>
-    <div class="machine-container">
+
+    <div class="resize-slider" draggable="true" (dragstart)="onDragStart()" (drag)="onDrag($event)" (dragend)="onDragEnd()">
+    </div>
+
+    <div class="machine-container" #right>
       <app-machine-screen #machineScreenComponent></app-machine-screen>
     </div>
   </div>
