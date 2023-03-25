@@ -55,6 +55,7 @@ code {
   padding: 0 4px;
   font-family: Consolas, monospace;
   font-weight: bold;
+  color: black;
 }
 
 .hover-contents h4, .suggest-details h4 {
