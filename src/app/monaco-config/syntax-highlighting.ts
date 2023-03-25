@@ -11,13 +11,15 @@ export function loadSyntaxHighlighting(monaco: any, languageName: string, themeN
     }
   });
 
-  // Common colors we use for tokens.
+  // Common colors we use in our theme.
   const black = '#000000'
   const white = '#FFFFFF'
-  const purple = '#A600E0';
   const blue = '#00AAE0'
-  const green = '#3AE000';
-  const red = '#E03600';
+  const red = '#C5366C'
+  const green = '#57A773'
+  // const purple = '#A600E0';
+  // const green = '#3AE000';
+
 
   monaco.editor.defineTheme(themeName, {
     base: 'vs-dark',
@@ -35,9 +37,9 @@ export function loadSyntaxHighlighting(monaco: any, languageName: string, themeN
       "editor.inactiveSelectionBackground": black,
     },
     rules: [
-      {token: 'function', foreground: purple, fontStyle: 'bold'},
-      {token: 'input-output', foreground: green},
-      {token: 'memory-slot', foreground: green},
+      {token: 'function', foreground: green}, // I can experiment with "fontStyle: 'bold'" and other stuff to spice it up.
+      {token: 'input-output', foreground: red},
+      {token: 'memory-slot', foreground: red},
       {token: 'loop', foreground: blue},
       {token: 'bracket', foreground: blue},
     ]
