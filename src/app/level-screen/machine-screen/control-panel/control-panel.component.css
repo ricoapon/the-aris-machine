@@ -14,8 +14,8 @@
 }
 
 button {
-  padding: 24px 32px;
-  font-size: 32px;
+  padding: 16px 24px;
+  font-size: 30px;
   color: white;
 }
 
@@ -24,12 +24,15 @@ button:disabled {
 }
 
 .btn-stop {
-  background-color: #E03600;
+  background-color: #C5366C;
 }
 .btn-start {
-  background-color: #3AE000;
+  background-color: #57A773;
 }
 .btn-enter {
   background-color: #00AAE0;
 }
 
+.slider {
+  width: 80px;
+}
