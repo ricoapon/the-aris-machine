@@ -49,8 +49,9 @@ export class ControlPanelComponent {
     this.machineGuiExecutor.singleStep()
   }
 
-  updateDelay() {
+  updateSpeedupFactor(factor: number) {
+    this.speedUpFactor = factor;
     // Start of slider means 1000ms delay and end of slider means 10ms delay.
-    this.machineGuiExecutor.updateDelayInMs(1000 - (this.speedUpFactor * 10))
+    this.machineGuiExecutor.updateDelayInMs(1000 / factor)
   }
 }

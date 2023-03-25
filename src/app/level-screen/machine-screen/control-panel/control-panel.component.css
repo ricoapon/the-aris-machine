@@ -14,9 +14,10 @@
 }
 
 button {
-  padding: 16px 24px;
   font-size: 30px;
   color: white;
+  width: 70px;
+  height: 70px;
 }
 
 button:disabled {
@@ -33,6 +34,23 @@ button:disabled {
   background-color: #00AAE0;
 }
 
-.slider {
-  width: 80px;
+.speed-control {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.speed-control > button {
+  background-color: #C5366C;
+  font-size: 12px;
+  padding: 0;
+  color: black;
+  width: 35px;
+  height: 35px;
+}
+
+.speed-control > button.selected {
+  background-color: #18BEFD;
+  color: white;
 }
