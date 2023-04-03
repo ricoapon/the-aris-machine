@@ -22,6 +22,7 @@ import {LanguageDocumentationComponent} from './documentation/language-documenta
 import {MonacoVariablesFactory} from "./monaco-config/global";
 import {NavigationComponent} from './navigation/navigation.component';
 import {DocumentationComponent} from './documentation/documentation.component';
+import {CookieService} from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import {DocumentationComponent} from './documentation/documentation.component';
     MonacoEditorModule.forRoot(monacoEditorConfig),
   ],
   providers: [
-    MonacoVariablesFactory
+    MonacoVariablesFactory,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

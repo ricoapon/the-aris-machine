@@ -2,17 +2,22 @@ import {Machine, MachineGUIAction} from "./machine";
 import {Level} from "./levels";
 import {Injectable} from "@angular/core";
 import {Parser} from "./parser";
+import {MyCookieService} from "../my-cookie-service";
 
 @Injectable({providedIn: 'root'})
 export class MachineGuiExecutor{
   private determineCode: () => string;
   private level: Level;
   private machineGUI: MachineGUI;
-  private delayInMs: number = 1000;
+  private delayInMs: number;
 
   private actions: MachineGUIAction[] = []
   private timer: NodeJS.Timer | undefined
   private finished: boolean = false
+
+  constructor(private myCookieService: MyCookieService) {
+    this.delayInMs = 1000 / myCookieService.getSpeedUpFactor()
+  }
 
   setDetermineCode(determineCode: () => string) {
     this.determineCode = determineCode;
