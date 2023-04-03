@@ -10,7 +10,7 @@ import {MonacoVariables, MonacoVariablesFactory} from "../../monaco-config/globa
 export class EditorComponent {
   readonly monacoVariables: MonacoVariables;
   readonly options: any;
-  content = 'move input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\nmove input to 0\nmove 0 to output\n';
+  content = '';
 
   constructor(private machineGuiExecutor: MachineGuiExecutor, private monacoVariablesFactory: MonacoVariablesFactory) {
     this.monacoVariables = monacoVariablesFactory.get()
