@@ -1,7 +1,8 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
 import {MachineGUIAction} from "../../backend/machine";
 import {Level} from "../../backend/levels";
-import {MachineGUI} from "../../backend/machine-gui-executor";
+import {MachineGUI, MachineGuiExecutor} from "../../backend/machine-gui-executor";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-machine-screen',
@@ -12,8 +13,12 @@ export class MachineScreenComponent implements MachineGUI {
   input: number[];
   output: number[];
   memorySlots: (number | undefined)[];
+  @ViewChild('finishedDialog') finishedDialog: ElementRef<HTMLDialogElement>
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private changeDetectorRef: ChangeDetectorRef,
+              private machineGuiExecutor: MachineGuiExecutor,
+              private route: ActivatedRoute,
+              private router: Router) {
     // Add some values so the HTML stuff doesn't break.
     this.input = []
     this.output = []
@@ -21,7 +26,7 @@ export class MachineScreenComponent implements MachineGUI {
   }
 
   rangeToN(n: number): number[] {
-    return Array(n).fill(0).map((x,i)=>i);
+    return Array(n).fill(0).map((x, i) => i);
   }
 
   determineNrOfGridColumns(): number {
@@ -53,7 +58,7 @@ export class MachineScreenComponent implements MachineGUI {
   }
 
   finished(): boolean {
-    alert('Finished the level!')
+    this.finishedDialog.nativeElement.showModal()
     return true
   }
 
@@ -78,5 +83,28 @@ export class MachineScreenComponent implements MachineGUI {
       // To make sure the output is shown in the correct order, we need to add at the start instead of at the end.
       this.output.unshift(machineGUIAction.addValueToOutput)
     }
+  }
+
+  dialogBack() {
+    this.machineGuiExecutor.stopAndClear()
+    this.finishedDialog.nativeElement.close()
+  }
+
+  dialogNext() {
+    this.route.paramMap.subscribe(paramMap => {
+      const levelId = paramMap.get('id')
+      if (levelId == null) {
+        throw Error('Level could not be found after finishing, this should not happen!')
+      }
+      const nextLevel: number = 1 + +levelId
+
+      // If we navigate normally, we don't re-initialise the entire level. If we refresh the page, it does.
+      // To mimic this, we use a trick to reload the level page.
+      // See https://stackoverflow.com/questions/40983055/how-to-reload-the-current-route-with-the-angular-2-router.
+      // We are not actually reloading the page, so we have to reset the executor though.
+      this.machineGuiExecutor.stopAndClear()
+      this.router.navigateByUrl('/', {skipLocationChange: true})
+        .then(() => this.router.navigate(['/levels/' + nextLevel]));
+    })
   }
 }

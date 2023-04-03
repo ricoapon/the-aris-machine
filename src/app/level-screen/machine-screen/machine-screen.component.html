@@ -19,3 +19,22 @@
 
   <app-control-panel class="control-panel"></app-control-panel>
 </div>
+
+<!--
+It doesn't really matter in which component the dialog element is added. To avoid prop drilling, we use this component.
+-->
+<dialog #finishedDialog>
+  <div>
+    <h1>Finished the level!</h1>
+    <div>
+      Size: 3 commands
+    </div>
+    <div>
+      Speed: 25 steps
+    </div>
+    <div>
+      <button (click)="dialogBack()">Back</button>
+      <button (click)="dialogNext()">Next level</button>
+    </div>
+  </div>
+</dialog>
