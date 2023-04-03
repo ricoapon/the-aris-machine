@@ -31,6 +31,7 @@ export class MonacoVariables {
     lineNumbersMinChars: 3, // Undocumented, see https://github.com/Microsoft/vscode/issues/30795#issuecomment-410998882.
     find: { addExtraSpaceOnTop: false },
     automaticLayout: true,
+    tabSize: 2, // Undocumented, see https://stackoverflow.com/a/75020810/7038554.
 
     // I am not sure whether we should enable or disable this. I had issues with hover/suggestion boxes that would not show
     // properly when hovering at the top of the editor. Though now it seems fixed.
