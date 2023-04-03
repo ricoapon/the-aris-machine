@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {getLevel, Level} from "../backend/levels";
 import {MachineGuiExecutor} from "../backend/machine-gui-executor";
 import {MachineScreenComponent} from "./machine-screen/machine-screen.component";
+import {MyCookieService} from "../my-cookie-service";
 
 @Component({
   selector: 'app-level-screen',
@@ -19,7 +20,10 @@ export class LevelScreenComponent implements OnInit, AfterViewInit {
   @ViewChild('left') left: ElementRef;
   @ViewChild('right') right: ElementRef;
 
-  constructor(private route: ActivatedRoute, private router: Router, private machineGuiExecutor: MachineGuiExecutor) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private machineGuiExecutor: MachineGuiExecutor,
+              private myCookieService: MyCookieService) {
   }
 
   ngOnInit(): void {
@@ -43,6 +47,11 @@ export class LevelScreenComponent implements OnInit, AfterViewInit {
     this.machineScreenComponent.detectChanges()
     this.machineGuiExecutor.setLevel(this.level)
     this.machineGuiExecutor.setMachineGUI(this.machineScreenComponent)
+
+    const leftContainerWidth = this.myCookieService.getLeftContainerWidthInPixels();
+    if (leftContainerWidth != undefined) {
+      this.resize(leftContainerWidth)
+    }
   }
 
   onDragStart(): void {
@@ -50,6 +59,11 @@ export class LevelScreenComponent implements OnInit, AfterViewInit {
   }
 
   onDragEnd(): void {
+    // The width has "px" at the end, so we remove this.
+    const widthAsString: string = this.left.nativeElement.style.width;
+    const width: number = Number(widthAsString.replace('px', ''))
+    this.myCookieService.setLeftContainerWidthInPixels(width);
+
     this.isSplitterDragging = false;
   }
 
@@ -58,12 +72,16 @@ export class LevelScreenComponent implements OnInit, AfterViewInit {
       return
     }
 
+    this.resize(event.clientX - this.left.nativeElement.offsetLeft)
+  }
+
+  private resize(leftContainerWidth: number) {
     const minWidthLeft = 400;
     const minWidthRight = 400;
 
     // Total width available is the total width minus borders and the splitter element.
     const totalWidth = this.container.nativeElement.offsetWidth - 4 - 4 * 2
-    const newWidthLeft = event.clientX - this.left.nativeElement.offsetLeft;
+    const newWidthLeft = leftContainerWidth;
     const newWidthRight = totalWidth - newWidthLeft;
 
     if (newWidthLeft < minWidthLeft || newWidthRight < minWidthRight) {
@@ -74,5 +92,6 @@ export class LevelScreenComponent implements OnInit, AfterViewInit {
     this.right.nativeElement.style.width = newWidthRight + 'px'
     this.left.nativeElement.flexGrow = 0
     this.right.nativeElement.flexGrow = 0
+
   }
 }

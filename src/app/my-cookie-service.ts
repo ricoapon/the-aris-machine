@@ -6,11 +6,15 @@ import {Injectable} from "@angular/core";
  */
 @Injectable({providedIn: 'root'})
 export class MyCookieService {
+  readonly EXPIRES_IN_DAYS = 365
+
   readonly SPEED_UP_FACTOR = 'speedUpFactor'
   readonly SPEED_UP_FACTOR_DEFAULT = 1
 
   readonly COMPLETED_LEVEL_PREFIX = 'completedLevel_'
   readonly COMPLETED_CODE_CHALLENGE_PREFIX = 'completedCodeChallenge_'
+
+  readonly LEFT_CONTAINER_WIDTH_IN_PIXELS = 'leftContainerWidthInPixels'
 
   constructor(private cookieService: CookieService) {
   }
@@ -23,7 +27,7 @@ export class MyCookieService {
   }
 
   setSpeedUpFactor(value: number) {
-    this.cookieService.set(this.SPEED_UP_FACTOR, String(value), 365)
+    this.cookieService.set(this.SPEED_UP_FACTOR, String(value), this.EXPIRES_IN_DAYS)
   }
 
   hasCompletedLevel(levelId: number): boolean {
@@ -31,7 +35,7 @@ export class MyCookieService {
   }
 
   setCompletedLevel(levelId: number) {
-    this.cookieService.set(this.COMPLETED_LEVEL_PREFIX + levelId, String('true'), 365)
+    this.cookieService.set(this.COMPLETED_LEVEL_PREFIX + levelId, String('true'), this.EXPIRES_IN_DAYS)
   }
 
   hasCompletedCodeChallenge(levelId: number): boolean {
@@ -39,6 +43,17 @@ export class MyCookieService {
   }
 
   setCompletedCodeChallenge(levelId: number) {
-    this.cookieService.set(this.COMPLETED_CODE_CHALLENGE_PREFIX + levelId, String('true'), 365)
+    this.cookieService.set(this.COMPLETED_CODE_CHALLENGE_PREFIX + levelId, String('true'), this.EXPIRES_IN_DAYS)
+  }
+
+  getLeftContainerWidthInPixels(): number | undefined {
+    if (!this.cookieService.check(this.LEFT_CONTAINER_WIDTH_IN_PIXELS)) {
+      return undefined
+    }
+    return Number(this.cookieService.get(this.LEFT_CONTAINER_WIDTH_IN_PIXELS))
+  }
+
+  setLeftContainerWidthInPixels(value: number) {
+    this.cookieService.set(this.LEFT_CONTAINER_WIDTH_IN_PIXELS, String(value), this.EXPIRES_IN_DAYS)
   }
 }
