@@ -13,10 +13,11 @@ export class MachineScreenComponent implements MachineGUI {
   input: number[];
   output: number[];
   memorySlots: (number | undefined)[];
+  maxCodeLengthScoreForStar: number;
   @ViewChild('finishedDialog') finishedDialog: ElementRef<HTMLDialogElement>
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
-              private machineGuiExecutor: MachineGuiExecutor,
+              public machineGuiExecutor: MachineGuiExecutor,
               private route: ActivatedRoute,
               private router: Router) {
     // Add some values so the HTML stuff doesn't break.
@@ -50,6 +51,7 @@ export class MachineScreenComponent implements MachineGUI {
     for (let i = 0; i < level.nrOfMemorySlots; i++) {
       this.memorySlots.push(undefined)
     }
+    this.maxCodeLengthScoreForStar = level.maxCodeLengthScoreForStar;
   }
 
   error(message: string): boolean {

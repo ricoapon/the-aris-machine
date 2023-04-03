@@ -3,20 +3,26 @@ import {Level} from "./levels";
 import {Injectable} from "@angular/core";
 import {Parser} from "./parser";
 import {MyCookieService} from "../my-cookie-service";
+import {determineCodeLengthScore} from "./determine-code-length-score";
 
 @Injectable({providedIn: 'root'})
-export class MachineGuiExecutor{
+export class MachineGuiExecutor {
   private determineCode: () => string;
   private level: Level;
   private machineGUI: MachineGUI;
   private delayInMs: number;
 
   private actions: MachineGUIAction[] = []
+  private codeLengthScore: number = 0;
   private timer: NodeJS.Timer | undefined
   private finished: boolean = false
 
   constructor(private myCookieService: MyCookieService) {
     this.delayInMs = 1000 / myCookieService.getSpeedUpFactor()
+  }
+
+  getCodeLengthScore(): number {
+    return this.codeLengthScore
   }
 
   setDetermineCode(determineCode: () => string) {
@@ -40,7 +46,10 @@ export class MachineGuiExecutor{
   }
 
   initialize() {
-    this.actions = new Parser(new Machine(this.level)).parse(this.determineCode())
+    let code = this.determineCode();
+    this.actions = new Parser(new Machine(this.level)).parse(code)
+    this.codeLengthScore = determineCodeLengthScore(code)
+
     this.finished = false
   }
 

@@ -26,11 +26,13 @@ It doesn't really matter in which component the dialog element is added. To avoi
 <dialog #finishedDialog>
   <div>
     <h1>Finished the level!</h1>
-    <div>
-      Size: 3 commands
+    <div *ngIf="machineGuiExecutor.getCodeLengthScore() <= maxCodeLengthScoreForStar">
+      <p>You gained a star for completing the size challenge!</p>
+      <p>Your code size was {{ machineGuiExecutor.getCodeLengthScore() }} and you needed {{ maxCodeLengthScoreForStar }}.</p>
     </div>
-    <div>
-      Speed: 25 steps
+    <div *ngIf="machineGuiExecutor.getCodeLengthScore() > maxCodeLengthScoreForStar">
+      <p>Your code size was {{ machineGuiExecutor.getCodeLengthScore() }}.
+        You need a size of at most {{ maxCodeLengthScoreForStar }} to gain a star.</p>
     </div>
     <div>
       <button (click)="dialogBack()">Back</button>
