@@ -514,6 +514,9 @@ SOFTWARE.
 
 
 
+ngx-cookie-service
+MIT
+
 ngx-monaco-editor-v2
 MIT
 
