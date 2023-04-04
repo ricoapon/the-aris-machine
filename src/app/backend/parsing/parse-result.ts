@@ -1,4 +1,5 @@
 export type MachineGUIAction = {
+  editorLine?: number,
   shiftInput?: boolean,
   addValueToOutput?: number,
   // I am not sure how this could be done different (like index: value). This worked.

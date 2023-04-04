@@ -14,6 +14,7 @@ export class MachineGuiExecutor {
   private determineCode: () => string;
   private level: Level;
   private machineGUI: MachineGUI;
+  private machineEditor: MachineEditor;
   private delayInMs: number;
 
   // Array with all the actions that will be emptied after actions are executed.
@@ -45,8 +46,9 @@ export class MachineGuiExecutor {
     }
   }
 
-  setMachineGUI(machineGUI: MachineGUI) {
+  setMachineVariables(machineGUI: MachineGUI, machineEditor: MachineEditor) {
     this.machineGUI = machineGUI;
+    this.machineEditor = machineEditor;
     if (this.level != undefined) {
       this.machineGUI.initialize(this.level)
       this.machineGUI.detectChanges()
@@ -93,6 +95,7 @@ export class MachineGuiExecutor {
   stopAndClear() {
     this.pause()
     this.actions = []
+    this.machineEditor.removeCaret()
     this.machineGUI.initialize(this.level)
   }
 
@@ -117,6 +120,11 @@ export class MachineGuiExecutor {
     }
 
     this.machineGUI.handle(action);
+    if (action.editorLine != undefined) {
+      this.machineEditor.addCaret(action.editorLine!!)
+    } else {
+      this.machineEditor.removeCaret()
+    }
     this.machineGUI.detectChanges()
   }
 }
@@ -127,4 +135,10 @@ export interface MachineGUI {
   initialize(level: Level): void;
 
   handle(machineGUIAction: MachineGUIAction): void;
+}
+
+export interface MachineEditor {
+  addCaret(lineNumber: number): void;
+
+  removeCaret(): void;
 }

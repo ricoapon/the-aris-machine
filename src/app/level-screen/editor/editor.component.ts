@@ -1,15 +1,14 @@
 import {Component} from '@angular/core';
-import {MachineGuiExecutor} from "../../backend/machine-gui-executor";
+import {MachineEditor, MachineGuiExecutor} from "../../backend/machine-gui-executor";
 import {MonacoVariables, MonacoVariablesFactory} from "../../monaco-config/global";
 import {IRange} from "monaco-editor";
-
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css'],
 })
-export class EditorComponent {
+export class EditorComponent implements MachineEditor {
   readonly monacoVariables: MonacoVariables;
   readonly options: any;
   content = '';

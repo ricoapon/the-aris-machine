@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {getLevel, Level} from "../backend/levels";
-import {MachineGuiExecutor} from "../backend/machine-gui-executor";
+import {MachineEditor, MachineGuiExecutor} from "../backend/machine-gui-executor";
 import {MachineScreenComponent} from "./machine-screen/machine-screen.component";
 import {MyCookieService} from "../my-cookie-service";
+import {EditorComponent} from "./editor/editor.component";
 
 @Component({
   selector: 'app-level-screen',
@@ -13,6 +14,7 @@ import {MyCookieService} from "../my-cookie-service";
 export class LevelScreenComponent implements OnInit, AfterViewInit {
   level: Level;
   @ViewChild('machineScreenComponent') machineScreenComponent: MachineScreenComponent;
+  @ViewChild('machineEditorComponent') editorComponent: EditorComponent;
 
   // Variables for dragging.
   isSplitterDragging = false;
@@ -46,7 +48,7 @@ export class LevelScreenComponent implements OnInit, AfterViewInit {
     this.machineScreenComponent.initialize(this.level)
     this.machineScreenComponent.detectChanges()
     this.machineGuiExecutor.setLevel(this.level)
-    this.machineGuiExecutor.setMachineGUI(this.machineScreenComponent)
+    this.machineGuiExecutor.setMachineVariables(this.machineScreenComponent, this.editorComponent)
 
     const leftContainerWidth = this.myCookieService.getLeftContainerWidthInPixels();
     if (leftContainerWidth != undefined) {

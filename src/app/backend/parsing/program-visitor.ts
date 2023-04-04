@@ -40,31 +40,34 @@ export class ProgramVisitor implements ArisVisitor<void> {
   }
 
   visitMove(ctx: MoveContext) {
+    const editorLine = ctx.start.line;
     if (ctx.INPUT() != undefined && ctx.OUTPUT() != undefined) {
-      this.machine.moveInputToOutput()
+      this.machine.moveInputToOutput(editorLine)
     } else if (ctx.INPUT() != undefined) {
       const memorySlot = +ctx.MEMORY_SLOT(0).text
-      this.machine.moveInputToMemorySlot(memorySlot)
+      this.machine.moveInputToMemorySlot(memorySlot, editorLine)
     } else if (ctx.OUTPUT() != undefined) {
       const memorySlot = +ctx.MEMORY_SLOT(0).text
-      this.machine.moveMemorySlotToOutput(memorySlot)
+      this.machine.moveMemorySlotToOutput(memorySlot, editorLine)
     } else {
       const from = +ctx.MEMORY_SLOT(0).text
       const to = +ctx.MEMORY_SLOT(1).text
-      this.machine.moveMemorySlotToMemorySlot(from, to)
+      this.machine.moveMemorySlotToMemorySlot(from, to,editorLine)
     }
   }
 
   visitCopy(ctx: CopyContext) {
+    const editorLine = ctx.start.line;
     const from = +ctx.MEMORY_SLOT(0)
     const to = +ctx.MEMORY_SLOT(1)
-    this.machine.copyMemorySlotToMemorySlot(from, to)
+    this.machine.copyMemorySlotToMemorySlot(from, to, editorLine)
   }
 
   visitAdd(ctx: AddContext) {
+    const editorLine = ctx.start.line;
     const from = +ctx.MEMORY_SLOT(0)
     const to = +ctx.MEMORY_SLOT(1)
-    this.machine.addMemorySlotToMemorySlot(from, to)
+    this.machine.addMemorySlotToMemorySlot(from, to, editorLine)
   }
 
   visitLoop(ctx: LoopContext) {

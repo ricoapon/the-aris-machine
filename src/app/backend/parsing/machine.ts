@@ -47,7 +47,7 @@ export class Machine {
     }
   }
 
-  moveInputToOutput() {
+  moveInputToOutput(editorLine: number) {
     if (this.input.length == 0) {
       return this.error('Cannot read from input anymore')
     }
@@ -59,6 +59,7 @@ export class Machine {
     }
 
     this.handle({
+      editorLine: editorLine,
       shiftInput: true,
       addValueToOutput: this.input.shift()
     })
@@ -68,13 +69,14 @@ export class Machine {
     }
   }
 
-  moveInputToMemorySlot(i: number) {
+  moveInputToMemorySlot(i: number, editorLine: number) {
     if (this.input.length == 0) {
       this.error('Cannot read from input anymore')
       return
     }
     this.memorySlots[i] = this.input.shift()
     this.handle({
+      editorLine: editorLine,
       shiftInput: true,
       memory: [{
         index: i,
@@ -83,7 +85,7 @@ export class Machine {
     })
   }
 
-  moveMemorySlotToOutput(i: number) {
+  moveMemorySlotToOutput(i: number, editorLine: number) {
     if (this.memorySlots[i] == undefined) {
       this.error('No value to move to output')
       return
@@ -97,6 +99,7 @@ export class Machine {
 
     // @ts-ignore
     this.handle({
+      editorLine: editorLine,
       addValueToOutput: this.memorySlots[i],
       memory: [{
         index: i,
@@ -110,7 +113,7 @@ export class Machine {
     }
   }
 
-  moveMemorySlotToMemorySlot(from: number, to: number) {
+  moveMemorySlotToMemorySlot(from: number, to: number, editorLine: number) {
     if (this.memorySlots[from] == undefined) {
       this.error('No value to move to memory slot ' + to)
       return
@@ -119,6 +122,7 @@ export class Machine {
     this.memorySlots[to] = this.memorySlots[from]
     this.memorySlots[from] = undefined
     this.handle({
+      editorLine: editorLine,
       memory: [
         {
           index: to,
@@ -132,7 +136,7 @@ export class Machine {
     })
   }
 
-  copyMemorySlotToMemorySlot(from: number, to: number) {
+  copyMemorySlotToMemorySlot(from: number, to: number, editorLine: number) {
     if (this.memorySlots[from] == undefined) {
       this.error('No value to move to memory slot ' + to)
       return
@@ -140,6 +144,7 @@ export class Machine {
 
     this.memorySlots[to] = this.memorySlots[from]
     this.handle({
+      editorLine: editorLine,
       memory: [{
         index: to,
         value: this.memorySlots[to]
@@ -155,7 +160,7 @@ export class Machine {
     }
   }
 
-  addMemorySlotToMemorySlot(from: number, to: number) {
+  addMemorySlotToMemorySlot(from: number, to: number, editorLine: number) {
     if (this.memorySlots[from] == undefined || this.memorySlots[to] == undefined) {
       this.error('No value to move to memory slot ' + to)
       return
@@ -164,6 +169,7 @@ export class Machine {
     // @ts-ignore
     this.memorySlots[to] += this.memorySlots[from]
     this.handle({
+      editorLine: editorLine,
       memory: [{
         index: to,
         value: this.memorySlots[to]
