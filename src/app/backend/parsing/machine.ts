@@ -21,7 +21,7 @@ export class Machine {
   input: number[]
   expectedOut: number[]
   memorySlots: (undefined | number)[]
-  machineGUIActions: MachineGUIAction[]
+  machineGUIActions: ProtectedArray<MachineGUIAction>
   machineState: MachineState
 
   constructor(level: Level) {
@@ -32,7 +32,7 @@ export class Machine {
     for (let i = 0; i < level.nrOfMemorySlots; i++) {
       this.memorySlots.push(undefined)
     }
-    this.machineGUIActions = []
+    this.machineGUIActions = new ProtectedArray<MachineGUIAction>()
     this.machineState = MachineState.RUNNING
   }
 
@@ -42,7 +42,7 @@ export class Machine {
 
   createMachineResult(): MachineResult {
     return {
-      machineGUIActions: this.machineGUIActions,
+      machineGUIActions: this.machineGUIActions.get(),
       finishedWithError: this.machineState == MachineState.FINISHED_WITH_ERROR
     }
   }
@@ -178,10 +178,38 @@ export class Machine {
   private error(message: string) {
     this.machineGUIActions.push({error: message})
     this.machineState = MachineState.FINISHED_WITH_ERROR
+    this.machineGUIActions.enableProtect()
   }
 
   private finished() {
     this.machineGUIActions.push({finished: true})
     this.machineState = MachineState.FINISHED
+    this.machineGUIActions.enableProtect()
+  }
+}
+
+/**
+ * Encapsulates an array that protects it from adding new elements after `enableProtect` is called. This class is used to
+ * protect the code from adding new actions after the actions are finished (either successfully or with an error).
+ * This is a sure-way to protect the array with little modifications to the code.
+ */
+class ProtectedArray<T> {
+  array: T[] = []
+  protect = false
+
+  push(...items: T[]): number {
+    // Do not throw an error if the array is protected, so the program runs smoothly.
+    if (this.protect) {
+      return 0
+    }
+    return this.array.push(...items)
+  }
+
+  enableProtect() {
+    this.protect = true
+  }
+
+  get(): T[] {
+    return this.array;
   }
 }
