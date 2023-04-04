@@ -66,3 +66,7 @@ code {
 .hover-contents hr, .suggest-details hr {
   margin: 8px 0 !important;
 }
+
+.caretGlyph {
+  content: url("assets/caret.svg");
+}

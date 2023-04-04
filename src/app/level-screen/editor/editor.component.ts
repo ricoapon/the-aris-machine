@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {MachineGuiExecutor} from "../../backend/machine-gui-executor";
 import {MonacoVariables, MonacoVariablesFactory} from "../../monaco-config/global";
+import {IRange} from "monaco-editor";
+
 
 @Component({
   selector: 'app-editor',
@@ -37,6 +39,34 @@ export class EditorComponent {
       this.machineGuiExecutor.execute()
     } else {
       this.machineGuiExecutor.execute()
+    }
+  }
+
+  caretDecoration: any = undefined
+
+  addCaret(lineNumber: number) {
+    this.removeCaret()
+
+    const monaco = this.monacoVariables.getMonacoEditor(this.options)
+    const range: IRange = {
+      startLineNumber: lineNumber,
+      endLineNumber: lineNumber,
+      startColumn: 1,
+      endColumn: 1,
+    }
+    this.caretDecoration = monaco.createDecorationsCollection([
+      {
+        range: range,
+        options: {
+          linesDecorationsClassName: "caretGlyph"
+        }
+      },
+    ]);
+  }
+
+  removeCaret() {
+    if (this.caretDecoration != undefined) {
+      this.caretDecoration.clear()
     }
   }
 }
