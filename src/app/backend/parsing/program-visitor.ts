@@ -1,37 +1,29 @@
-import {AddContext, ArisParser, CopyContext, LoopContext, MoveContext} from "./generated/ArisParser";
-import {ArisLexer} from "./generated/ArisLexer";
-import {ArisVisitor} from "./generated/ArisVisitor";
-import {CharStreams, CommonTokenStream} from "antlr4ts";
+import {ArisVisitor} from "../generated/ArisVisitor";
+import {Machine, MachineResult} from "./machine";
 import {ErrorNode, ParseTree, RuleNode} from "antlr4ts/tree";
-import {Machine, MachineGUIAction} from "./machine";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
+import {AddContext, ArisParser, CopyContext, LoopContext, MoveContext} from "../generated/ArisParser";
+import {Level} from "../levels";
+import {CharStreams, CommonTokenStream} from "antlr4ts";
+import {ArisLexer} from "../generated/ArisLexer";
 
-export class Parser {
-  private readonly machine: Machine
+/**
+ * Executes a program by walking through the code using the visitor pattern.
+ * State will be processed in {@link Machine} and the result will be returned.
+ */
+export class ProgramVisitor implements ArisVisitor<void> {
+  private machine: Machine
 
-  constructor(machine: Machine) {
-    this.machine = machine
-  }
+  run(level: Level, input: string): MachineResult {
+    this.machine = new Machine(level)
 
-  parse(input: string): MachineGUIAction[] {
     const inputStream = CharStreams.fromString(input);
     const lexer = new ArisLexer(inputStream);
     const tokenStream = new CommonTokenStream(lexer);
     const parser = new ArisParser(tokenStream);
-    const visitor = new MyVisitor(this.machine);
 
-    visitor.visit(parser.program())
-
-    return this.machine.machineGUIActions;
-  }
-}
-
-class MyVisitor implements ArisVisitor<void> {
-  private readonly machine: Machine
-  private continueProgram = true
-
-  constructor(machine: Machine) {
-    this.machine = machine
+    this.visit(parser.program())
+    return this.machine.createMachineResult()
   }
 
   visit(tree: ParseTree): void {
@@ -48,40 +40,37 @@ class MyVisitor implements ArisVisitor<void> {
   }
 
   visitMove(ctx: MoveContext) {
-    let result
     if (ctx.INPUT() != undefined && ctx.OUTPUT() != undefined) {
-      result = this.machine.moveInputToOutput()
+      this.machine.moveInputToOutput()
     } else if (ctx.INPUT() != undefined) {
       const memorySlot = +ctx.MEMORY_SLOT(0).text
-      result = this.machine.moveInputToMemorySlot(memorySlot)
+      this.machine.moveInputToMemorySlot(memorySlot)
     } else if (ctx.OUTPUT() != undefined) {
       const memorySlot = +ctx.MEMORY_SLOT(0).text
-      result = this.machine.moveMemorySlotToOutput(memorySlot)
+      this.machine.moveMemorySlotToOutput(memorySlot)
     } else {
       const from = +ctx.MEMORY_SLOT(0).text
       const to = +ctx.MEMORY_SLOT(1).text
-      result = this.machine.moveMemorySlotToMemorySlot(from, to)
+      this.machine.moveMemorySlotToMemorySlot(from, to)
     }
-
-    this.parseResult(result)
   }
 
   visitCopy(ctx: CopyContext) {
     const from = +ctx.MEMORY_SLOT(0)
     const to = +ctx.MEMORY_SLOT(1)
-    this.parseResult(this.machine.copyMemorySlotToMemorySlot(from, to))
+    this.machine.copyMemorySlotToMemorySlot(from, to)
   }
 
   visitAdd(ctx: AddContext) {
     const from = +ctx.MEMORY_SLOT(0)
     const to = +ctx.MEMORY_SLOT(1)
-    this.parseResult(this.machine.addMemorySlotToMemorySlot(from, to))
+    this.machine.addMemorySlotToMemorySlot(from, to)
   }
 
   visitLoop(ctx: LoopContext) {
     // To prevent loops to go infinite, we set a max that we will never reach in normal situations.
     let counter = 0;
-    while (counter < 1000 && this.continueProgram) {
+    while (counter < 1000 && this.machine.isRunning()) {
       for (let i = 0; i < ctx.line().length; i++) {
         this.call(ctx.line()[i])
       }
@@ -96,14 +85,8 @@ class MyVisitor implements ArisVisitor<void> {
   }
 
   private call(tree: ParseTree) {
-    if (this.continueProgram) {
+    if (this.machine.isRunning()) {
       tree.accept(this)
-    }
-  }
-
-  private parseResult(result: boolean | void) {
-    if (result != undefined && !result) {
-      this.continueProgram = false
     }
   }
 }

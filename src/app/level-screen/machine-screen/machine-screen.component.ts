@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
-import {MachineGUIAction} from "../../backend/machine";
+import {MachineGUIAction} from "../../backend/parsing/machine";
 import {Level} from "../../backend/levels";
 import {MachineGUI, MachineGuiExecutor} from "../../backend/machine-gui-executor";
 import {ActivatedRoute, Router} from "@angular/router";

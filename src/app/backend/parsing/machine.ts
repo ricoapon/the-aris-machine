@@ -1,10 +1,28 @@
-import {Level} from "./levels";
+import {Level} from "../levels";
+import {MachineGUIAction} from "./parse-result";
 
-export class Machine {
-  input: number[];
-  expectedOut: number[];
-  memorySlots: (undefined | number)[];
+/** Contains all results that are available after running the code on the machine. */
+export type MachineResult = {
   machineGUIActions: MachineGUIAction[]
+  finishedWithError: boolean
+}
+
+enum MachineState {
+  RUNNING,
+  FINISHED,
+  FINISHED_WITH_ERROR
+}
+
+/**
+ * Represents the internal state of the level. Methods represent actions that are allowed on the level.
+ * After all actions are executed, results can be gathered.
+ */
+export class Machine {
+  input: number[]
+  expectedOut: number[]
+  memorySlots: (undefined | number)[]
+  machineGUIActions: MachineGUIAction[]
+  machineState: MachineState
 
   constructor(level: Level) {
     // Clone arrays to make sure that we don't change the level object.
@@ -15,16 +33,29 @@ export class Machine {
       this.memorySlots.push(undefined)
     }
     this.machineGUIActions = []
+    this.machineState = MachineState.RUNNING
   }
 
-  moveInputToOutput(): boolean | void {
+  isRunning(): boolean {
+    return this.machineState == MachineState.RUNNING
+  }
+
+  createMachineResult(): MachineResult {
+    return {
+      machineGUIActions: this.machineGUIActions,
+      finishedWithError: this.machineState == MachineState.FINISHED_WITH_ERROR
+    }
+  }
+
+  moveInputToOutput() {
     if (this.input.length == 0) {
       return this.error('Cannot read from input anymore')
     }
 
     const expectedOutNumber = this.expectedOut.shift()
     if (expectedOutNumber != this.input[0]) {
-      return this.error('Output is not correct')
+      this.error('Output is not correct')
+      return
     }
 
     this.handle({
@@ -33,13 +64,14 @@ export class Machine {
     })
 
     if (this.expectedOut.length == 0) {
-      return this.finished()
+      this.finished()
     }
   }
 
-  moveInputToMemorySlot(i: number): boolean | void {
+  moveInputToMemorySlot(i: number) {
     if (this.input.length == 0) {
-      return this.error('Cannot read from input anymore')
+      this.error('Cannot read from input anymore')
+      return
     }
     this.memorySlots[i] = this.input.shift()
     this.handle({
@@ -51,14 +83,16 @@ export class Machine {
     })
   }
 
-  moveMemorySlotToOutput(i: number): boolean | void {
+  moveMemorySlotToOutput(i: number) {
     if (this.memorySlots[i] == undefined) {
-      return this.error('No value to move to output')
+      this.error('No value to move to output')
+      return
     }
 
     const expectedOutNumber = this.expectedOut.shift()
     if (expectedOutNumber != this.memorySlots[i]) {
-      return this.error('Output is not correct')
+      this.error('Output is not correct')
+      return
     }
 
     // @ts-ignore
@@ -72,13 +106,14 @@ export class Machine {
     this.memorySlots[i] = undefined
 
     if (this.expectedOut.length == 0) {
-      return this.finished()
+      this.finished()
     }
   }
 
-  moveMemorySlotToMemorySlot(from: number, to: number): boolean | void {
+  moveMemorySlotToMemorySlot(from: number, to: number) {
     if (this.memorySlots[from] == undefined) {
-      return this.error('No value to move to memory slot ' + to)
+      this.error('No value to move to memory slot ' + to)
+      return
     }
 
     this.memorySlots[to] = this.memorySlots[from]
@@ -97,9 +132,10 @@ export class Machine {
     })
   }
 
-  copyMemorySlotToMemorySlot(from: number, to: number): boolean | void {
+  copyMemorySlotToMemorySlot(from: number, to: number) {
     if (this.memorySlots[from] == undefined) {
-      return this.error('No value to move to memory slot ' + to)
+      this.error('No value to move to memory slot ' + to)
+      return
     }
 
     this.memorySlots[to] = this.memorySlots[from]
@@ -111,17 +147,18 @@ export class Machine {
     })
   }
 
-  checkWinningCondition(): boolean {
+  checkWinningCondition() {
     if (this.expectedOut.length != 0) {
-      return this.error('More output is expected!')
+      this.error('More output is expected!')
+    } else {
+      this.finished()
     }
-
-    return this.finished()
   }
 
-  addMemorySlotToMemorySlot(from: number, to: number): boolean | void {
+  addMemorySlotToMemorySlot(from: number, to: number) {
     if (this.memorySlots[from] == undefined || this.memorySlots[to] == undefined) {
-      return this.error('No value to move to memory slot ' + to)
+      this.error('No value to move to memory slot ' + to)
+      return
     }
 
     // @ts-ignore
@@ -134,26 +171,17 @@ export class Machine {
     })
   }
 
-  private handle(machineGUIAction: MachineGUIAction): void {
+  private handle(machineGUIAction: MachineGUIAction) {
     this.machineGUIActions.push(machineGUIAction)
   }
 
-  private error(message: string): boolean {
+  private error(message: string) {
     this.machineGUIActions.push({error: message})
-    return false
+    this.machineState = MachineState.FINISHED_WITH_ERROR
   }
 
-  private finished(): boolean {
+  private finished() {
     this.machineGUIActions.push({finished: true})
-    return true
+    this.machineState = MachineState.FINISHED
   }
-}
-
-export type MachineGUIAction = {
-  shiftInput?: boolean,
-  addValueToOutput?: number,
-  // I am not sure how this could be done different (like index: value). This worked.
-  memory?: { index: number, value: number | undefined }[]
-  error?: string,
-  finished?: boolean,
 }

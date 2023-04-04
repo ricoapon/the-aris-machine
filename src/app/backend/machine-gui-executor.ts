@@ -1,9 +1,8 @@
-import {Machine, MachineGUIAction} from "./machine";
 import {Level} from "./levels";
 import {Injectable} from "@angular/core";
-import {Parser} from "./parser";
+import {Parser} from "./parsing/parser";
 import {MyCookieService} from "../my-cookie-service";
-import {determineCodeLengthScore} from "./determine-code-length-score";
+import {MachineGUIAction} from "./parsing/parse-result";
 
 @Injectable({providedIn: 'root'})
 export class MachineGuiExecutor {
@@ -46,9 +45,9 @@ export class MachineGuiExecutor {
   }
 
   initialize() {
-    let code = this.determineCode();
-    this.actions = new Parser(new Machine(this.level)).parse(code)
-    this.codeLengthScore = determineCodeLengthScore(code)
+    const parseResult = new Parser().parse(this.level, this.determineCode())
+    this.actions = parseResult.actions
+    this.codeLengthScore = parseResult.codeLengthScore
 
     this.finished = false
   }
