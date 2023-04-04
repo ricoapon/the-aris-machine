@@ -32,7 +32,7 @@ export class EditorComponent {
       return
     }
 
-    if (!this.machineGuiExecutor.isReadyForExecution()) {
+    if (!this.machineGuiExecutor.hasActionsLeft()) {
       this.machineGuiExecutor.initialize()
       this.machineGuiExecutor.execute()
     } else {

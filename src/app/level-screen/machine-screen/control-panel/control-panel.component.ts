@@ -15,7 +15,7 @@ export class ControlPanelComponent {
   }
 
   canBeStopped(): boolean {
-    return this.machineGuiExecutor.isReadyForExecution();
+    return this.machineGuiExecutor.hasActionsLeft();
   }
 
   canBeStarted(): boolean {
@@ -23,7 +23,7 @@ export class ControlPanelComponent {
   }
 
   isFinished(): boolean {
-    return this.machineGuiExecutor.isFinished()
+    return !this.machineGuiExecutor.hasActionsLeft()
   }
 
   stop() {
@@ -35,14 +35,14 @@ export class ControlPanelComponent {
       return
     }
 
-    if (!this.machineGuiExecutor.isReadyForExecution()) {
+    if (!this.machineGuiExecutor.hasActionsLeft()) {
       this.machineGuiExecutor.initialize()
     }
     this.machineGuiExecutor.execute()
   }
 
   singleStep() {
-    if (!this.machineGuiExecutor.isReadyForExecution()) {
+    if (!this.machineGuiExecutor.hasActionsLeft()) {
       this.machineGuiExecutor.initialize()
     }
     if (this.machineGuiExecutor.isRunning()) {

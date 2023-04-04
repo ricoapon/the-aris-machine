@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
-import {MachineGUIAction} from "../../backend/parsing/machine";
 import {Level} from "../../backend/levels";
 import {MachineGUI, MachineGuiExecutor} from "../../backend/machine-gui-executor";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MachineGUIAction} from "../../backend/parsing/parse-result";
 
 @Component({
   selector: 'app-machine-screen',
@@ -54,23 +54,22 @@ export class MachineScreenComponent implements MachineGUI {
     this.maxCodeLengthScoreForStar = level.maxCodeLengthScoreForStar;
   }
 
-  error(message: string): boolean {
+  error(message: string) {
     alert(message)
-    return false
+    this.machineGuiExecutor.stopAndClear()
   }
 
-  finished(): boolean {
+  finished() {
     this.finishedDialog.nativeElement.showModal()
-    return true
   }
 
-  handle(machineGUIAction: MachineGUIAction): boolean | void {
+  handle(machineGUIAction: MachineGUIAction): void {
     if (machineGUIAction.finished == true) {
       this.finished()
-      return true
+      return
     } else if (machineGUIAction.error != undefined) {
       this.error(machineGUIAction.error)
-      return false
+      return
     }
 
     if (machineGUIAction.shiftInput == true) {

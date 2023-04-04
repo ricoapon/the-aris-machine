@@ -2,8 +2,13 @@ import {Level} from "./levels";
 import {Injectable} from "@angular/core";
 import {Parser} from "./parsing/parser";
 import {MyCookieService} from "../my-cookie-service";
-import {MachineGUIAction} from "./parsing/parse-result";
+import {MachineGUIAction, ParseResult} from "./parsing/parse-result";
 
+/**
+ * This class "runs" the code on the screen, meaning that all steps that the code makes (for example: moving a memory
+ * from input to memory slot 0) is executed on screen. Using the {@link MachineGUI} interface, all actions are delegated
+ * to a frontend component.
+ */
 @Injectable({providedIn: 'root'})
 export class MachineGuiExecutor {
   private determineCode: () => string;
@@ -11,17 +16,21 @@ export class MachineGuiExecutor {
   private machineGUI: MachineGUI;
   private delayInMs: number;
 
+  // Array with all the actions that will be emptied after actions are executed.
   private actions: MachineGUIAction[] = []
-  private codeLengthScore: number = 0;
+  private parseResult: ParseResult
   private timer: NodeJS.Timer | undefined
-  private finished: boolean = false
 
   constructor(private myCookieService: MyCookieService) {
     this.delayInMs = 1000 / myCookieService.getSpeedUpFactor()
   }
 
   getCodeLengthScore(): number {
-    return this.codeLengthScore
+    // This method is called when initializing the screen, so this part is here for avoiding errors.
+    if (this.parseResult == undefined) {
+      return 0
+    }
+    return this.parseResult.codeLengthScore
   }
 
   setDetermineCode(determineCode: () => string) {
@@ -45,29 +54,22 @@ export class MachineGuiExecutor {
   }
 
   initialize() {
-    const parseResult = new Parser().parse(this.level, this.determineCode())
-    this.actions = parseResult.actions
-    this.codeLengthScore = parseResult.codeLengthScore
-
-    this.finished = false
+    this.parseResult = new Parser().parse(this.level, this.determineCode())
+    this.actions = this.parseResult.actions
   }
 
-  isReadyForExecution(): boolean {
+  hasActionsLeft(): boolean {
     return this.actions.length > 0
-  }
-
-  execute() {
-    // The trick to add delays in between also applies to the first element. So we do this one manually.
-    this.handleNext()
-    this.executeDelayed()
   }
 
   isRunning(): boolean {
     return this.timer != undefined
   }
 
-  isFinished(): boolean {
-    return this.finished
+  execute() {
+    // The trick to add delays in between also applies to the first element. So we do this one manually.
+    this.handleNext()
+    this.executeDelayed()
   }
 
   updateDelayInMs(delayInMs: number) {
@@ -107,25 +109,16 @@ export class MachineGuiExecutor {
     }, this.delayInMs)
   }
 
-  private handleNext(): boolean | void {
-    if (this.finished) {
-      return true
-    }
-
+  private handleNext() {
     const action = this.actions.shift()
     if (action == undefined) {
       this.pause()
       return
     }
 
-    const result = this.machineGUI.handle(action);
+    this.machineGUI.handle(action);
     this.machineGUI.detectChanges()
-    if (result != undefined) {
-      this.finished = true
-      return result;
-    }
   }
-
 }
 
 export interface MachineGUI {
@@ -133,5 +126,5 @@ export interface MachineGUI {
 
   initialize(level: Level): void;
 
-  handle(machineGUIAction: MachineGUIAction): boolean | void;
+  handle(machineGUIAction: MachineGUIAction): void;
 }
