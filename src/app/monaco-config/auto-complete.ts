@@ -114,19 +114,68 @@ function createDictionary(monaco: any): DictionaryItem[] {
     {
       label: "move",
       documentation: "#### move [memory-slot | input] to [memory-slot | output]\n---\n" +
-        "This action makes it possible to move memory blocks from one place to another.",
+        "This action moves memory blocks from one place to another.",
       suggestion: {
         kind: monaco.languages.CompletionItemKind.Snippet,
         insertText: 'move $1 to $2',
         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,      }
     },
     {
+      label: "copy",
+      documentation: "#### copy [memory-slot] to [memory-slot | output]\n---\n" +
+        "This action copies memory blocks from one place to another.",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        insertText: 'copy $1 to $2',
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,      }
+    },
+    {
       label: 'loop',
       documentation: "#### loop { [code block] }\n---\n" +
-        "Repeats the  nested code block until the `break` command is used. An example:\n```aris\nloop {\n  move input to 0\n}\n```\n",
+        "Repeats the nested code block until the `break` command is used. An example:\n```aris\nloop {\n  move input to 0\n}\n```\n",
       suggestion: {
         kind: monaco.languages.CompletionItemKind.Snippet,
         insertText: 'loop {\n  $0\n}',
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+      }
+    },
+    {
+      label: 'ifzero',
+      documentation: "#### ifzero [memory-block | input] { [code block] }\n---\n" +
+        "Executes the code block if the value of the specified memory block or input equals 0.",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        insertText: 'ifzero $1 {\n  $0\n}',
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+      }
+    },
+    {
+      label: 'ifnotzero',
+      documentation: "#### ifnotzero [memory-block | input] { [code block] }\n---\n" +
+        "Executes the code block if the value of the specified memory block or input is not equal to 0.",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        insertText: 'ifnotzero $1 {\n  $0\n}',
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+      }
+    },
+    {
+      label: 'ifpos',
+      documentation: "#### ifpos [memory-block | input] { [code block] }\n---\n" +
+        "Executes the code block if the value of the specified memory block or input is positive.",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        insertText: 'ifpos $1 {\n  $0\n}',
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+      }
+    },
+    {
+      label: 'ifneg',
+      documentation: "#### ifneg [memory-block | input] { [code block] }\n---\n" +
+        "Executes the code block if the value of the specified memory block or input is negative.",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        insertText: 'ifneg $1 {\n  $0\n}',
         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
       }
     },

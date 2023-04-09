@@ -2,7 +2,16 @@ import {ArisVisitor} from "../generated/ArisVisitor";
 import {Machine, MachineResult} from "./machine";
 import {ErrorNode, ParseTree, RuleNode} from "antlr4ts/tree";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
-import {AddContext, ArisParser, CopyContext, LoopContext, MoveContext} from "../generated/ArisParser";
+import {
+  AddContext,
+  ArisParser,
+  CopyContext, IfNegContext,
+  IfNotZeroContext, IfPosContext,
+  IfZeroContext,
+  LinesContext,
+  LoopContext,
+  MoveContext
+} from "../generated/ArisParser";
 import {Level} from "../levels";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {ArisLexer} from "../generated/ArisLexer";
@@ -52,7 +61,7 @@ export class ProgramVisitor implements ArisVisitor<void> {
     } else {
       const from = +ctx.MEMORY_SLOT(0).text
       const to = +ctx.MEMORY_SLOT(1).text
-      this.machine.moveMemorySlotToMemorySlot(from, to,editorLine)
+      this.machine.moveMemorySlotToMemorySlot(from, to, editorLine)
     }
   }
 
@@ -79,16 +88,77 @@ export class ProgramVisitor implements ArisVisitor<void> {
     // To prevent loops to go infinite, we set a max that we will never reach in normal situations.
     let counter = 0;
     while (counter < 1000 && this.machine.isRunning()) {
-      for (let i = 0; i < ctx.line().length; i++) {
-        this.call(ctx.line()[i])
-      }
+      this.callLines(ctx.lines())
       counter++
+    }
+  }
+
+  visitIfZero(ctx: IfZeroContext) {
+    let value
+    if (ctx.INPUT() != undefined) {
+      value = this.machine.getValueOfInputElement()
+    } else {
+      // We know the value of memory slot is undefined here.
+      // @ts-ignore
+      value = this.machine.getValueOfMemorySlot(+ctx.MEMORY_SLOT())
+    }
+
+    if (value == 0) {
+      this.callLines(ctx.lines())
+    }
+  }
+
+  visitIfNotZero(ctx: IfNotZeroContext) {
+    let value
+    if (ctx.INPUT() != undefined) {
+      value = this.machine.getValueOfInputElement()
+    } else {
+      // We know the value of memory slot is undefined here.
+      // @ts-ignore
+      value = this.machine.getValueOfMemorySlot(+ctx.MEMORY_SLOT())
+    }
+    if (value != 0) {
+      this.callLines(ctx.lines())
+    }
+  }
+
+  visitIfPos(ctx: IfPosContext): void {
+    let value
+    if (ctx.INPUT() != undefined) {
+      value = this.machine.getValueOfInputElement()
+    } else {
+      // We know the value of memory slot is undefined here.
+      // @ts-ignore
+      value = this.machine.getValueOfMemorySlot(+ctx.MEMORY_SLOT())
+    }
+    if (value > 0) {
+      this.callLines(ctx.lines())
+    }
+  }
+
+  visitIfNeg(ctx: IfNegContext): void {
+    let value
+    if (ctx.INPUT() != undefined) {
+      value = this.machine.getValueOfInputElement()
+    } else {
+      // We know the value of memory slot is undefined here.
+      // @ts-ignore
+      value = this.machine.getValueOfMemorySlot(+ctx.MEMORY_SLOT())
+    }
+    if (value < 0) {
+      this.callLines(ctx.lines())
     }
   }
 
   visitChildren(node: RuleNode): void {
     for (let i = 0; i < node.childCount; i++) {
       this.call(node.getChild(i))
+    }
+  }
+
+  private callLines(lines: LinesContext) {
+    for (let i = 0; i < lines.line().length; i++) {
+      this.call(lines.line()[i])
     }
   }
 

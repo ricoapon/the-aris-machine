@@ -41,8 +41,15 @@ const LEVELS: Level[] = [
     "them together and put the result in the output.<br>" +
     "<br>" +
     "You can use the command <code>add X to Y</code> where X and Y must be memory slots."),
-  new Level([1, 2, 3], [1, 2, 3], 10, 0,
-    "This is only a test level to test the number of memory slots on screen."),
+  new Level([1, 0, -1], [1, -1], 3, 0,
+    "Move all non zero items to the output."),
+  new Level([1, -1, 0], [0], 3, 0,
+    "Move all zero items to the output."),
+  new Level([-1, 0, 1], [1], 3, 0,
+    "Move all positive items to the output."),
+  new Level([1, 0, -1], [-1], 3, 0,
+    "Move all negative items to the output."),
+
 ]
 
 export function getLevel(i: number): Level {

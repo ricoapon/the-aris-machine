@@ -47,9 +47,23 @@ export class Machine {
     }
   }
 
+  getValueOfMemorySlot(i: number): number {
+    const value = this.memorySlots[i]
+    if (value == undefined) {
+      this.error('Trying to read memory slot ' + i + ', but it is empty')
+      return 0
+    }
+    return value
+  }
+
+  getValueOfInputElement(): number {
+    return this.input[0]
+  }
+
   moveInputToOutput(editorLine: number) {
     if (this.input.length == 0) {
-      return this.error('Cannot read from input anymore')
+      this.error('Cannot read from input anymore')
+      return
     }
 
     const expectedOutNumber = this.expectedOut.shift()

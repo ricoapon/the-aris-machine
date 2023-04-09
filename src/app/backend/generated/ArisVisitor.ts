@@ -4,6 +4,7 @@
 import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
 
 import { ProgramContext } from "./ArisParser";
+import { LinesContext } from "./ArisParser";
 import { LineContext } from "./ArisParser";
 import { ExpressionContext } from "./ArisParser";
 import { ActionContext } from "./ArisParser";
@@ -11,6 +12,10 @@ import { MoveContext } from "./ArisParser";
 import { CopyContext } from "./ArisParser";
 import { AddContext } from "./ArisParser";
 import { LoopContext } from "./ArisParser";
+import { IfZeroContext } from "./ArisParser";
+import { IfNotZeroContext } from "./ArisParser";
+import { IfPosContext } from "./ArisParser";
+import { IfNegContext } from "./ArisParser";
 
 
 /**
@@ -27,6 +32,13 @@ export interface ArisVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitProgram?: (ctx: ProgramContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `ArisParser.lines`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitLines?: (ctx: LinesContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `ArisParser.line`.
@@ -76,5 +88,33 @@ export interface ArisVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitLoop?: (ctx: LoopContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `ArisParser.ifZero`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitIfZero?: (ctx: IfZeroContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `ArisParser.ifNotZero`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitIfNotZero?: (ctx: IfNotZeroContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `ArisParser.ifPos`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitIfPos?: (ctx: IfPosContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `ArisParser.ifNeg`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitIfNeg?: (ctx: IfNegContext) => Result;
 }
 

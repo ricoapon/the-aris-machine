@@ -4,6 +4,8 @@ program
  : line+ EOF
  ;
 
+lines: line*;
+
 line
  : expression NEWLINE*
  ;
@@ -17,12 +19,20 @@ action
  | move
  | add
  | loop
+ | ifZero
+ | ifNotZero
+ | ifPos
+ | ifNeg
  ;
 
 move: MOVE (MEMORY_SLOT|INPUT) TO (MEMORY_SLOT|OUTPUT);
 copy: COPY MEMORY_SLOT TO (MEMORY_SLOT|OUTPUT);
 add: ADD MEMORY_SLOT TO MEMORY_SLOT;
-loop: LOOP CURLY_OPEN NEWLINE line* CURLY_CLOSED;
+loop: LOOP CURLY_OPEN NEWLINE lines CURLY_CLOSED;
+ifZero: IFZERO (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
+ifNotZero: IFNOTZERO (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
+ifPos: IFPOS (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
+ifNeg: IFNEG (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
 
 ADD: 'add';
 COPY: 'copy';
@@ -31,6 +41,10 @@ TO: 'to';
 INPUT: 'input';
 OUTPUT: 'output';
 LOOP: 'loop';
+IFZERO: 'ifzero';
+IFNOTZERO: 'ifnotzero';
+IFPOS: 'ifpos';
+IFNEG: 'ifneg';
 CURLY_OPEN: '{';
 CURLY_CLOSED: '}';
 MEMORY_SLOT: (MEMORY_SLOT_NUMBER | MEMORY_SLOT_NAME);

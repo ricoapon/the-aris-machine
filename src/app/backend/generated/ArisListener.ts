@@ -4,6 +4,7 @@
 import { ParseTreeListener } from "antlr4ts/tree/ParseTreeListener";
 
 import { ProgramContext } from "./ArisParser";
+import { LinesContext } from "./ArisParser";
 import { LineContext } from "./ArisParser";
 import { ExpressionContext } from "./ArisParser";
 import { ActionContext } from "./ArisParser";
@@ -11,6 +12,10 @@ import { MoveContext } from "./ArisParser";
 import { CopyContext } from "./ArisParser";
 import { AddContext } from "./ArisParser";
 import { LoopContext } from "./ArisParser";
+import { IfZeroContext } from "./ArisParser";
+import { IfNotZeroContext } from "./ArisParser";
+import { IfPosContext } from "./ArisParser";
+import { IfNegContext } from "./ArisParser";
 
 
 /**
@@ -28,6 +33,17 @@ export interface ArisListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitProgram?: (ctx: ProgramContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `ArisParser.lines`.
+	 * @param ctx the parse tree
+	 */
+	enterLines?: (ctx: LinesContext) => void;
+	/**
+	 * Exit a parse tree produced by `ArisParser.lines`.
+	 * @param ctx the parse tree
+	 */
+	exitLines?: (ctx: LinesContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `ArisParser.line`.
@@ -105,5 +121,49 @@ export interface ArisListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLoop?: (ctx: LoopContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `ArisParser.ifZero`.
+	 * @param ctx the parse tree
+	 */
+	enterIfZero?: (ctx: IfZeroContext) => void;
+	/**
+	 * Exit a parse tree produced by `ArisParser.ifZero`.
+	 * @param ctx the parse tree
+	 */
+	exitIfZero?: (ctx: IfZeroContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `ArisParser.ifNotZero`.
+	 * @param ctx the parse tree
+	 */
+	enterIfNotZero?: (ctx: IfNotZeroContext) => void;
+	/**
+	 * Exit a parse tree produced by `ArisParser.ifNotZero`.
+	 * @param ctx the parse tree
+	 */
+	exitIfNotZero?: (ctx: IfNotZeroContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `ArisParser.ifPos`.
+	 * @param ctx the parse tree
+	 */
+	enterIfPos?: (ctx: IfPosContext) => void;
+	/**
+	 * Exit a parse tree produced by `ArisParser.ifPos`.
+	 * @param ctx the parse tree
+	 */
+	exitIfPos?: (ctx: IfPosContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `ArisParser.ifNeg`.
+	 * @param ctx the parse tree
+	 */
+	enterIfNeg?: (ctx: IfNegContext) => void;
+	/**
+	 * Exit a parse tree produced by `ArisParser.ifNeg`.
+	 * @param ctx the parse tree
+	 */
+	exitIfNeg?: (ctx: IfNegContext) => void;
 }
 
