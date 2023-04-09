@@ -152,6 +152,29 @@ export class Machine {
     })
   }
 
+  copyMemorySlotToOutput(from: number, editorLine: number) {
+    if (this.memorySlots[from] == undefined) {
+      this.error('Memory slot ' + from + ' does not exist')
+      return
+    }
+
+    const numberToCopyToOutput = this.memorySlots[from]
+    const expectedOutNumber = this.expectedOut.shift()
+    if (expectedOutNumber != numberToCopyToOutput) {
+      this.error('Output is not correct')
+      return
+    }
+
+    this.handle({
+      editorLine: editorLine,
+      addValueToOutput: numberToCopyToOutput
+    })
+
+    if (this.expectedOut.length == 0) {
+      this.finished()
+    }
+  }
+
   checkWinningCondition() {
     if (this.expectedOut.length != 0) {
       this.error('More output is expected!')

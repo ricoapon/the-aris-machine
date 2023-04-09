@@ -59,8 +59,13 @@ export class ProgramVisitor implements ArisVisitor<void> {
   visitCopy(ctx: CopyContext) {
     const editorLine = ctx.start.line;
     const from = +ctx.MEMORY_SLOT(0)
-    const to = +ctx.MEMORY_SLOT(1)
-    this.machine.copyMemorySlotToMemorySlot(from, to, editorLine)
+
+    if (ctx.OUTPUT() != undefined) {
+      this.machine.copyMemorySlotToOutput(from, editorLine)
+    } else {
+      const to = +ctx.MEMORY_SLOT(1)
+      this.machine.copyMemorySlotToMemorySlot(from, to, editorLine)
+    }
   }
 
   visitAdd(ctx: AddContext) {

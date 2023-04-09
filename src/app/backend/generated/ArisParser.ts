@@ -308,6 +308,7 @@ export class ArisParser extends Parser {
 	public copy(): CopyContext {
 		let _localctx: CopyContext = new CopyContext(this._ctx, this.state);
 		this.enterRule(_localctx, 10, ArisParser.RULE_copy);
+		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -318,7 +319,17 @@ export class ArisParser extends Parser {
 			this.state = 45;
 			this.match(ArisParser.TO);
 			this.state = 46;
-			this.match(ArisParser.MEMORY_SLOT);
+			_la = this._input.LA(1);
+			if (!(_la === ArisParser.OUTPUT || _la === ArisParser.MEMORY_SLOT)) {
+			this._errHandler.recoverInline(this);
+			} else {
+				if (this._input.LA(1) === Token.EOF) {
+					this.matchedEOF = true;
+				}
+
+				this._errHandler.reportMatch(this);
+				this.consume();
+			}
 			}
 		}
 		catch (re) {
@@ -435,7 +446,7 @@ export class ArisParser extends Parser {
 		"$\'\x05\x0E\b\x02%\'\x05\x10\t\x02&\"\x03\x02\x02\x02&#\x03\x02\x02\x02" +
 		"&$\x03\x02\x02\x02&%\x03\x02\x02\x02\'\t\x03\x02\x02\x02()\x07\x05\x02" +
 		"\x02)*\t\x02\x02\x02*+\x07\x06\x02\x02+,\t\x03\x02\x02,\v\x03\x02\x02" +
-		"\x02-.\x07\x04\x02\x02./\x07\f\x02\x02/0\x07\x06\x02\x0201\x07\f\x02\x02" +
+		"\x02-.\x07\x04\x02\x02./\x07\f\x02\x02/0\x07\x06\x02\x0201\t\x03\x02\x02" +
 		"1\r\x03\x02\x02\x0223\x07\x03\x02\x0234\x07\f\x02\x0245\x07\x06\x02\x02" +
 		"56\x07\f\x02\x026\x0F\x03\x02\x02\x0278\x07\t\x02\x0289\x07\n\x02\x02" +
 		"9=\x07\x0F\x02\x02:<\x05\x04\x03\x02;:\x03\x02\x02\x02<?\x03\x02\x02\x02" +
@@ -659,6 +670,7 @@ export class CopyContext extends ParserRuleContext {
 		}
 	}
 	public TO(): TerminalNode { return this.getToken(ArisParser.TO, 0); }
+	public OUTPUT(): TerminalNode | undefined { return this.tryGetToken(ArisParser.OUTPUT, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
