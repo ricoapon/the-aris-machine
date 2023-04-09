@@ -18,6 +18,8 @@ action
  : copy
  | move
  | add
+ | increment
+ | decrement
  | loop
  | ifZero
  | ifNotZero
@@ -28,6 +30,8 @@ action
 move: MOVE (MEMORY_SLOT|INPUT) TO (MEMORY_SLOT|OUTPUT);
 copy: COPY MEMORY_SLOT TO (MEMORY_SLOT|OUTPUT);
 add: ADD MEMORY_SLOT TO MEMORY_SLOT;
+increment: INCR MEMORY_SLOT;
+decrement: DECR MEMORY_SLOT;
 loop: LOOP CURLY_OPEN NEWLINE lines CURLY_CLOSED;
 ifZero: IFZERO (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
 ifNotZero: IFNOTZERO (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
@@ -45,6 +49,8 @@ IFZERO: 'ifzero';
 IFNOTZERO: 'ifnotzero';
 IFPOS: 'ifpos';
 IFNEG: 'ifneg';
+INCR: 'incr';
+DECR: 'decr';
 CURLY_OPEN: '{';
 CURLY_CLOSED: '}';
 MEMORY_SLOT: (MEMORY_SLOT_NUMBER | MEMORY_SLOT_NAME);

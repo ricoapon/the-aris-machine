@@ -35,4 +35,28 @@ export class ScoreListener implements ArisListener {
   enterMove(): void {
     this.counter++
   }
+
+  enterDecrement(): void {
+    this.counter++
+  }
+
+  enterIfNeg(): void {
+    this.counter++
+  }
+
+  enterIfNotZero(): void {
+    this.counter++
+  }
+
+  enterIfPos(): void {
+    this.counter++
+  }
+
+  enterIfZero(): void {
+    this.counter++
+  }
+
+  enterIncrement(): void {
+    this.counter++
+  }
 }

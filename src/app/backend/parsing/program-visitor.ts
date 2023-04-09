@@ -5,9 +5,13 @@ import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 import {
   AddContext,
   ArisParser,
-  CopyContext, IfNegContext,
-  IfNotZeroContext, IfPosContext,
+  CopyContext,
+  DecrementContext,
+  IfNegContext,
+  IfNotZeroContext,
+  IfPosContext,
   IfZeroContext,
+  IncrementContext,
   LinesContext,
   LoopContext,
   MoveContext
@@ -82,6 +86,16 @@ export class ProgramVisitor implements ArisVisitor<void> {
     const from = +ctx.MEMORY_SLOT(0)
     const to = +ctx.MEMORY_SLOT(1)
     this.machine.addMemorySlotToMemorySlot(from, to, editorLine)
+  }
+
+  visitIncrement(ctx: IncrementContext): void {
+    const editorLine = ctx.start.line;
+    this.machine.incrementMemorySlot(+ctx.MEMORY_SLOT(), editorLine)
+  }
+
+  visitDecrement(ctx: DecrementContext): void {
+    const editorLine = ctx.start.line;
+    this.machine.decrementMemorySlot(+ctx.MEMORY_SLOT(), editorLine)
   }
 
   visitLoop(ctx: LoopContext) {

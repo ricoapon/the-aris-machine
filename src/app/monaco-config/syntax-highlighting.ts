@@ -2,7 +2,7 @@ export function loadSyntaxHighlighting(monaco: any, languageName: string, themeN
   monaco.languages.setMonarchTokensProvider(languageName, {
     tokenizer: {
       root: [
-        [/(add|copy|move)/, 'function'],
+        [/(add|copy|move|incr|decr)/, 'function'],
         [/(input|output)/, 'input-output'],
         [/(\d+)/, 'memory-slot'],
         [/loop/, 'loop'],

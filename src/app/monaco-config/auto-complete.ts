@@ -114,7 +114,7 @@ function createDictionary(monaco: any): DictionaryItem[] {
     {
       label: "move",
       documentation: "#### move [memory-slot | input] to [memory-slot | output]\n---\n" +
-        "This action moves memory blocks from one place to another.",
+        "Moves the value from one place to another.",
       suggestion: {
         kind: monaco.languages.CompletionItemKind.Snippet,
         insertText: 'move $1 to $2',
@@ -123,11 +123,40 @@ function createDictionary(monaco: any): DictionaryItem[] {
     {
       label: "copy",
       documentation: "#### copy [memory-slot] to [memory-slot | output]\n---\n" +
-        "This action copies memory blocks from one place to another.",
+        "Copies the value of a memory slot to another place.",
       suggestion: {
         kind: monaco.languages.CompletionItemKind.Snippet,
         insertText: 'copy $1 to $2',
         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,      }
+    },
+    {
+      label: "add",
+      documentation: "#### add [memory-slot] to [memory-slot]\n---\n" +
+        "Adds the value of one memory slot to another.",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        insertText: 'add $1 to $2',
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,      }
+    },
+    {
+      label: 'incr',
+      documentation: "#### incr [memory-slot]\n---\n" +
+        "Increments the value of a memory slot by one.",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        insertText: 'incr $1',
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+      }
+    },
+    {
+      label: 'decr',
+      documentation: "#### decr [memory-slot]\n---\n" +
+        "Decrements the value of a memory slot by one.",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        insertText: 'decr $1',
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+      }
     },
     {
       label: 'loop',

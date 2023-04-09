@@ -189,6 +189,42 @@ export class Machine {
     }
   }
 
+  incrementMemorySlot(i: number, editorLine: number) {
+    if (this.memorySlots[i] == undefined) {
+      this.error('Memory slot ' + i + ' does not exist')
+      return
+    }
+
+    // @ts-ignore
+    this.memorySlots[i]++
+
+    this.handle({
+      editorLine: editorLine,
+      memory: [{
+        index: i,
+        value: this.memorySlots[i]
+      }]
+    })
+  }
+
+  decrementMemorySlot(i: number, editorLine: number) {
+    if (this.memorySlots[i] == undefined) {
+      this.error('Memory slot ' + i + ' does not exist')
+      return
+    }
+
+    // @ts-ignore
+    this.memorySlots[i]--
+
+    this.handle({
+      editorLine: editorLine,
+      memory: [{
+        index: i,
+        value: this.memorySlots[i]
+      }]
+    })
+  }
+
   checkWinningCondition() {
     if (this.expectedOut.length != 0) {
       this.error('More output is expected!')
