@@ -1,59 +1,76 @@
 import {CookieService} from "ngx-cookie-service";
 import {Injectable} from "@angular/core";
 
+export type CookieStorage = {
+  speedUpFactor: number,
+  completedLevels: number[]
+  completedCodeChallengeLevels: number[]
+  leftContainerWidthInPixels: number | undefined
+}
+
 /**
  * Wrapper around existing CookieService to have all code for setting and reading cookies in one place.
  */
 @Injectable({providedIn: 'root'})
 export class MyCookieService {
   readonly EXPIRES_IN_DAYS = 365
-
-  readonly SPEED_UP_FACTOR = 'speedUpFactor'
-  readonly SPEED_UP_FACTOR_DEFAULT = 1
-
-  readonly COMPLETED_LEVEL_PREFIX = 'completedLevel_'
-  readonly COMPLETED_CODE_CHALLENGE_PREFIX = 'completedCodeChallenge_'
-
-  readonly LEFT_CONTAINER_WIDTH_IN_PIXELS = 'leftContainerWidthInPixels'
+  readonly COOKIE_NAME = 'aris-machine-cookie'
+  private readonly storage: CookieStorage
 
   constructor(private cookieService: CookieService) {
+    if (this.cookieService.check(this.COOKIE_NAME)) {
+      this.storage = JSON.parse(this.cookieService.get(this.COOKIE_NAME))
+    } else {
+      this.storage = {
+        speedUpFactor: 1,
+        completedLevels: [],
+        completedCodeChallengeLevels: [],
+        leftContainerWidthInPixels: undefined
+      }
+    }
+  }
+
+  private save() {
+    this.cookieService.set(this.COOKIE_NAME, JSON.stringify(this.storage), this.EXPIRES_IN_DAYS)
   }
 
   getSpeedUpFactor(): number {
-    if (!this.cookieService.check(this.SPEED_UP_FACTOR)) {
-      return this.SPEED_UP_FACTOR_DEFAULT
-    }
-    return Number(this.cookieService.get(this.SPEED_UP_FACTOR))
+    return this.storage.speedUpFactor
   }
 
   setSpeedUpFactor(value: number) {
-    this.cookieService.set(this.SPEED_UP_FACTOR, String(value), this.EXPIRES_IN_DAYS)
+    this.storage.speedUpFactor = value
+    this.save()
   }
 
   hasCompletedLevel(levelId: number): boolean {
-    return this.cookieService.check(this.COMPLETED_LEVEL_PREFIX + levelId)
+    return this.storage.completedLevels.indexOf(levelId) > -1
   }
 
   setCompletedLevel(levelId: number) {
-    this.cookieService.set(this.COMPLETED_LEVEL_PREFIX + levelId, String('true'), this.EXPIRES_IN_DAYS)
+    if (!this.hasCompletedLevel(levelId)) {
+      this.storage.completedLevels.push(levelId)
+      this.save()
+    }
   }
 
   hasCompletedCodeChallenge(levelId: number): boolean {
-    return this.cookieService.check(this.COMPLETED_CODE_CHALLENGE_PREFIX + levelId)
+    return this.storage.completedCodeChallengeLevels.indexOf(levelId) > -1
   }
 
   setCompletedCodeChallenge(levelId: number) {
-    this.cookieService.set(this.COMPLETED_CODE_CHALLENGE_PREFIX + levelId, String('true'), this.EXPIRES_IN_DAYS)
+    if (!this.hasCompletedCodeChallenge(levelId)) {
+      this.storage.completedLevels.push(levelId)
+      this.save()
+    }
   }
 
   getLeftContainerWidthInPixels(): number | undefined {
-    if (!this.cookieService.check(this.LEFT_CONTAINER_WIDTH_IN_PIXELS)) {
-      return undefined
-    }
-    return Number(this.cookieService.get(this.LEFT_CONTAINER_WIDTH_IN_PIXELS))
+    return this.storage.leftContainerWidthInPixels
   }
 
-  setLeftContainerWidthInPixels(value: number) {
-    this.cookieService.set(this.LEFT_CONTAINER_WIDTH_IN_PIXELS, String(value), this.EXPIRES_IN_DAYS)
+  setLeftContainerWidthInPixels(value: number | undefined) {
+    this.storage.leftContainerWidthInPixels = value
+    this.save()
   }
 }
