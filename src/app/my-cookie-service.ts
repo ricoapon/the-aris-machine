@@ -6,6 +6,9 @@ export type CookieStorage = {
   completedLevels: number[]
   completedCodeChallengeLevels: number[]
   leftContainerWidthInPixels: number | undefined
+  codePerLevel: {
+    [key: number]: string
+  }
 }
 
 /**
@@ -25,7 +28,8 @@ export class MyCookieService {
         speedUpFactor: 1,
         completedLevels: [],
         completedCodeChallengeLevels: [],
-        leftContainerWidthInPixels: undefined
+        leftContainerWidthInPixels: undefined,
+        codePerLevel: {}
       }
     }
   }
@@ -71,6 +75,19 @@ export class MyCookieService {
 
   setLeftContainerWidthInPixels(value: number | undefined) {
     this.storage.leftContainerWidthInPixels = value
+    this.save()
+  }
+
+  getCodeForLevel(levelId: number): string {
+    if (this.storage.codePerLevel[levelId] == undefined) {
+      return ''
+    }
+
+    return this.storage.codePerLevel[levelId]
+  }
+
+  setCodeForLevel(levelId: number, code: string) {
+    this.storage.codePerLevel[levelId] = code
     this.save()
   }
 }

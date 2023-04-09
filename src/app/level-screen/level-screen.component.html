@@ -12,7 +12,7 @@
         <p [innerHTML]="level.description"></p>
       </div>
       <div class="editor">
-        <app-editor #machineEditorComponent></app-editor>
+        <app-editor [levelId]="this.levelId" #machineEditorComponent></app-editor>
       </div>
     </div>
 

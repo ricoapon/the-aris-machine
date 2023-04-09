@@ -1,19 +1,23 @@
-import {Component} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MachineEditor, MachineGuiExecutor} from "../../backend/machine-gui-executor";
 import {MonacoVariables, MonacoVariablesFactory} from "../../monaco-config/global";
 import {IRange} from "monaco-editor";
+import {MyCookieService} from "../../my-cookie-service";
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css'],
 })
-export class EditorComponent implements MachineEditor {
+export class EditorComponent implements MachineEditor, OnInit {
   readonly monacoVariables: MonacoVariables;
   readonly options: any;
+  @Input() levelId: number
   content = '';
 
-  constructor(private machineGuiExecutor: MachineGuiExecutor, private monacoVariablesFactory: MonacoVariablesFactory) {
+  constructor(private machineGuiExecutor: MachineGuiExecutor,
+              private monacoVariablesFactory: MonacoVariablesFactory,
+              private myCookieService: MyCookieService) {
     this.monacoVariables = monacoVariablesFactory.get()
     this.options = this.monacoVariables.createMonacoEditorOptions();
 
@@ -26,6 +30,10 @@ export class EditorComponent implements MachineEditor {
         this.execute()
       })
     })
+  }
+
+  ngOnInit(): void {
+    this.content = this.myCookieService.getCodeForLevel(this.levelId)
   }
 
   execute() {
@@ -67,5 +75,20 @@ export class EditorComponent implements MachineEditor {
     if (this.caretDecoration != undefined) {
       this.caretDecoration.clear()
     }
+  }
+
+  updateCookieTimeout: NodeJS.Timeout | undefined = undefined
+
+  onContentChange(input: string) {
+    // We don't want to spam new cookie values every keyboard press.
+    // We only save if no changes have been made for one second.
+    if (this.updateCookieTimeout != undefined) {
+      clearInterval(this.updateCookieTimeout)
+    }
+    this.updateCookieTimeout = setTimeout(() => this.updateCookie(input), 1000)
+  }
+
+  private updateCookie(input: string) {
+    this.myCookieService.setCodeForLevel(this.levelId, input)
   }
 }

@@ -12,6 +12,7 @@ import {EditorComponent} from "./editor/editor.component";
   styleUrls: ['./level-screen.component.css']
 })
 export class LevelScreenComponent implements OnInit, AfterViewInit {
+  levelId: number;
   level: Level;
   @ViewChild('machineScreenComponent') machineScreenComponent: MachineScreenComponent;
   @ViewChild('machineEditorComponent') editorComponent: EditorComponent;
@@ -37,7 +38,8 @@ export class LevelScreenComponent implements OnInit, AfterViewInit {
           throw Error('No valid level')
         }
 
-        this.level = getLevel(+levelId)
+        this.levelId = +levelId
+        this.level = getLevel(this.levelId)
       } catch (e) {
         this.router.navigate(['/'])
       }
