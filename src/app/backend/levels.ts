@@ -59,6 +59,35 @@ const LEVELS: Level[] = [
   new Level([9, 0, -5, 1, 6, 8, 0, -1], [8, -4, 0, 5, 7, 0], 3, 9,
     "If the input is positive, subtract 1 and output that. If the input is negative, add 1 and output that. " +
     "Ignore any input that is 0."),
+
+  new Level([1, -5, 6, 8, 0, 9, 2, -6, 5, -5, 7, 8], [-6, -2, 9, 8, -10, -1], 3, 9,
+    "For each two things in the input, first subtract the 1st from the 2nd and put the result in the output. " +
+    "And then, subtract the 2nd from the 1st and put the result in the output. repeat." +
+    "<br>" +
+    "You can use the command <code>subtract [memory-slot] from [memory-slot]</code>."),
+
+  new Level([1, -5, 6, 6, 0, 9, -6, -6, 5, -5, 7, 7], [6, -6, 7], 3, 6,
+    "For each two elements in the input: if they are equal, put one of them in the output. Discard non-equal pairs. Repeat!"),
+  // Code size of next level could be decreased by 2 if we implement the "ifnotpos" or "ifnotneg" command.
+  new Level([1, -5, 6, 6, 0, 9, -6, -7, 5, -5, 7, 7], [1, 6, 9, -6, 5, 7], 3, 11,
+    "For each two elements in the input: put the bigger of the two in the output, If they are equal, just pick either one. Repeat!"),
+
+  new Level([1, -5, 6, 9, -6, -7, 0, -5], [1, 5, 6, 9, 6, 7, 0, 5], 3, 7,
+    "Send each input to the output. But if the number is negative, first make it positive. Repeat!"),
+
+  new Level([-1, 1, 7, 8, 9, -2, -6, -6, 1, 5, -1, 2], [1, -1, 1, 1, -1], 8, 15,
+    "For each two things in the input: <br>" +
+    "Send 1 to the output if they have the same (both negative or both positive).<br>" +
+    "Send -1 to the output if their signs are different.<br>" +
+    "The input will always start with -1 and 1, which are ignored and should be used by you. Other inputs will never be 0.<br>" +
+    "<br>" +
+    "Bonus points if you can find a solution without using <code>ifpos</code>"),
+
+  new Level([9, -3, 0, 2], [9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -3, -2, -1, 0, 0, 2, 1, 0], 10, 9,
+    "For each input, send that number to the output, followed by all numbers down to (or up to) zero."),
+
+  new Level([6, 4, 6, 2, 0, 0, 5, 3, 1, 1, 7, 0, 0, 7], [24, 12, 0, 15, 1, 0, 0], 10, 11,
+    "For each two items in the input, multiply them and output the result. Don't worry about negative numbers for now."),
 ]
 
 export function getLevel(i: number): Level {
