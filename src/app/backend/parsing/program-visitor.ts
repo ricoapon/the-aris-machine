@@ -14,7 +14,7 @@ import {
   IncrementContext,
   LinesContext,
   LoopContext,
-  MoveContext
+  MoveContext, SubtractContext
 } from "../generated/ArisParser";
 import {Level} from "../levels";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
@@ -86,6 +86,13 @@ export class ProgramVisitor implements ArisVisitor<void> {
     const from = +ctx.MEMORY_SLOT(0)
     const to = +ctx.MEMORY_SLOT(1)
     this.machine.addMemorySlotToMemorySlot(from, to, editorLine)
+  }
+
+  visitSubtract(ctx: SubtractContext): void {
+    const editorLine = ctx.start.line;
+    const from = +ctx.MEMORY_SLOT(0)
+    const to = +ctx.MEMORY_SLOT(1)
+    this.machine.subtractMemorySlotFromMemorySlot(from, to, editorLine)
   }
 
   visitIncrement(ctx: IncrementContext): void {

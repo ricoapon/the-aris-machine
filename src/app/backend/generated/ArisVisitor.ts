@@ -11,6 +11,7 @@ import { ActionContext } from "./ArisParser";
 import { MoveContext } from "./ArisParser";
 import { CopyContext } from "./ArisParser";
 import { AddContext } from "./ArisParser";
+import { SubtractContext } from "./ArisParser";
 import { IncrementContext } from "./ArisParser";
 import { DecrementContext } from "./ArisParser";
 import { LoopContext } from "./ArisParser";
@@ -83,6 +84,13 @@ export interface ArisVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitAdd?: (ctx: AddContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `ArisParser.subtract`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitSubtract?: (ctx: SubtractContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `ArisParser.increment`.

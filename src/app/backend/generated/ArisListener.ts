@@ -11,6 +11,7 @@ import { ActionContext } from "./ArisParser";
 import { MoveContext } from "./ArisParser";
 import { CopyContext } from "./ArisParser";
 import { AddContext } from "./ArisParser";
+import { SubtractContext } from "./ArisParser";
 import { IncrementContext } from "./ArisParser";
 import { DecrementContext } from "./ArisParser";
 import { LoopContext } from "./ArisParser";
@@ -112,6 +113,17 @@ export interface ArisListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAdd?: (ctx: AddContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `ArisParser.subtract`.
+	 * @param ctx the parse tree
+	 */
+	enterSubtract?: (ctx: SubtractContext) => void;
+	/**
+	 * Exit a parse tree produced by `ArisParser.subtract`.
+	 * @param ctx the parse tree
+	 */
+	exitSubtract?: (ctx: SubtractContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `ArisParser.increment`.

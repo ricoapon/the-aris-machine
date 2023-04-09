@@ -18,6 +18,7 @@ action
  : copy
  | move
  | add
+ | subtract
  | increment
  | decrement
  | loop
@@ -30,6 +31,7 @@ action
 move: MOVE (MEMORY_SLOT|INPUT) TO (MEMORY_SLOT|OUTPUT);
 copy: COPY MEMORY_SLOT TO (MEMORY_SLOT|OUTPUT);
 add: ADD MEMORY_SLOT TO MEMORY_SLOT;
+subtract: SUB MEMORY_SLOT FROM MEMORY_SLOT;
 increment: INCR MEMORY_SLOT;
 decrement: DECR MEMORY_SLOT;
 loop: LOOP CURLY_OPEN NEWLINE lines CURLY_CLOSED;
@@ -39,9 +41,11 @@ ifPos: IFPOS (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
 ifNeg: IFNEG (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
 
 ADD: 'add';
+SUB: 'sub';
 COPY: 'copy';
 MOVE: 'move';
 TO: 'to';
+FROM: 'from';
 INPUT: 'input';
 OUTPUT: 'output';
 LOOP: 'loop';

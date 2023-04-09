@@ -139,6 +139,15 @@ function createDictionary(monaco: any): DictionaryItem[] {
         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,      }
     },
     {
+      label: "sub",
+      documentation: "#### sub [memory-slot] from [memory-slot]\n---\n" +
+        "Subtract the value of one memory slot from another.",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Snippet,
+        insertText: 'sub $1 from $2',
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,      }
+    },
+    {
       label: 'incr',
       documentation: "#### incr [memory-slot]\n---\n" +
         "Increments the value of a memory slot by one.",

@@ -1,9 +1,23 @@
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {ArisLexer} from "../generated/ArisLexer";
-import {ArisParser} from "../generated/ArisParser";
+import {
+  AddContext,
+  ArisParser,
+  CopyContext,
+  DecrementContext,
+  IfNegContext,
+  IfNotZeroContext,
+  IfPosContext,
+  IfZeroContext,
+  IncrementContext,
+  LoopContext,
+  MoveContext,
+  SubtractContext
+} from "../generated/ArisParser";
 import {ArisListener} from "../generated/ArisListener";
 import {ParseTreeWalker} from "antlr4ts/tree";
 
+// noinspection JSUnusedLocalSymbols
 export class ScoreListener implements ArisListener {
   counter: number
 
@@ -20,43 +34,48 @@ export class ScoreListener implements ArisListener {
     return this.counter
   }
 
-  enterAdd(): void {
+  enterAdd(ctx: AddContext): void {
     this.counter++
   }
 
-  enterCopy(): void {
+  enterCopy(ctx: CopyContext): void {
     this.counter++
   }
 
-  enterLoop(): void {
+  enterLoop(ctx: LoopContext): void {
     this.counter++
   }
 
-  enterMove(): void {
+  enterMove(ctx: MoveContext): void {
     this.counter++
   }
 
-  enterDecrement(): void {
+  enterDecrement(ctx: DecrementContext): void {
     this.counter++
   }
 
-  enterIfNeg(): void {
+  enterIfNeg(ctx: IfNegContext): void {
     this.counter++
   }
 
-  enterIfNotZero(): void {
+  enterIfNotZero(ctx: IfNotZeroContext): void {
     this.counter++
   }
 
-  enterIfPos(): void {
+  enterIfPos(ctx: IfPosContext): void {
     this.counter++
   }
 
-  enterIfZero(): void {
+  enterIfZero(ctx: IfZeroContext): void {
     this.counter++
   }
 
-  enterIncrement(): void {
+  enterIncrement(ctx: IncrementContext): void {
     this.counter++
   }
+
+  enterSubtract(ctx: SubtractContext): void {
+    this.counter++
+  }
+
 }

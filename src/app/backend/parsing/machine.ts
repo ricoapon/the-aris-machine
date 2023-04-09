@@ -235,7 +235,7 @@ export class Machine {
 
   addMemorySlotToMemorySlot(from: number, to: number, editorLine: number) {
     if (this.memorySlots[from] == undefined || this.memorySlots[to] == undefined) {
-      this.error('No value to move to memory slot ' + to)
+      this.error('One of the two memory slots does not exist: ' + from + ", " + to)
       return
     }
 
@@ -249,6 +249,25 @@ export class Machine {
       }]
     })
   }
+
+
+  subtractMemorySlotFromMemorySlot(valueToSubtract: number, toBeSubtractedFrom: number, editorLine: number) {
+    if (this.memorySlots[valueToSubtract] == undefined || this.memorySlots[toBeSubtractedFrom] == undefined) {
+      this.error('One of the two memory slots does not exist: ' + valueToSubtract + ", " + toBeSubtractedFrom)
+      return
+    }
+
+    // @ts-ignore
+    this.memorySlots[toBeSubtractedFrom] -= this.memorySlots[valueToSubtract]
+    this.handle({
+      editorLine: editorLine,
+      memory: [{
+        index: toBeSubtractedFrom,
+        value: this.memorySlots[toBeSubtractedFrom]
+      }]
+    })
+  }
+
 
   private handle(machineGUIAction: MachineGUIAction) {
     this.machineGUIActions.push(machineGUIAction)
