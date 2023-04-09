@@ -4,7 +4,7 @@ import {ErrorNode, ParseTree, RuleNode} from "antlr4ts/tree";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 import {
   AddContext,
-  ArisParser,
+  ArisParser, BreakContext, ContinueContext,
   CopyContext,
   DecrementContext,
   IfNegContext,
@@ -20,12 +20,26 @@ import {Level} from "../levels";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {ArisLexer} from "../generated/ArisLexer";
 
+enum BreakContinueState {
+  IGNORE,
+  CONTINUE,
+  BREAK,
+}
+
 /**
  * Executes a program by walking through the code using the visitor pattern.
  * State will be processed in {@link Machine} and the result will be returned.
  */
 export class ProgramVisitor implements ArisVisitor<void> {
   private machine: Machine
+  // If execute break or continue commands, we want to go back to the most recent loop we started executing.
+  // We cannot "go back" in the visitor pattern, so the solution is stop block any execution of code until
+  // we are back in the visitLoop function. Not the prettiest solution, but it works.
+  private breakContinueState: BreakContinueState = BreakContinueState.IGNORE
+
+  private shouldStopExecutionUntilLoopIsReached(): boolean {
+    return this.breakContinueState != BreakContinueState.IGNORE
+  }
 
   run(level: Level, input: string): MachineResult {
     this.machine = new Machine(level)
@@ -53,6 +67,10 @@ export class ProgramVisitor implements ArisVisitor<void> {
   }
 
   visitMove(ctx: MoveContext) {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     const editorLine = ctx.start.line;
     if (ctx.INPUT() != undefined && ctx.OUTPUT() != undefined) {
       this.machine.moveInputToOutput(editorLine)
@@ -70,6 +88,10 @@ export class ProgramVisitor implements ArisVisitor<void> {
   }
 
   visitCopy(ctx: CopyContext) {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     const editorLine = ctx.start.line;
     const from = +ctx.MEMORY_SLOT(0)
 
@@ -82,6 +104,10 @@ export class ProgramVisitor implements ArisVisitor<void> {
   }
 
   visitAdd(ctx: AddContext) {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     const editorLine = ctx.start.line;
     const from = +ctx.MEMORY_SLOT(0)
     const to = +ctx.MEMORY_SLOT(1)
@@ -89,6 +115,10 @@ export class ProgramVisitor implements ArisVisitor<void> {
   }
 
   visitSubtract(ctx: SubtractContext): void {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     const editorLine = ctx.start.line;
     const from = +ctx.MEMORY_SLOT(0)
     const to = +ctx.MEMORY_SLOT(1)
@@ -96,25 +126,66 @@ export class ProgramVisitor implements ArisVisitor<void> {
   }
 
   visitIncrement(ctx: IncrementContext): void {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     const editorLine = ctx.start.line;
     this.machine.incrementMemorySlot(+ctx.MEMORY_SLOT(), editorLine)
   }
 
   visitDecrement(ctx: DecrementContext): void {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     const editorLine = ctx.start.line;
     this.machine.decrementMemorySlot(+ctx.MEMORY_SLOT(), editorLine)
   }
 
   visitLoop(ctx: LoopContext) {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     // To prevent loops to go infinite, we set a max that we will never reach in normal situations.
     let counter = 0;
     while (counter < 1000 && this.machine.isRunning()) {
       this.callLines(ctx.lines())
       counter++
+
+      if (this.breakContinueState == BreakContinueState.BREAK) {
+        this.breakContinueState = BreakContinueState.IGNORE
+        break;
+      } else if (this.breakContinueState == BreakContinueState.CONTINUE) {
+        this.breakContinueState = BreakContinueState.IGNORE
+      }
     }
   }
 
+  // noinspection JSUnusedLocalSymbols
+  visitBreak(ctx: BreakContext): void {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
+    this.breakContinueState = BreakContinueState.BREAK
+  }
+
+  // noinspection JSUnusedLocalSymbols
+  visitContinue(ctx: ContinueContext): void {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
+    this.breakContinueState = BreakContinueState.CONTINUE
+  }
+
   visitIfZero(ctx: IfZeroContext) {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     let value
     if (ctx.INPUT() != undefined) {
       value = this.machine.getValueOfInputElement()
@@ -130,6 +201,10 @@ export class ProgramVisitor implements ArisVisitor<void> {
   }
 
   visitIfNotZero(ctx: IfNotZeroContext) {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     let value
     if (ctx.INPUT() != undefined) {
       value = this.machine.getValueOfInputElement()
@@ -144,6 +219,10 @@ export class ProgramVisitor implements ArisVisitor<void> {
   }
 
   visitIfPos(ctx: IfPosContext): void {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     let value
     if (ctx.INPUT() != undefined) {
       value = this.machine.getValueOfInputElement()
@@ -158,6 +237,10 @@ export class ProgramVisitor implements ArisVisitor<void> {
   }
 
   visitIfNeg(ctx: IfNegContext): void {
+    if (this.shouldStopExecutionUntilLoopIsReached()) {
+      return
+    }
+
     let value
     if (ctx.INPUT() != undefined) {
       value = this.machine.getValueOfInputElement()

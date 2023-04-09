@@ -6,6 +6,7 @@ export function loadSyntaxHighlighting(monaco: any, languageName: string, themeN
         [/(input|output)/, 'input-output'],
         [/(\d+)/, 'memory-slot'],
         [/loop/, 'loop'],
+        [/(break|continue)/, 'break-continue'],
         [/(ifzero|ifnotzero|ifpos|ifneg)/, 'if-statement'],
         [/[{}]/, 'bracket'],
       ]
@@ -42,6 +43,7 @@ export function loadSyntaxHighlighting(monaco: any, languageName: string, themeN
       {token: 'input-output', foreground: red},
       {token: 'memory-slot', foreground: red},
       {token: 'loop', foreground: blue},
+      {token: 'break-continue', foreground: red},
       {token: 'if-statement', foreground: blue},
       {token: 'bracket', foreground: blue},
     ]

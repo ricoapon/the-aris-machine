@@ -22,6 +22,8 @@ action
  | increment
  | decrement
  | loop
+ | break
+ | continue
  | ifZero
  | ifNotZero
  | ifPos
@@ -35,6 +37,8 @@ subtract: SUB MEMORY_SLOT FROM MEMORY_SLOT;
 increment: INCR MEMORY_SLOT;
 decrement: DECR MEMORY_SLOT;
 loop: LOOP CURLY_OPEN NEWLINE lines CURLY_CLOSED;
+break: BREAK;
+continue: CONTINUE;
 ifZero: IFZERO (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
 ifNotZero: IFNOTZERO (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
 ifPos: IFPOS (MEMORY_SLOT|INPUT) CURLY_OPEN NEWLINE lines CURLY_CLOSED;
@@ -49,6 +53,8 @@ FROM: 'from';
 INPUT: 'input';
 OUTPUT: 'output';
 LOOP: 'loop';
+BREAK: 'break';
+CONTINUE: 'continue';
 IFZERO: 'ifzero';
 IFNOTZERO: 'ifnotzero';
 IFPOS: 'ifpos';

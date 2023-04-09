@@ -2,7 +2,7 @@ import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {ArisLexer} from "../generated/ArisLexer";
 import {
   AddContext,
-  ArisParser,
+  ArisParser, BreakContext, ContinueContext,
   CopyContext,
   DecrementContext,
   IfNegContext,
@@ -43,6 +43,14 @@ export class ScoreListener implements ArisListener {
   }
 
   enterLoop(ctx: LoopContext): void {
+    this.counter++
+  }
+
+  enterBreak(ctx: BreakContext): void {
+    this.counter++
+  }
+
+  enterContinue(ctx: ContinueContext): void {
     this.counter++
   }
 

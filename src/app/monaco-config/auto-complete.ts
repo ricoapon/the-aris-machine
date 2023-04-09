@@ -178,6 +178,24 @@ function createDictionary(monaco: any): DictionaryItem[] {
       }
     },
     {
+      label: 'break',
+      documentation: "#### break\n---\n" +
+        "Stops the execution of the current loop you are in.",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Text,
+        insertText: 'break',
+      }
+    },
+    {
+      label: 'continue',
+      documentation: "#### continue\n---\n" +
+        "Return to the beginning of the code block of the loop",
+      suggestion: {
+        kind: monaco.languages.CompletionItemKind.Text,
+        insertText: 'continue',
+      }
+    },
+    {
       label: 'ifzero',
       documentation: "#### ifzero [memory-block | input] { [code block] }\n---\n" +
         "Executes the code block if the value of the specified memory block or input equals 0.",

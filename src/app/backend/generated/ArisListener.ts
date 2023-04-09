@@ -15,6 +15,8 @@ import { SubtractContext } from "./ArisParser";
 import { IncrementContext } from "./ArisParser";
 import { DecrementContext } from "./ArisParser";
 import { LoopContext } from "./ArisParser";
+import { BreakContext } from "./ArisParser";
+import { ContinueContext } from "./ArisParser";
 import { IfZeroContext } from "./ArisParser";
 import { IfNotZeroContext } from "./ArisParser";
 import { IfPosContext } from "./ArisParser";
@@ -157,6 +159,28 @@ export interface ArisListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLoop?: (ctx: LoopContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `ArisParser.break`.
+	 * @param ctx the parse tree
+	 */
+	enterBreak?: (ctx: BreakContext) => void;
+	/**
+	 * Exit a parse tree produced by `ArisParser.break`.
+	 * @param ctx the parse tree
+	 */
+	exitBreak?: (ctx: BreakContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `ArisParser.continue`.
+	 * @param ctx the parse tree
+	 */
+	enterContinue?: (ctx: ContinueContext) => void;
+	/**
+	 * Exit a parse tree produced by `ArisParser.continue`.
+	 * @param ctx the parse tree
+	 */
+	exitContinue?: (ctx: ContinueContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `ArisParser.ifZero`.
