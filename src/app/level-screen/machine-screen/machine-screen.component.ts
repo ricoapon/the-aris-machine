@@ -32,11 +32,11 @@ export class MachineScreenComponent implements MachineGUI {
 
   determineNrOfGridColumns(): number {
     const length = this.memorySlots.length
-    if (length <= 4) {
+    if (length <= 5) {
       return length;
     }
 
-    return length / 2;
+    return Math.ceil(length / 2);
   }
 
   detectChanges(): void {
