@@ -5,7 +5,6 @@ export class Level {
   readonly maxCodeLengthScoreForStar: number;
   readonly description: string;
 
-
   constructor(input: number[], expectedOut: number[], nrOfMemorySlots: number, maxCodeLengthScoreForStar: number, description: string) {
     this.input = input;
     this.expectedOut = expectedOut;
@@ -41,15 +40,25 @@ const LEVELS: Level[] = [
     "them together and put the result in the output.<br>" +
     "<br>" +
     "You can use the command <code>add X to Y</code> where X and Y must be memory slots."),
-  new Level([1, 0, -1], [1, -1], 3, 0,
-    "Move all non zero items to the output."),
-  new Level([1, -1, 0], [0], 3, 0,
-    "Move all zero items to the output."),
-  new Level([-1, 0, 1], [1], 3, 0,
-    "Move all positive items to the output."),
-  new Level([1, 0, -1], [-1], 3, 0,
-    "Move all negative items to the output."),
 
+  new Level([4, 8, 3, 1, 10], [12, 24, 9, 3, 30], 3, 6,
+    "Triple the input value and output the result."),
+  new Level([4, 8, 3, 1, 10], [32, 64, 24, 8, 80], 5, 6,
+    "Multiply the input by 8 and output the result. Can you do it using only 3 ADD commands?"),
+  new Level([4, 8, 3, 1, 10], [160, 320, 120, 40, 400], 5, 10,
+    "Multiply the input by 40 and output the result."),
+
+  new Level([9, 0, 8, 1, 0, 0, -6, 0], [0, 0, 0, 0], 3, 4,
+    "Only move the 0 values to the output. You can use the command <code>ifzero [memory-slot | input] { ... }</code> " +
+    "to only execute commands if the memory slot has the value 0 in it." +
+    "<br>" +
+    "The function <code>ifnotzero</code> also exists, which does the opposite: executes code only if the memory slot value is not equal to 0."),
+  new Level([9, 0, -5, 1, 6, 8, 0, -1], [10, -6, 2, 7, 9, -2], 3, 8,
+    "If the input is positive, add 1 and output that. If the input is negative, subtract 1 and output that. " +
+    "Ignore any input that is 0."),
+  new Level([9, 0, -5, 1, 6, 8, 0, -1], [8, -4, 0, 5, 7, 0], 3, 9,
+    "If the input is positive, subtract 1 and output that. If the input is negative, add 1 and output that. " +
+    "Ignore any input that is 0."),
 ]
 
 export function getLevel(i: number): Level {
